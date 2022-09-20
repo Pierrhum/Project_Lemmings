@@ -23,7 +23,8 @@ int main()
     NYTimer timer;
     Input input;
     timer.start();
-    
+
+    //ShowCursor(FALSE);
     ReadConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
     buffer[5][10].Char.AsciiChar = 'H';
     buffer[5][10].Attributes = 0x0E;
@@ -38,10 +39,8 @@ int main()
     //MessageBox(NULL,_T("voila le message"),_T("voila le titre"),MB_OK);
 
 
-    while(timer.getElapsedSeconds() <= 10)
+    while(1)
     {
-        input.ProcessInput(&buffer[0], timer);
-
         if(static_cast<int>(timer.getElapsedSeconds()) % 2 == 0)
         {
             buffer[5][10].Attributes = 0x0E;
@@ -50,6 +49,7 @@ int main()
         
         WriteConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
         
+        input.ProcessInput(&buffer[0], timer);        
     }
 
     return 0;
@@ -62,8 +62,12 @@ LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)
     SetLastError(NO_ERROR);        
 
     HWND hwnd_console = GetConsoleWindow();
+    SetConsoleTitleA("The Lemmings");
     LONG_PTR style_ptr = SetWindowLongPtr(hwnd_console,n_index,new_style);
-    SetWindowPos(hwnd_console,0,0,0,0,0,SWP_NOZORDER|SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_DRAWFRAME);
+    SetConsoleWindowInfo(hwnd_console, 1, &rcRegion);
+
+    
+    SetWindowPos(hwnd_console,0,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,SWP_NOMOVE|SWP_DRAWFRAME);
 
     //show window after updating
     ShowWindow(hwnd_console,SW_SHOW);
