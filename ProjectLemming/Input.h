@@ -14,6 +14,6 @@ private:
     
 public:
     Input();
-    void DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase);
+    void DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase, bool onClick);
     void ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer timer);
 };

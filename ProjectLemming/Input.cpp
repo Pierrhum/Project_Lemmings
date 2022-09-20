@@ -8,16 +8,45 @@ Input::Input()
     FlushConsoleInputBuffer(hInput);
 }
 
-void Input::DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase)
+void Input::DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase, bool onClick)
 {
-    for(int x=-3; x <= 3;x++)
-        if(MousePos.X + x > 0 && MousePos.X + x < SCREEN_WIDTH)
-            buffer[MousePos.Y][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
-    for(int y=-2; y <= 2;y++)
-        if(MousePos.Y + y > 0 && MousePos.Y + y < SCREEN_HEIGHT)
-            buffer[MousePos.Y + y][MousePos.X].Char.AsciiChar = erase ? ' ' : 'x';
+    if(onClick)
+    {
+        buffer[MousePos.Y][MousePos.X].Char.AsciiChar = erase ? ' ' : 'x';
+        for(int x=-3; x <= 3;x++)
+        {
+            if(MousePos.X + x > 0 && MousePos.X + x < SCREEN_WIDTH)
+            {
+                if(MousePos.Y + 2 < SCREEN_HEIGHT)
+                    buffer[MousePos.Y + 2][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+                if(MousePos.Y - 2 > 0)
+                    buffer[MousePos.Y - 2][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+            }
+        }
+        for(int y=-1; y <= 1;y++)
+        {
+            if(MousePos.Y + y > 0 && MousePos.Y + y < SCREEN_HEIGHT)
+            {
+                if(MousePos.X + 3 < SCREEN_WIDTH)
+                    buffer[MousePos.Y + y][MousePos.X + 3].Char.AsciiChar = erase ? ' ' : 'x';
+                if(MousePos.X - 3 > 0)
+                    buffer[MousePos.Y - y][MousePos.X - 3].Char.AsciiChar = erase ? ' ' : 'x';
+            }
+            
+        }
+    }
+    else
+    {
+        for(int x=-3; x <= 3;x++)
+            if(MousePos.X + x > 0 && MousePos.X + x < SCREEN_WIDTH)
+                buffer[MousePos.Y][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+        for(int y=-2; y <= 2;y++)
+            if(MousePos.Y + y > 0 && MousePos.Y + y < SCREEN_HEIGHT)
+                buffer[MousePos.Y + y][MousePos.X].Char.AsciiChar = erase ? ' ' : 'x';        
+    }
 }
 
+bool onClick = false;
 void Input::ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer timer)
 {
     DWORD nb;
@@ -33,14 +62,14 @@ void Input::ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer 
                 if (record[i].EventType == MOUSE_EVENT)
                 {
                     if(!MouseInit) MouseInit = true;
-                    else DrawMouse(buffer, true);
+                    else DrawMouse(buffer, true, onClick);
                     
                     MousePos = record[i].Event.MouseEvent.dwMousePosition;
-                    DrawMouse(buffer, false);
                     switch (record[i].Event.MouseEvent.dwButtonState)
                     {
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
                         buffer[5][20].Char.AsciiChar = 'O';
+                        DrawMouse(buffer, false, (onClick=true));
                         break;
                     case RIGHTMOST_BUTTON_PRESSED:
                         buffer[5][20].Char.AsciiChar = 'U';
@@ -49,6 +78,8 @@ void Input::ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer 
                         buffer[5][20].Char.AsciiChar = 'I';
                         break;
                     default:
+                        DrawMouse(buffer, false, false);
+                        onClick=false;
                         break;
                     }
                 }
