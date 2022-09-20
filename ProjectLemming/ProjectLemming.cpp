@@ -1,11 +1,19 @@
 #define _WIN32_WINNT 0x0501
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
+
+#include <codecvt>
 #include <stdio.h>
-#include <iostream>
 #include <windows.h>
 #include <tchar.h>
+
+#include <string>
+#include <iostream>
+#include <fstream>
+
 #include "NYTimer.h"
+
+using namespace std;
 
 HANDLE hOutput = (HANDLE)GetStdHandle( STD_OUTPUT_HANDLE );
 HANDLE hInput = (HANDLE)GetStdHandle( STD_INPUT_HANDLE );
@@ -18,6 +26,9 @@ SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH-1, SCREEN_HEIGHT-1 };
 CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 
 LONG_PTR setConsoleWindowStyle(INT,LONG_PTR);
+
+void setBackground(const char* str);
+void setSimpleBackground(const char* str);
 
 int main()
 {
@@ -87,6 +98,54 @@ int main()
 
     return 0;
 }
+
+// void setBackground(const char* str)
+// {
+//     wifstream ansi_input{str};
+//     ansi_input.open(str);
+//
+//     // Define the code page of the text file (1256 = Arabic)
+//     ansi_input.imbue( std::locale( ".1256" ) );
+//     // ansi_input.imbue( std::locale( ansi_input.getloc(), new std::codecvt_utf8_utf16< wchar_t, 1114111UL, std::consume_header> ) );
+//     
+//     // Read the whole file into a wstring.
+//     // The stream converts from ANSI to UTF-16 encoding.
+//     std::wstring ws{ std::istreambuf_iterator<wchar_t>( ansi_input ), std::istreambuf_iterator<wchar_t>() };
+//     
+//     if (ansi_input.is_open() == true)
+//     {
+//         wchar_t* psStr = &ws[0];
+//         for (int i = 0; i < ws.size(); ++i)
+//         {
+//             wchar_t wc = psStr[i];
+//             buffer[i/121][i%121].Char.AsciiChar = char(wc);
+//             buffer[i/121][i%121].Attributes = wc;
+//         }
+//     }
+//     
+//     ansi_input.close();
+//     
+// }
+
+void setSimpleBackground(const char* str)
+{
+    ifstream input;
+    input.open(str);
+
+    if (input.is_open() == true) {
+        char c;
+        int i = 0;
+        while (input.get(c))
+        {
+            buffer[i/121][i%121].Char.AsciiChar = c;
+            buffer[i/121][i%121].Attributes = 0x0E;
+            i++;
+        }
+        input.close();
+    }
+}
+
+
 
 //Si le new style est à 0, la fenetre n'a absolument rien à part son contenu
 LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)

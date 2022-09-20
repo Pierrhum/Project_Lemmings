@@ -160,6 +160,13 @@
   <ItemGroup>
     <ClInclude Include="NYTimer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="spriteAscii\backgroundTest.txt" />
+    <Content Include="spriteRef\backgroundTest.jpg" />
+    <Content Include="spriteRef\Def-Lemmings.bmp" />
+    <Content Include="spriteRef\lem.png" />
+    <Content Include="spriteRef\maxresdefault.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
