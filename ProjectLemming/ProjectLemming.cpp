@@ -1,15 +1,14 @@
 #define _WIN32_WINNT 0x0501
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+
 #include <stdio.h>
 #include <iostream>
 #include <windows.h>
 #include <tchar.h>
+
+#include "Input.h"
 #include "NYTimer.h"
 
 HANDLE hOutput = (HANDLE)GetStdHandle( STD_OUTPUT_HANDLE );
-HANDLE hInput = (HANDLE)GetStdHandle( STD_INPUT_HANDLE );
-DWORD fdwMode = ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
 
 COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 COORD dwBufferCoord = { 0, 0 };
@@ -22,6 +21,7 @@ LONG_PTR setConsoleWindowStyle(INT,LONG_PTR);
 int main()
 {
     NYTimer timer;
+    Input input;
     timer.start();
     
     ReadConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
@@ -33,54 +33,21 @@ int main()
     buffer[5][12].Attributes = 0x0A;
     LONG_PTR new_style =  WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL;
     setConsoleWindowStyle(GWL_STYLE,new_style);
-    
-    /*
-    int res,type = MB_OK;
-    res = MessageBox(NULL,_T("voila le message"),_T("voila le titre"),type);
-    printf("Code de retour : %d\n",res);*/
 
-    SetConsoleMode(hInput, fdwMode);
-    DWORD nb;
-    INPUT_RECORD record[200];
     
-    //POINT pt;
-    FlushConsoleInputBuffer(hInput);
-    while(timer.getElapsedSeconds() <= 4)
+    //MessageBox(NULL,_T("voila le message"),_T("voila le titre"),MB_OK);
+
+
+    while(timer.getElapsedSeconds() <= 10)
     {
-        buffer[5][5].Char.AsciiChar = 0x30 + static_cast<int>(timer.getElapsedSeconds());
-        if (WaitForSingleObject(hInput, 100) == WAIT_OBJECT_0)
-        {
-            if (ReadConsoleInput(hInput,record,200,&nb))
-            {
-                for(DWORD i=0;i<nb;i++)
-                {
-                    if (record[i].EventType == MOUSE_EVENT)
-                    {
-                        switch (record[i].Event.MouseEvent.dwButtonState)
-                        {
-                        case FROM_LEFT_1ST_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'O';
-                            break;
-                        case RIGHTMOST_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'U';
-                            break;
-                        case FROM_LEFT_2ND_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'I';
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        
-        /* */
+        input.ProcessInput(&buffer[0], timer);
+
         if(static_cast<int>(timer.getElapsedSeconds()) % 2 == 0)
         {
             buffer[5][10].Attributes = 0x0E;
         } else 
             buffer[5][10].Attributes = 0x0B;
+        
         WriteConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
         
     }
