@@ -8,7 +8,7 @@ Input::Input()
     FlushConsoleInputBuffer(hInput);
 }
 
-void Input::DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase, bool onClick)
+void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick)
 {
     if(onClick)
     {
@@ -47,7 +47,7 @@ void Input::DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase,
 }
 
 bool onClick = false;
-void Input::ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer timer)
+void Input::ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
 {
     DWORD nb;
     INPUT_RECORD record[200];

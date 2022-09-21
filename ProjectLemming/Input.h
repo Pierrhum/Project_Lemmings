@@ -1,8 +1,9 @@
 #pragma once
+#include <vector>
 #include <windows.h>
 #include "NYTimer.h"
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 213
+#define SCREEN_HEIGHT 45
 
 class Input
 {
@@ -14,6 +15,6 @@ private:
     
 public:
     Input();
-    void DrawMouse(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], bool erase, bool onClick);
-    void ProcessInput(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], NYTimer timer);
+    void DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick);
+    void ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer);
 };
