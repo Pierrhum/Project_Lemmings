@@ -70,7 +70,7 @@ LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)
     SetWindowPos(hwnd_console,0,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,SWP_NOMOVE|SWP_DRAWFRAME);
 
     //show window after updating
-    ShowWindow(hwnd_console,SW_SHOW);
+    ShowWindow(hwnd_console,SW_MAXIMIZE);
 
     return style_ptr;  
 }
