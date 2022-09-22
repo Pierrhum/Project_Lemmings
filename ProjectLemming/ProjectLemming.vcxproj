@@ -154,12 +154,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="NYTimer.cpp" />
     <ClCompile Include="ProjectLemming.cpp" />
     <ClCompile Include="WinConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="WinConsole.h" />
