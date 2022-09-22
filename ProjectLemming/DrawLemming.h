@@ -16,9 +16,7 @@ public:
         static DrawLemming S;
         return S;
     }
-    
     Picture intial_level;
-    
-    void DrawPixel(std::vector<std::vector<CHAR_INFO>>& buffer, int x, int y, Hexa_color color);
-    void DrawPicture(std::vector<std::vector<CHAR_INFO>>& buffer, int x, int y, Picture picture);
+    void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
+    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture);
 };
