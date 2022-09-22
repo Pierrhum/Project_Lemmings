@@ -1,105 +1,68 @@
 #define _WIN32_WINNT 0x0501
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
+
+
 #include <stdio.h>
-#include <iostream>
 #include <windows.h>
 #include <tchar.h>
+
+#include "Input.h"
 #include "NYTimer.h"
+#include "DrawLemming.h"
 
-HANDLE hOutput = (HANDLE)GetStdHandle( STD_OUTPUT_HANDLE );
-HANDLE hInput = (HANDLE)GetStdHandle( STD_INPUT_HANDLE );
-DWORD fdwMode = ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
+using namespace std;
 
-COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
-COORD dwBufferCoord = { 0, 0 };
-SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH-1, SCREEN_HEIGHT-1 };
+#include "WinConsole.h"
 
-CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-
-LONG_PTR setConsoleWindowStyle(INT,LONG_PTR);
+void setBackground(const char* str);
+void setSimpleBackground(const char* str);
 
 int main()
 {
     NYTimer timer;
+    Input input;
     timer.start();
-    
-    ReadConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
-    buffer[5][10].Char.AsciiChar = 'H';
-    buffer[5][10].Attributes = 0x0E;
-    buffer[5][11].Char.AsciiChar = 'i';
-    buffer[5][11].Attributes = 0x0B;
-    buffer[5][12].Char.AsciiChar = '!';
-    buffer[5][12].Attributes = 0x0A;
-    LONG_PTR new_style =  WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL;
-    setConsoleWindowStyle(GWL_STYLE,new_style);
-    
-    /*
-    int res,type = MB_OK;
-    res = MessageBox(NULL,_T("voila le message"),_T("voila le titre"),type);
-    printf("Code de retour : %d\n",res);*/
 
-    SetConsoleMode(hInput, fdwMode);
-    DWORD nb;
-    INPUT_RECORD record[200];
+    WinConsole Console;
+
+    //ShowCursor(FALSE);
+    ReadConsoleOutput( Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize,
+                        Console.dwBufferCoord, &Console.rcRegion );
     
-    //POINT pt;
-    FlushConsoleInputBuffer(hInput);
-    while(timer.getElapsedSeconds() <= 4)
+    for(int y=0;y < Console.dwBufferSize.Y; y++)
+        for(int x=0; x < Console.dwBufferSize.X;x++)
+            Console.buffer[y][x].Attributes = 0x0F;
+    
+    Console.buffer[5][10].Char.AsciiChar = 'H';
+    Console.buffer[5][10].Attributes = 0x0E;
+    Console.buffer[5][11].Char.AsciiChar = 'i';
+    Console.buffer[5][11].Attributes = 0x0B;
+    Console.buffer[5][12].Char.AsciiChar = '!';
+    Console.buffer[5][12].Attributes = 0x0A;
+    for(int y=0;y < Console.dwBufferSize.Y; y++)
     {
-        buffer[5][5].Char.AsciiChar = 0x30 + static_cast<int>(timer.getElapsedSeconds());
-        if (WaitForSingleObject(hInput, 100) == WAIT_OBJECT_0)
-        {
-            if (ReadConsoleInput(hInput,record,200,&nb))
-            {
-                for(DWORD i=0;i<nb;i++)
-                {
-                    if (record[i].EventType == MOUSE_EVENT)
-                    {
-                        switch (record[i].Event.MouseEvent.dwButtonState)
-                        {
-                        case FROM_LEFT_1ST_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'O';
-                            break;
-                        case RIGHTMOST_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'U';
-                            break;
-                        case FROM_LEFT_2ND_BUTTON_PRESSED:
-                            buffer[5][20].Char.AsciiChar = 'I';
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        
-        /* */
-        if(static_cast<int>(timer.getElapsedSeconds()) % 2 == 0)
-        {
-            buffer[5][10].Attributes = 0x0E;
-        } else 
-            buffer[5][10].Attributes = 0x0B;
-        WriteConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
-        
+        Console.buffer[y][0].Char.AsciiChar = '|';
+        Console.buffer[y][0].Attributes = 0x0A;
+        Console.buffer[y][Console.dwBufferSize.X-1].Char.AsciiChar = '|';
+        Console.buffer[y][Console.dwBufferSize.X-1].Attributes = 0x0A;
+    }
+    
+    for(int x=0; x < Console.dwBufferSize.X;x++)
+    {
+        Console.buffer[0][x].Char.AsciiChar = '-';
+        Console.buffer[0][x].Attributes = 0x0A;
+        Console.buffer[Console.dwBufferSize.Y-1][x].Char.AsciiChar = '-';
+        Console.buffer[Console.dwBufferSize.Y-1][x].Attributes = 0x0A;
     }
 
-    return 0;
-}
+    while(1)
+    {
+        if(static_cast<int>(timer.getElapsedSeconds()) % 2 == 0)
+        {
+            Console.buffer[5][10].Attributes = 0x0E;
+        } else 
+            Console.buffer[5][10].Attributes = 0x0B;
 
-//Si le new style est à 0, la fenetre n'a absolument rien à part son contenu
-LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)
-{
-    /*The function does not clear the last error information. if last value was zero.*/
-    SetLastError(NO_ERROR);        
-
-    HWND hwnd_console = GetConsoleWindow();
-    LONG_PTR style_ptr = SetWindowLongPtr(hwnd_console,n_index,new_style);
-    SetWindowPos(hwnd_console,0,0,0,0,0,SWP_NOZORDER|SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_DRAWFRAME);
-
-    //show window after updating
-    ShowWindow(hwnd_console,SW_SHOW);
-
-    return style_ptr;  
+        WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord, &Console.rcRegion );
+        input.ProcessInput(Console.buffer, timer);        
+    }
 }
