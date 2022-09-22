@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <tchar.h>
 
+#include "Animation.h"
 #include "Input.h"
 #include "NYTimer.h"
 #include "DrawLemming.h"
@@ -31,36 +32,17 @@ int main()
     for(int y=0;y < Console.dwBufferSize.Y; y++)
         for(int x=0; x < Console.dwBufferSize.X;x++)
             Console.buffer[y][x].Attributes = 0x0F;
-    
-    Console.buffer[5][10].Char.AsciiChar = 'H';
-    Console.buffer[5][10].Attributes = 0x0E;
-    Console.buffer[5][11].Char.AsciiChar = 'i';
-    Console.buffer[5][11].Attributes = 0x0B;
-    Console.buffer[5][12].Char.AsciiChar = '!';
-    Console.buffer[5][12].Attributes = 0x0A;
-    for(int y=0;y < Console.dwBufferSize.Y; y++)
-    {
-        Console.buffer[y][0].Char.AsciiChar = '|';
-        Console.buffer[y][0].Attributes = 0x0A;
-        Console.buffer[y][Console.dwBufferSize.X-1].Char.AsciiChar = '|';
-        Console.buffer[y][Console.dwBufferSize.X-1].Attributes = 0x0A;
-    }
-    
-    for(int x=0; x < Console.dwBufferSize.X;x++)
-    {
-        Console.buffer[0][x].Char.AsciiChar = '-';
-        Console.buffer[0][x].Attributes = 0x0A;
-        Console.buffer[Console.dwBufferSize.Y-1][x].Char.AsciiChar = '-';
-        Console.buffer[Console.dwBufferSize.Y-1][x].Attributes = 0x0A;
-    }
 
+    Animation anim = Animation("spriteAscii/lem_mouve.txt", 8);
+    int cpt = 0;
     while(1)
     {
         if(static_cast<int>(timer.getElapsedSeconds()) % 2 == 0)
         {
-            Console.buffer[5][10].Attributes = 0x0E;
-        } else 
-            Console.buffer[5][10].Attributes = 0x0B;
+            
+        }
+        cpt++;
+        DrawLemming::Instance().DrawPicture(Console.buffer, 0, 0, anim.get_frame(cpt%7));
 
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord, &Console.rcRegion );
         input.ProcessInput(Console.buffer, timer);        
