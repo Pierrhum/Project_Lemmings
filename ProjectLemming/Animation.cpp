@@ -12,6 +12,18 @@ Animation::Animation(const char* str_file, int nb_frames): nb_frames(nb_frames),
             frame_buffer.clear();
         }
     }
+    
+}
+
+void Animation::play_anim(std::vector<std::vector<CHAR_INFO>> &buffer, int cpt, bool loop)
+{   
+    if (loop)
+    {
+        DrawLemming::Instance().DrawPicture(buffer, 0, 0, vanim.at(cpt));
+    }else
+    {
+        DrawLemming::Instance().DrawPicture(buffer, 0, 0, vanim.at(cpt));
+    }
 }
 
 Picture Animation::get_frame(int num_fram)

@@ -157,6 +157,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="DrawLemming.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="NYTimer.cpp" />
     <ClCompile Include="Picture.cpp" />
     <ClCompile Include="ProjectLemming.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="DrawLemming.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Lemming.h" />
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="Picture.h" />
     <ClInclude Include="WinConsole.h" />
@@ -180,7 +182,7 @@
     <Content Include="spriteRef\backgroundTest_150-75.png" />
     <Content Include="spriteRef\Def-Lemmings.bmp" />
     <Content Include="spriteRef\lem.png" />
-    <Content Include="spriteRef\lem_mouve.png" />
+    <Content Include="spriteRef\lem_move.png" />
     <Content Include="spriteRef\maxresdefault.jpg" />
     <Content Include="spriteRef\png_to_console_txt.py" />
   </ItemGroup>
