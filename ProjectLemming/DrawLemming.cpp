@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 
-
 void DrawLemming::DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color)
 {
     int top_mask = 0xF0; int bot_mask = 0x0F;
