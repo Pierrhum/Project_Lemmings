@@ -1,8 +1,5 @@
 #define _WIN32_WINNT 0x0501
-#define SCREEN_WIDTH 1920
-#define SCREEN_HEIGHT 1080
 
-#include <codecvt>
 #include <stdio.h>
 #include <windows.h>
 #include <tchar.h>
@@ -12,6 +9,7 @@
 #include <fstream>
 
 #include "NYTimer.h"
+#include "DrawLemming.h"
 
 using namespace std;
 
@@ -35,13 +33,9 @@ int main()
     NYTimer timer;
     timer.start();
     
+    DrawLemming draw_lemming;
+    
     ReadConsoleOutput( hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion );
-    buffer[5][10].Char.AsciiChar = 'H';
-    buffer[5][10].Attributes = 0x0E;
-    buffer[5][11].Char.AsciiChar = 'i';
-    buffer[5][11].Attributes = 0x0B;
-    buffer[5][12].Char.AsciiChar = '!';
-    buffer[5][12].Attributes = 0x0A;
     LONG_PTR new_style =  WS_OVERLAPPEDWINDOW | WS_HSCROLL | WS_VSCROLL;
     setConsoleWindowStyle(GWL_STYLE,new_style);
     
@@ -49,6 +43,11 @@ int main()
     int res,type = MB_OK;
     res = MessageBox(NULL,_T("voila le message"),_T("voila le titre"),type);
     printf("Code de retour : %d\n",res);*/
+    Picture picture("spriteAscii/backgroundTest200_100.txt");
+    DrawLemming::Instance().DrawPicture(&buffer[0], 0, 0, picture);
+
+    int pixel = picture.GetPixel(3, 2);
+    // draw_lemming.DrawPixelBackGround(&buffer[0]);
 
     SetConsoleMode(hInput, fdwMode);
     DWORD nb;
@@ -56,7 +55,7 @@ int main()
     
     //POINT pt;
     FlushConsoleInputBuffer(hInput);
-    while(timer.getElapsedSeconds() <= 4)
+    while(timer.getElapsedSeconds() <= 60)
     {
         buffer[5][5].Char.AsciiChar = 0x30 + static_cast<int>(timer.getElapsedSeconds());
         if (WaitForSingleObject(hInput, 100) == WAIT_OBJECT_0)
@@ -99,53 +98,6 @@ int main()
     return 0;
 }
 
-// void setBackground(const char* str)
-// {
-//     wifstream ansi_input{str};
-//     ansi_input.open(str);
-//
-//     // Define the code page of the text file (1256 = Arabic)
-//     ansi_input.imbue( std::locale( ".1256" ) );
-//     // ansi_input.imbue( std::locale( ansi_input.getloc(), new std::codecvt_utf8_utf16< wchar_t, 1114111UL, std::consume_header> ) );
-//     
-//     // Read the whole file into a wstring.
-//     // The stream converts from ANSI to UTF-16 encoding.
-//     std::wstring ws{ std::istreambuf_iterator<wchar_t>( ansi_input ), std::istreambuf_iterator<wchar_t>() };
-//     
-//     if (ansi_input.is_open() == true)
-//     {
-//         wchar_t* psStr = &ws[0];
-//         for (int i = 0; i < ws.size(); ++i)
-//         {
-//             wchar_t wc = psStr[i];
-//             buffer[i/121][i%121].Char.AsciiChar = char(wc);
-//             buffer[i/121][i%121].Attributes = wc;
-//         }
-//     }
-//     
-//     ansi_input.close();
-//     
-// }
-
-void setSimpleBackground(const char* str)
-{
-    ifstream input;
-    input.open(str);
-
-    if (input.is_open() == true) {
-        char c;
-        int i = 0;
-        while (input.get(c))
-        {
-            buffer[i/121][i%121].Char.AsciiChar = c;
-            buffer[i/121][i%121].Attributes = 0x0E;
-            i++;
-        }
-        input.close();
-    }
-}
-
-
 
 //Si le new style est à 0, la fenetre n'a absolument rien à part son contenu
 LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)
@@ -155,7 +107,7 @@ LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style)
 
     HWND hwnd_console = GetConsoleWindow();
     LONG_PTR style_ptr = SetWindowLongPtr(hwnd_console,n_index,new_style);
-    SetWindowPos(hwnd_console,0,0,0,0,0,SWP_NOZORDER|SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_DRAWFRAME);
+    SetWindowPos(hwnd_console,0,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,SWP_NOZORDER|SWP_NOMOVE|SWP_NOACTIVATE|SWP_DRAWFRAME);
 
     //show window after updating
     ShowWindow(hwnd_console,SW_SHOW);
