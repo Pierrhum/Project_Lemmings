@@ -13,6 +13,6 @@ public:
     int h_picture;
     vector<int> vpicture;
     Picture(const char* str_file);
-    explicit Picture(vector<int> vpicture, int w_picture, int h_picture): w_picture(w_picture), h_picture(h_picture), vpicture(vpicture) {}
+    explicit Picture(vector<int> &vpicture, int w_picture, int h_picture): w_picture(w_picture), h_picture(h_picture), vpicture(vpicture) {}
     int GetPixel(int x, int y);
 };

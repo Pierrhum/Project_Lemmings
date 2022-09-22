@@ -19,6 +19,6 @@ public:
         static DrawLemming S;
         return S;
     }
-    void DrawPixel(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], int x, int y, Hexa_color color);
-    void DrawPicture(CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH], int x, int y, Picture picture);
+    void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
+    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture);
 };
