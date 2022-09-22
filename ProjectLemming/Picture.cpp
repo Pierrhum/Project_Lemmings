@@ -30,5 +30,5 @@ Picture::Picture(const char* str_file)
 
 int Picture::GetPixel(int x, int y)
 {
-    return vpicture.at(x*w_picture + y);
+    return vpicture.at(y*w_picture + x);
 }

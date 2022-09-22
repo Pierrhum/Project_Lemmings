@@ -1,36 +1,34 @@
 #include "Input.h"
 
-Input::Input()
+Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
 {
-    fdwMode = ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
-    hInput = (HANDLE)GetStdHandle( STD_INPUT_HANDLE );
-    SetConsoleMode(hInput, fdwMode);
-    FlushConsoleInputBuffer(hInput);
+    return (Hexa_color)pic.GetPixel(MousePos.X + x, MousePos.Y * 2 + y);
 }
 
 void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick)
 {
+    Picture pic = DrawLemming::Instance().intial_level;
     if(onClick)
     {
-        buffer[MousePos.Y][MousePos.X].Char.AsciiChar = erase ? ' ' : 'x';
+        DrawLemming::Instance().DrawPixel(buffer, MousePos.X, MousePos.Y * 2, erase ? GetHexaColor(pic, 0,0) : RED);
         for(int x=-3; x <= 3;x++)
         {
-            if(MousePos.X + x > 0 && MousePos.X + x < SCREEN_WIDTH)
+            if(MousePos.X + x > 0 && MousePos.X + x < Console.dwBufferSize.X)
             {
-                if(MousePos.Y + 2 < SCREEN_HEIGHT)
-                    buffer[MousePos.Y + 2][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+                if(MousePos.Y + 2 < Console.dwBufferSize.Y)
+                    DrawLemming::Instance().DrawPixel(buffer, MousePos.X + x, MousePos.Y * 2 + 2, erase ? GetHexaColor(pic, x,2) : PURPLE);
                 if(MousePos.Y - 2 > 0)
-                    buffer[MousePos.Y - 2][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+                    DrawLemming::Instance().DrawPixel(buffer, MousePos.X + x, MousePos.Y * 2 - 2, erase ? GetHexaColor(pic, x,-2) : PURPLE);
             }
         }
         for(int y=-1; y <= 1;y++)
         {
-            if(MousePos.Y + y > 0 && MousePos.Y + y < SCREEN_HEIGHT)
+            if(MousePos.Y + y > 0 && MousePos.Y + y < Console.dwBufferSize.Y)
             {
-                if(MousePos.X + 3 < SCREEN_WIDTH)
-                    buffer[MousePos.Y + y][MousePos.X + 3].Char.AsciiChar = erase ? ' ' : 'x';
+                if(MousePos.X + 3 < Console.dwBufferSize.X)
+                    DrawLemming::Instance().DrawPixel(buffer, MousePos.X + 3, MousePos.Y * 2 + y, erase ? GetHexaColor(pic, 3,y) : PURPLE);
                 if(MousePos.X - 3 > 0)
-                    buffer[MousePos.Y - y][MousePos.X - 3].Char.AsciiChar = erase ? ' ' : 'x';
+                    DrawLemming::Instance().DrawPixel(buffer, MousePos.X - 3, MousePos.Y * 2 + y, erase ? GetHexaColor(pic, -3,y) : PURPLE);
             }
             
         }
@@ -38,11 +36,11 @@ void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, b
     else
     {
         for(int x=-3; x <= 3;x++)
-            if(MousePos.X + x > 0 && MousePos.X + x < SCREEN_WIDTH)
-                buffer[MousePos.Y][MousePos.X + x].Char.AsciiChar = erase ? ' ' : 'x';
+            if(MousePos.X + x > 0 && MousePos.X + x < Console.dwBufferSize.X)
+                DrawLemming::Instance().DrawPixel(buffer, MousePos.X + x, MousePos.Y * 2, erase ? GetHexaColor(pic, x,0) : PURPLE);
         for(int y=-2; y <= 2;y++)
-            if(MousePos.Y + y > 0 && MousePos.Y + y < SCREEN_HEIGHT)
-                buffer[MousePos.Y + y][MousePos.X].Char.AsciiChar = erase ? ' ' : 'x';        
+            if(MousePos.Y + y > 0 && MousePos.Y + y < Console.dwBufferSize.Y)
+                DrawLemming::Instance().DrawPixel(buffer, MousePos.X, MousePos.Y * 2 + y , erase ? GetHexaColor(pic, 0,y) : PURPLE);
     }
 }
 
@@ -53,9 +51,9 @@ void Input::ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer ti
     INPUT_RECORD record[200];
     
     buffer[5][5].Char.AsciiChar = 0x30 + static_cast<int>(timer.getElapsedSeconds());
-    if (WaitForSingleObject(hInput, 50) == WAIT_OBJECT_0)
+    if (WaitForSingleObject(Console.hInput, 50) == WAIT_OBJECT_0)
     {
-        if (ReadConsoleInput(hInput,record,200,&nb))
+        if (ReadConsoleInput(Console.hInput,record,200,&nb))
         {
             for(DWORD i=0;i<nb;i++)
             {
