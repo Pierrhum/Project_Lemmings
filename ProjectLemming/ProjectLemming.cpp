@@ -42,7 +42,7 @@ int main()
     _anims.push_back( new Animation("spriteAscii/lemming_fall/lem_fall_size8.txt", 4));
     _anims.push_back( new Animation("spriteAscii/lemming_dig/lem_dig_size10.txt", 16));
     Lemming lemming = Lemming(_anims, COORD{drop.get_center().X, (short)(drop.get_center().Y-10)});
-    lemming.change_movement(RMOVE);
+    lemming.change_state(FALL);
     
     int last_second = 0;
     int timing_frame = 100;
