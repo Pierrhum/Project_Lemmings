@@ -2,7 +2,7 @@
 
 Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
 {
-    return (Hexa_color)pic.GetPixel(MousePos.X + x, MousePos.Y * 2 + y);
+    return (Hexa_color)pic.get_pixel(MousePos.X + x, MousePos.Y * 2 + y);
 }
 
 void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick)
