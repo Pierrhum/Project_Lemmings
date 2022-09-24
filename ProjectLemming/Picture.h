@@ -12,6 +12,8 @@ public:
     vector<int> vpicture;
     Picture(){};
     Picture(const char* str_file);
+    void flip_picture();
     explicit Picture(vector<int> &vpicture, int w_picture, int h_picture): w_picture(w_picture), h_picture(h_picture), vpicture(vpicture) {}
-    int GetPixel(int x, int y);
+    int get_pixel(int i);
+    int get_pixel(int x, int y);
 };
