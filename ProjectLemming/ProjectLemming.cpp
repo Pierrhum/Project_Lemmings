@@ -44,7 +44,7 @@ int main()
     _anims.push_back( new Animation("spriteAscii/lemming_end/lem_end10.txt", 8));
     
     COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
-    Lemming lemming = Lemming(_anims, centre_drop_lem, END);
+    Lemming lemming = Lemming(_anims, centre_drop_lem, FALL);
     
     int last_second = 0;
     int timing_frame = 100;
