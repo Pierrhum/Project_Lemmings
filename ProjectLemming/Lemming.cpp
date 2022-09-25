@@ -21,6 +21,6 @@ State Lemming::get_state()
 
 COORD Lemming::get_center()
 {
-    return COORD{(short)(POS.X + animations.at(currant_state)->origin_picture.h_picture/animations.at(currant_state)->nb_frames/2),
-    (short)(POS.Y + animations.at(currant_state)->origin_picture.w_picture/2)};
+    return COORD{(short)(POS.X + animations.at(currant_state)->origin_picture.w_picture/2),
+    (short)(POS.Y + animations.at(currant_state)->origin_picture.h_picture/animations.at(currant_state)->nb_frames/2)};
 }

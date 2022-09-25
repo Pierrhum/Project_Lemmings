@@ -253,10 +253,12 @@
     <Content Include="spriteAscii\door\door.txt" />
     <Content Include="spriteAscii\door\door16.txt" />
     <Content Include="spriteAscii\drop\drop.txt" />
-    <Content Include="spriteAscii\drop\drop25.txt" />
+    <Content Include="spriteAscii\drop\drop16.txt" />
     <Content Include="spriteAscii\lemming_dig\lem_dig.txt" />
     <Content Include="spriteAscii\lemming_dig\lem_dig_size10.txt" />
     <Content Include="spriteAscii\lemming_dig\lem_dig_size8.txt" />
+    <Content Include="spriteAscii\lemming_end\lem_end.txt" />
+    <Content Include="spriteAscii\lemming_end\lem_end10.txt" />
     <Content Include="spriteAscii\lemming_fall\lem_fall.txt" />
     <Content Include="spriteAscii\lemming_fall\lem_fall_size8.txt" />
     <Content Include="spriteAscii\lemming_move\lem_fmove_size8.txt" />
@@ -272,6 +274,7 @@
     <Content Include="spriteRef\door\door16.png" />
     <Content Include="spriteRef\door\door18.png" />
     <Content Include="spriteRef\drop\drop.png" />
+    <Content Include="spriteRef\drop\drop16.png" />
     <Content Include="spriteRef\lem.png" />
     <Content Include="spriteRef\lemming_dig\lem_dig.png" />
     <Content Include="spriteRef\lemming_dig\lem_dig_size10.png" />
@@ -283,6 +286,9 @@
     <Content Include="spriteRef\lemming_move\lem_move_size7.png" />
     <Content Include="spriteRef\lemming_move\lem_move_size8.png" />
     <Content Include="spriteRef\png_to_console_txt.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="spriteRef\lemming_end" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

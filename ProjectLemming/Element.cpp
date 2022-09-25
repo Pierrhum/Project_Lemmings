@@ -16,5 +16,5 @@ void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer)
 
 COORD Element::get_center()
 {
-    return COORD{(short)(POS.X + anim->origin_picture.h_picture/anim->nb_frames/2), (short)( POS.Y + anim->origin_picture.w_picture/2)};
+    return COORD{(short)(POS.X + anim->origin_picture.w_picture/2), (short)( POS.Y + anim->origin_picture.h_picture/anim->nb_frames/2)};
 }
