@@ -8,8 +8,8 @@ Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
 void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick)
 {
 
-    if(MousePos.Y > Console.dwBufferSize.Y - 10) return;
-    if(MousePos.X > Console.dwBufferSize.X - 35) return;
+    // if(MousePos.Y > Console.dwBufferSize.Y - 10) return;
+    // if(MousePos.X > Console.dwBufferSize.X - 35) return;
     
     Picture pic = DrawLemming::Instance().intial_level;
     if(onClick)
