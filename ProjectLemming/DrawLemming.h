@@ -18,8 +18,10 @@ public:
         return S;
     }
     Picture intial_level;
+
+    WORD ColorToAttribute(Hexa_color color);
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
-    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture);
+    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_init_level(vector<std::vector<CHAR_INFO>>& buffer);
     
 };

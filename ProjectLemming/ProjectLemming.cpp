@@ -57,7 +57,7 @@ int main()
             drop.play_next_frame(Console.buffer);
             door.play_next_frame(Console.buffer);
 
-            if (drop.end_anim) lemming.play_next_frame(Console.buffer);
+            if (drop.end_anim) lemming.Update(Console.buffer);
         }
         
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord, &Console.rcRegion );
