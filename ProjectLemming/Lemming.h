@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Animation.h"
+#include "Element.h"
 
 enum State
 {
@@ -8,27 +9,31 @@ enum State
 
 enum SIDES {TOP, BOTTOM, LEFT, RIGHT};
 
+
 struct Movement
 {
     State state;
     COORD lem_vector;
 };
 
-class Lemming
+class Lemming : Element
 {
 public:
-    vector<Animation*> animations;
     Movement movements[5] = {{RMOVE, {1, 0}}, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
+    State current_state;
     COORD SIZE;
-    COORD POS;
-    State currant_state;
-    int next_frame_to_play = 0;
-    Lemming(vector<Animation*> animation, COORD POS, State currant_state = RMOVE) : animations(animation), POS(POS), currant_state(currant_state){}
-    
+
+    Lemming(vector<Animation*> animation, COORD POS, State current_state = RMOVE) :
+        Element(animation, POS, true), current_state(current_state)
+    {
+        Picture pic = animations.at(current_state)->origin_picture;
+        SIZE.X = (short)pic.w_picture;
+        SIZE.Y = (short)pic.h_picture/animations.at(current_state)->nb_frames;
+
+        debugOutline = true;
+    }
+
     void Update(std::vector<std::vector<CHAR_INFO>> &buffer);
     bool isColliding(SIDES side) const;
-    void play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer);
-    void change_state(State newState);
-    State get_state();
-    COORD get_center();
+    
 };
