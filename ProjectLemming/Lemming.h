@@ -30,10 +30,15 @@ public:
         SIZE.X = (short)pic.w_picture;
         SIZE.Y = (short)pic.h_picture/animations.at(current_state)->nb_frames;
 
-        debugOutline = true;
+        // Pour débug le contour du Lemming
+        debugOutline = false;
     }
 
     void Update(std::vector<std::vector<CHAR_INFO>> &buffer);
     bool isColliding(SIDES side) const;
+    bool canClimb(SIDES side) const;
+
+private:
+    State fall_state = RMOVE; // State avant la chute (pour récupérer la bonne direction une fois tombé
     
 };

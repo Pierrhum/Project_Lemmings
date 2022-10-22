@@ -9,20 +9,36 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     {
         case FALL:
             if(isColliding(BOTTOM))
-                current_state = RMOVE;
+                current_state = fall_state;
         break;
         case RMOVE:
             if(!isColliding(BOTTOM))
+            {
                 current_state = FALL;
+                fall_state = RMOVE;
+            }
             else if(isColliding(RIGHT))
-                current_state = LMOVE;
+            {
+                if(canClimb(RIGHT))
+                    POS.Y -= 1;
+                else
+                    current_state = LMOVE;
+            }
         break;
 
         case LMOVE:
             if(!isColliding(BOTTOM))
+            {
                 current_state = FALL;
+                fall_state = LMOVE;
+            }
             else if(isColliding(LEFT))
-                current_state = RMOVE;
+            {
+                if(canClimb(LEFT))
+                    POS.Y -= 1;
+                else
+                    current_state = RMOVE;
+            }
         break;
     }
     
@@ -56,11 +72,34 @@ bool Lemming::isColliding(SIDES side) const
     case RIGHT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
             collidingPixels += DrawLemming::Instance().intial_level.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
-        return collidingPixels > SIZE.Y / 2;
+        return collidingPixels >= SIZE.Y / 4;
     case LEFT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
             collidingPixels += DrawLemming::Instance().intial_level.get_pixel( POS.X, y) != BLACK ? 1 : 0;
-        return collidingPixels > SIZE.Y / 2;
+        return collidingPixels >= SIZE.Y / 4;
     }
     return false;
+}
+
+bool Lemming::canClimb(SIDES side) const
+{
+    int collidingPixels = 0;
+    
+    switch (side)
+    {
+    case RIGHT :
+        for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
+            collidingPixels += DrawLemming::Instance().intial_level.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
+        return collidingPixels == SIZE.Y / 4 && !isColliding(TOP);
+        
+    case LEFT :
+        for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
+            collidingPixels += DrawLemming::Instance().intial_level.get_pixel( POS.X, y) != BLACK ? 1 : 0;
+        
+        return collidingPixels == SIZE.Y / 4 && !isColliding(TOP);
+        
+    case BOTTOM :
+    case TOP :
+        return false;
+    }
 }
