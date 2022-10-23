@@ -18,11 +18,18 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
 {
     for (int i = 0; i < picture.h_picture*picture.w_picture; ++i)
     {
-        Instance().DrawPixel(buffer, x + i%picture.w_picture, y + i/picture.w_picture, (Hexa_color)picture.get_pixel(i));
+        DrawPixel(buffer, x + i%picture.w_picture, y + i/picture.w_picture, (Hexa_color)picture.get_pixel(i));
     }
 }
 
-void DrawLemming::Refresh_init_level(std::vector<std::vector<CHAR_INFO>> &buffer)
+void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    Instance().DrawPicture(buffer, 0, 0, intial_level);
+    DrawPicture(buffer, 0, 0, intial_level);
+}
+
+void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
+{
+    for (int i = 0; i < lemmings.size(); ++i)
+        if (lemmings.at(i).is_showed)
+            lemmings.at(i).play_next_frame(buffer);
 }

@@ -1,6 +1,7 @@
 #define _WIN32_WINNT 0x0501
 
 
+#include <iostream>
 #include <stdio.h>
 #include <windows.h>
 #include <tchar.h>
@@ -8,7 +9,6 @@
 #include "Input.h"
 #include "NYTimer.h"
 #include "DrawLemming.h"
-#include "GlobalObjects.h"
 
 using namespace std;
 
@@ -25,26 +25,40 @@ int main()
     timer.start();
 
     //ShowCursor(FALSE);
-    ReadConsoleOutput( Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize,
-                        Console.dwBufferCoord, &Console.rcRegion );
-    
-    GlobalObjects::Instance().InitLevelOne();
-    
+    ReadConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize,
+                      Console.dwBufferCoord, &Console.rcRegion);
+
+
     int last_second = 0;
     int timing_frame = 100;
-    while(1)
+    int lapse_spawn = 3;
+    int spawn_counter = 0;
+    int next_lemming = 0;
+    while (1)
     {
-        if(static_cast<int>(timer.getElapsedMs()/timing_frame) > last_second)
+        if (static_cast<int>(timer.getElapsedMs() / timing_frame) > last_second)
         {
-            last_second = static_cast<int>(timer.getElapsedMs()/timing_frame);
-            DrawLemming::Instance().Refresh_init_level(Console.buffer);
-            GlobalObjects::Instance().drop.play_next_frame(Console.buffer);
-            GlobalObjects::Instance().door.play_next_frame(Console.buffer);
+            last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
+            DrawLemming::Instance().Refresh_level(Console.buffer);
+            DrawLemming::Instance().drop.play_next_frame(Console.buffer);
+            DrawLemming::Instance().door.play_next_frame(Console.buffer);
 
-            if (GlobalObjects::Instance().drop.end_anim) GlobalObjects::Instance().lemming.at(0).play_next_frame(Console.buffer);
+            DrawLemming::Instance().DrawLemmings(Console.buffer);
+            // if (DrawLemming::Instance().drop.end_anim)
+            //     DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+
+            if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&
+                spawn_counter%lapse_spawn==lapse_spawn-1 &&
+                next_lemming<DrawLemming::Instance().lemmings.size())
+            {
+                DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+                next_lemming++;
+            }
+            spawn_counter = static_cast<int>(timer.getElapsedMs() / 1000);
         }
-        
-        WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord, &Console.rcRegion );
-        input.ProcessInput(Console.buffer, timer);        
+
+        WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord,
+                           &Console.rcRegion);
+        input.ProcessInput(Console.buffer, timer);
     }
 }
