@@ -157,7 +157,6 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="DrawLemming.cpp" />
     <ClCompile Include="Element.cpp" />
-    <ClCompile Include="GlobalObjects.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Lemming.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -241,7 +240,6 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="DrawLemming.h" />
     <ClInclude Include="Element.h" />
-    <ClInclude Include="GlobalObjects.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="NYTimer.h" />
@@ -249,9 +247,12 @@
     <ClInclude Include="WinConsole.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="spriteAscii\background\background200_100.txt" />
     <Content Include="spriteAscii\background\backgroundTest.txt" />
     <Content Include="spriteAscii\background\backgroundTest200_100.txt" />
     <Content Include="spriteAscii\background\backgroundTest_150-75.txt" />
+    <Content Include="spriteAscii\background\background_dark.txt" />
+    <Content Include="spriteAscii\background\bg_210-125.txt" />
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
     <Content Include="spriteAscii\door\door.txt" />
     <Content Include="spriteAscii\door\door16.txt" />

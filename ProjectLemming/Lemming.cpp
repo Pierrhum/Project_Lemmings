@@ -1,4 +1,5 @@
 ﻿#include "Lemming.h"
+#include "DrawLemming.h"
 
 
 void Lemming::play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer)

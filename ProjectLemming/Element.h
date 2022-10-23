@@ -1,4 +1,8 @@
 ﻿#pragma once
+
+#include <vector>
+#include <windows.h>
+
 #include "Animation.h"
 
 class Element

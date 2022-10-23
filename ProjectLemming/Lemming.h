@@ -1,5 +1,9 @@
 ﻿#pragma once
+
+#include <vector>
+#include <windows.h>
 #include "Animation.h"
+
 
 enum State
 {
@@ -26,6 +30,7 @@ public:
         {END, {{0, 0}}},
         {BOOM, {{0, 0}}}};
     COORD POS;
+    bool is_showed = false;
     State currant_state;
     int next_frame_to_play = 0;
     Lemming(vector<Animation*> animation, COORD POS, State currant_state = RMOVE) : animations(animation), POS(POS), currant_state(currant_state){}

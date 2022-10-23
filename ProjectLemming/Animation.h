@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "DrawLemming.h"
 #include "Picture.h"
 
 using namespace std;

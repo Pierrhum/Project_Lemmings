@@ -1,4 +1,5 @@
 ﻿#include "Element.h"
+#include "DrawLemming.h"
 
 void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
