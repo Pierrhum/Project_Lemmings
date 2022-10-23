@@ -24,7 +24,8 @@ public:
         SIZE.X = (short)pic.w_picture;
         SIZE.Y = (short)pic.h_picture/anim->nb_frames;
     }
-    
+
+    void play_frame(std::vector<std::vector<CHAR_INFO>>& buffer, int frame); // Usefull for numbers
     void play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD gap={0,0});
     COORD get_center();
     bool isOverlapping(Element& element, const bool center);

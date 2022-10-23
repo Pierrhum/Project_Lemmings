@@ -1,5 +1,11 @@
 ﻿#include "Element.h"
 
+void Element::play_frame(std::vector<std::vector<CHAR_INFO>>& buffer, int frame)
+{
+    if(frame<0) frame=0;
+    DrawLemming::Instance().DrawPicture(buffer, POS.X, POS.Y, animations[current_anim]->get_frame(frame), debugOutline);
+}
+
 void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD gap)
 {
     if (!loop)

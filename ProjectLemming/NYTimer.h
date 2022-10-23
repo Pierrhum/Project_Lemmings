@@ -3,19 +3,24 @@
 
 #include <windows.h>
 
+#include "Element.h"
+
 class NYTimer
 {
     public :
+    int _MaxTime = 90;
         LARGE_INTEGER lastUpdateTime;
     LONGLONG freq;
 
-    NYTimer()
+    NYTimer(int MaxTime)
     {
         QueryPerformanceCounter(&lastUpdateTime);
         LARGE_INTEGER li_freq;
         QueryPerformanceFrequency(&li_freq);
         freq = li_freq.QuadPart;
         freq /= 1000;
+
+        _MaxTime = MaxTime;
     }
 
     void start(void)
@@ -46,6 +51,11 @@ class NYTimer
 
         unsigned long elapsed = (unsigned long) ((float)elapsedLong/(float)freq);
         return elapsed;
+    }
+
+    int getRemainingTime()
+    {
+        return _MaxTime - (int)getElapsedSeconds();     
     }
 };
 
