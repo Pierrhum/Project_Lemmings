@@ -1,6 +1,6 @@
 ﻿#include "Element.h"
 
-void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer)
+void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD gap)
 {
     if (!loop)
     {
@@ -11,7 +11,8 @@ void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>> &buffer)
         next_frame_to_play++;
         if (next_frame_to_play>=animations[current_anim]->nb_frames) next_frame_to_play = 0;
     }
-    DrawLemming::Instance().DrawPicture(buffer, POS.X, POS.Y, animations[current_anim]->get_frame(next_frame_to_play), debugOutline);
+    DrawLemming::Instance().DrawPicture(buffer, POS.X + gap.X, POS.Y + gap.Y, animations[current_anim]->get_frame(next_frame_to_play), debugOutline);
+    
 }
 
 COORD Element::get_center()

@@ -19,6 +19,6 @@ public:
     {
         animations.push_back(anim);
     }
-    void play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD gap={0,0});
     COORD get_center();
 };

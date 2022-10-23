@@ -16,7 +16,7 @@ struct Movement
     COORD lem_vector;
 };
 
-class Lemming : Element
+class Lemming : public Element
 {
 public:
     Movement movements[5] = {{RMOVE, {1, 0}}, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
@@ -35,6 +35,8 @@ public:
     }
 
     void Update(std::vector<std::vector<CHAR_INFO>> &buffer);
+    void Dig();
+    
     bool isColliding(SIDES side) const;
     bool canClimb(SIDES side) const;
 

@@ -16,4 +16,5 @@ public:
     explicit Picture(vector<int> &vpicture, int w_picture, int h_picture): w_picture(w_picture), h_picture(h_picture), vpicture(vpicture) {}
     int get_pixel(int i);
     int get_pixel(int x, int y);
+    void set_pixel(int x, int y, int color);
 };
