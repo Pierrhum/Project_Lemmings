@@ -34,7 +34,7 @@ int main()
     DrawLemming::Instance().intial_level = picture;
 
     Element drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false);
-    Element door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true);
+    Element door(new Animation("spriteAscii/door/door16.txt", 6), COORD{100, 35}, true); // 145, 67
 
     vector<Animation*> _anims;
     _anims.push_back( new Animation("spriteAscii/lemming_move/lem_move_size8.txt", 8));
@@ -58,6 +58,7 @@ int main()
             door.play_next_frame(Console.buffer);
 
             if (drop.end_anim) lemming.Update(Console.buffer);
+            if(lemming.isOverlapping(door, true)) MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
         }
         
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord, &Console.rcRegion );

@@ -21,7 +21,6 @@ class Lemming : public Element
 public:
     Movement movements[5] = {{RMOVE, {1, 0}}, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
     State current_state;
-    COORD SIZE;
 
     Lemming(vector<Animation*> animation, COORD POS, State current_state = RMOVE) :
         Element(animation, POS, true), current_state(current_state)
