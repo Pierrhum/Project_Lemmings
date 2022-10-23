@@ -7,6 +7,8 @@
 #include <windows.h>
 #include <vector>
 
+#include "SkillButton.h"
+
 enum Hexa_color
 {
     BLACK = 0, BLUE = 1, GREEN = 2, BLUESKY = 3, RED = 4, PURPLE = 5, YELLOW = 6, GREY_LIGHT = 7, GREY = 8,
@@ -17,6 +19,7 @@ class DrawLemming
 {
 public:
     DrawLemming() :
+    dig_button(DIG_BUTTON, COORD{0, 84}),
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
     door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true)
     {
@@ -41,6 +44,7 @@ public:
     Picture intial_level;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
+    SkillButton dig_button;
     Element drop;
     Element door;
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);

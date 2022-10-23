@@ -44,11 +44,8 @@ int main()
             DrawLemming::Instance().door.play_next_frame(Console.buffer);
 
             DrawLemming::Instance().DrawLemmings(Console.buffer);
-            // if (DrawLemming::Instance().drop.end_anim)
-            //     DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
-
             if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&
-                spawn_counter%lapse_spawn==lapse_spawn-1 &&
+                spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                 next_lemming<DrawLemming::Instance().lemmings.size())
             {
                 DrawLemming::Instance().lemmings[next_lemming].is_showed = true;

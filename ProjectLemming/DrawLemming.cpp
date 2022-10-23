@@ -25,6 +25,7 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, intial_level);
+    dig_button.ShowButton(buffer);
 }
 
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
