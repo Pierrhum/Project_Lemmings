@@ -46,3 +46,10 @@ int Picture::get_pixel(int x, int y)
 {
     return vpicture.at(y*w_picture + x);
 }
+
+void Picture::set_pixel(int x, int y, int color)
+{
+    if(y*w_picture + x < vpicture.size())
+        vpicture[y*w_picture + x] = color;
+    
+}

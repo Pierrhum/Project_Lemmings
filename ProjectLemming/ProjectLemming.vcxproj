@@ -266,6 +266,7 @@
     <Content Include="spriteAscii\lemming_move\lem_move_size10.txt" />
     <Content Include="spriteAscii\lemming_move\lem_move_size7.txt" />
     <Content Include="spriteAscii\lemming_move\lem_move_size8.txt" />
+    <Content Include="spriteAscii\numbers.txt" />
     <Content Include="spriteRef\background\backgroundTest.png" />
     <Content Include="spriteRef\background\backgroundTest_150-75.png" />
     <Content Include="spriteRef\Def-Lemmings.bmp" />
