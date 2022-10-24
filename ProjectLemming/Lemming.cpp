@@ -1,10 +1,17 @@
 ﻿#include "Lemming.h"
+#include "DrawLemming.h"
 
 
 void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    State oldState = current_state;
+    //const int index_anim = next_frame_to_play % movements[currant_state].lem_vector_list.size();
+    //DrawLemming::Instance().DrawPicture(buffer, POS.X += movements[currant_state].lem_vector_list[index_anim].X,
+    //                                    POS.Y += movements[currant_state].lem_vector_list[index_anim].Y,
+    //                                    animations.at(currant_state)->get_frame(next_frame_to_play));
+    //next_frame_to_play++;
+    //if (next_frame_to_play>=animations.at(currant_state)->nb_frames) next_frame_to_play = 0;
     
+    State oldState = current_state;
     switch (current_state)
     {
         case DIG:
@@ -53,7 +60,6 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     current_anim = current_state;
     POS.X += movements[current_state].lem_vector.X;
     POS.Y += movements[current_state].lem_vector.Y;
-    
 }
 
 void Lemming::Dig()
