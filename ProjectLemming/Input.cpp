@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include "Lemming.h"
+
 Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
 {
     return (Hexa_color)pic.get_pixel(MousePos.X + x, MousePos.Y * 2 + y);
@@ -49,7 +51,7 @@ void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, b
 }
 
 bool onClick = false;
-void Input::ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
+void Input::ProcessInput(Lemming& lemming, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
 {
     DWORD nb;
     INPUT_RECORD record[200];
@@ -69,16 +71,21 @@ void Input::ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer ti
                     MousePos = record[i].Event.MouseEvent.dwMousePosition;
                     switch (record[i].Event.MouseEvent.dwButtonState)
                     {
+                        // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        buffer[5][20].Char.AsciiChar = 'O';
+                        if(isOverlappingLemming(lemming))
+                            lemming.current_state = DIG;
                         DrawMouse(buffer, false, (onClick=true));
                         break;
+                        // Clic droit
                     case RIGHTMOST_BUTTON_PRESSED:
-                        buffer[5][20].Char.AsciiChar = 'U';
+
                         break;
+                        // Clic molette
                     case FROM_LEFT_2ND_BUTTON_PRESSED:
-                        buffer[5][20].Char.AsciiChar = 'I';
+
                         break;
+                        // Aucun clic : affichge de la souris
                     default:
                         DrawMouse(buffer, false, false);
                         onClick=false;
@@ -88,4 +95,10 @@ void Input::ProcessInput(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer ti
             }
         }
     }
+}
+
+bool Input::isOverlappingLemming(Lemming& lemming)
+{
+    return lemming.POS.X < MousePos.X && lemming.POS.X + lemming.SIZE.X > MousePos.X
+        && lemming.POS.Y < MousePos.Y * 2 && lemming.POS.Y + lemming.SIZE.Y > MousePos.Y * 2;
 }
