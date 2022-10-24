@@ -51,7 +51,7 @@ void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, b
 }
 
 bool onClick = false;
-void Input::ProcessInput(Lemming& lemming, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
+void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
 {
     DWORD nb;
     INPUT_RECORD record[200];
@@ -73,8 +73,9 @@ void Input::ProcessInput(Lemming& lemming, std::vector<std::vector<CHAR_INFO>>& 
                     {
                         // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        if(isOverlappingLemming(lemming))
-                            lemming.current_state = DIG;
+                        for (int i = 0; i < lemmings.size(); ++i)
+                            if (isOverlappingLemming(lemmings.at(i)))
+                                lemmings.at(i).current_state = DIG;
                         DrawMouse(buffer, false, (onClick=true));
                         break;
                         // Clic droit

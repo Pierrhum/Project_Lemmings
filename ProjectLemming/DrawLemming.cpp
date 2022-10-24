@@ -1,18 +1,6 @@
 ﻿#include "DrawLemming.h"
 
-WORD DrawLemming::ColorToAttribute(Hexa_color color)
-{
-    WORD Attribute = 0x0000;
-    int top_mask = 0xF0; int bot_mask = 0x0F;
-    /*
-    if (color != -1)
-    {
-        Attribute &= y%2 ? bot_mask : top_mask;
-        Attribute += y%2 ? color<<4 : color;
-    }*/
-
-    return Attribute;
-}
+#include <tchar.h>
 
 void DrawLemming::DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color)
 {
@@ -56,9 +44,21 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
     dig_button.ShowButton(buffer);
 }
 
-void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
+void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
 {
     for (int i = 0; i < lemmings.size(); ++i)
         if (lemmings.at(i).is_showed)
-            lemmings.at(i).play_next_frame(buffer);
+        {
+            lemmings.at(i).Update(buffer);
+            if(lemmings.at(i).isOverlapping(door, true)) MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
+            
+        }
+    
+    // Gestion du timer
+    int _minute = timer.getRemainingTime() / 60;
+    int _seconde = timer.getRemainingTime() - (_minute * 60);
+    // Affichage
+    minute.play_frame(buffer, _minute);
+    sec1.play_frame(buffer, _seconde / 10);
+    sec2.play_frame(buffer, _seconde % 10);
 }

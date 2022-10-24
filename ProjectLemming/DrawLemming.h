@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <vector>
 
+#include "NYTimer.h"
 #include "SkillButton.h"
 
 enum Hexa_color
@@ -24,6 +25,10 @@ public:
     door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true)
     {
         intial_level = Picture("spriteAscii/background/background200_100.txt");
+        short borderMap = (short)intial_level.w_picture;
+        minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
+        sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
+        sec2 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 10), 5}, false);
         _anims.push_back( new Animation("spriteAscii/lemming_move/lem_move_size8.txt", 8));
         _anims.push_back( new Animation("spriteAscii/lemming_move/lem_move_size8.txt", 8, true));
         _anims.push_back( new Animation("spriteAscii/lemming_fall/lem_fall_size8.txt", 4));
@@ -31,10 +36,9 @@ public:
         _anims.push_back( new Animation("spriteAscii/lemming_end/lem_end10.txt", 8));
         _anims.push_back( new Animation("spriteAscii/boom/lem_boom_size10.txt", 12));
         COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
-        for (int i = 0; i < 10; ++i)
-        {
-            lemmings.push_back( Lemming(_anims, centre_drop_lem, FALL) );
-        }
+
+        Lemming lem = Lemming(_anims, centre_drop_lem, FALL);
+        lemmings.resize(10, Lemming(_anims, centre_drop_lem, FALL));        
     }
     
     static DrawLemming& Instance() {
@@ -47,8 +51,11 @@ public:
     SkillButton dig_button;
     Element drop;
     Element door;
+    Element minute;
+    Element sec1;
+    Element sec2;
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
-    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture);
+    void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
 };

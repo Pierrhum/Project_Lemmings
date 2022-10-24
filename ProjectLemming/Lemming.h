@@ -24,8 +24,6 @@ struct Movement
 class Lemming : public Element
 {
 public:
-
-    vector<Animation*> animations;
     // Movement movements[5] = {{RMOVE, {1, 0} }, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
     Movement movements[6] = {
         {RMOVE, {{1, 0}}},
@@ -35,7 +33,7 @@ public:
         {END, {{0, 0}}},
         {BOOM, {{0, 0}}}};
     bool is_showed = false;
-    State currant_state;
+    State current_state;
 
     Lemming(vector<Animation*> animation, COORD POS, State current_state = RMOVE) :
         Element(animation, POS, true), current_state(current_state)

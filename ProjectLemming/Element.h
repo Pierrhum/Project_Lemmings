@@ -18,7 +18,8 @@ public:
     int loop;
     bool end_anim = false;
     int next_frame_to_play = 0;
-    
+
+    Element() {};
     Element(vector<Animation*> animations, COORD POS, int loop = true) : animations(animations), POS(POS), loop(loop){}
     Element(Animation* anim, COORD POS, int loop = true) : POS(POS), loop(loop)
     {
