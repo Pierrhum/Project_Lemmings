@@ -4,7 +4,7 @@
 #include "DrawLemming.h"
 #include "Lemming.h"
 
-class Input
+class Input : public Element
 {
 private:
     WinConsole &Console;
@@ -12,10 +12,11 @@ private:
     bool MouseInit;
     
 public:
-    Input(WinConsole &WinConsole) : Console(WinConsole) { }
+    Input(WinConsole &WinConsole) : Console(WinConsole), Element(new Animation("spriteAscii/mouse.txt", 3), COORD{100, 5}, false) { }
     void DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick);
     void ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer);
     bool isOverlappingLemming(Lemming& lemming);
+    bool onClick = false;
 
     Hexa_color GetHexaColor(Picture pic, int x, int y);
 };

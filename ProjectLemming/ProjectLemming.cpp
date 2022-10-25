@@ -55,6 +55,7 @@ int main()
                 next_lemming++;
             }
             spawn_counter = static_cast<int>(timer.getElapsedMs() / 1000);
+            input.play_frame(Console.buffer, input.onClick);
         }
 
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord,

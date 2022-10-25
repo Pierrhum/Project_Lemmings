@@ -9,10 +9,11 @@ Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
 
 void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick)
 {
-
+    POS.X = MousePos.X - SIZE.X/2;
+    POS.Y = MousePos.Y * 2 - SIZE.Y / 2;
     // if(MousePos.Y > Console.dwBufferSize.Y - 10) return;
     // if(MousePos.X > Console.dwBufferSize.X - 35) return;
-    
+    /*
     Picture pic = DrawLemming::Instance().intial_level;
     if(onClick)
     {
@@ -47,10 +48,9 @@ void Input::DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, b
         for(int y=-2; y <= 2;y++)
             if(MousePos.Y + y > 0 && MousePos.Y + y < Console.dwBufferSize.Y)
                 DrawLemming::Instance().DrawPixel(buffer, MousePos.X, MousePos.Y * 2 + y , erase ? GetHexaColor(pic, 0,y) : PURPLE);
-    }
+    }*/
 }
 
-bool onClick = false;
 void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
 {
     DWORD nb;
@@ -77,7 +77,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         //    if(lemming.is_showed && isOverlappingLemming(lemming))
                         //        lemming.current_state = DIG;
                         for (int lem = 0; lem < lemmings.size(); ++lem)
-                            if (lemmings[lem].is_showed && isOverlappingLemming(lemmings[lem]))
+                            if (lemmings[lem].is_showed && isOverlappingLemming(lemmings[lem]) && lemmings[lem].current_state != FALL)
                                 lemmings[lem].current_state = DIG;
                         DrawMouse(buffer, false, (onClick=true));
                         break;
@@ -91,7 +91,6 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         break;
                         // Aucun clic : affichge de la souris
                     default:
-                        DrawMouse(buffer, false, false);
                         onClick=false;
                         break;
                     }
@@ -99,6 +98,8 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
             }
         }
     }
+    if(!onClick)
+        DrawMouse(buffer, false, false);
 }
 
 bool Input::isOverlappingLemming(Lemming& lemming)
