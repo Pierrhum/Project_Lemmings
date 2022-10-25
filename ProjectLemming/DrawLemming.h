@@ -22,7 +22,7 @@ public:
     DrawLemming() :
     dig_button(DIG_BUTTON, COORD{0, 84}),
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
-    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true)
+    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true) // 145,67
     {
         intial_level = Picture("spriteAscii/background/background200_100.txt");
         short borderMap = (short)intial_level.w_picture;
@@ -58,4 +58,6 @@ public:
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
+
+    bool isLevelEnded();
 };

@@ -43,7 +43,11 @@ int main()
             DrawLemming::Instance().door.play_next_frame(Console.buffer);
 
             DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
-            if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&
+            
+            if(DrawLemming::Instance().isLevelEnded())
+                MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
+            
+            else if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&
                 spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                 next_lemming<DrawLemming::Instance().lemmings.size())
             {

@@ -111,3 +111,9 @@ bool Lemming::canClimb(SIDES side) const
         return false;
     }
 }
+
+void Lemming::exitLevel() 
+{
+    current_state = END;
+    is_showed = false;
+}

@@ -50,8 +50,7 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTi
         if (lemmings.at(i).is_showed)
         {
             lemmings.at(i).Update(buffer);
-            if(lemmings.at(i).isOverlapping(door, true)) MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
-            
+            if(lemmings.at(i).isOverlapping(door, true)) lemmings.at(i).exitLevel();
         }
     
     // Gestion du timer
@@ -61,4 +60,13 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTi
     minute.play_frame(buffer, _minute);
     sec1.play_frame(buffer, _seconde / 10);
     sec2.play_frame(buffer, _seconde % 10);
+}
+
+bool DrawLemming::isLevelEnded()
+{
+    bool ended = true;
+    for (int i = 0; i < lemmings.size(); ++i)
+        if (lemmings.at(i).current_state != END) ended = false;
+
+    return ended;
 }
