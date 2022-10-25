@@ -73,9 +73,12 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                     {
                         // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        for (int i = 0; i < lemmings.size(); ++i)
-                            if (isOverlappingLemming(lemmings.at(i)))
-                                lemmings.at(i).current_state = DIG;
+                        //for(Lemming lemming : lemmings)
+                        //    if(lemming.is_showed && isOverlappingLemming(lemming))
+                        //        lemming.current_state = DIG;
+                        for (int lem = 0; lem < lemmings.size(); ++lem)
+                            if (lemmings[lem].is_showed && isOverlappingLemming(lemmings[lem]))
+                                lemmings[lem].current_state = DIG;
                         DrawMouse(buffer, false, (onClick=true));
                         break;
                         // Clic droit

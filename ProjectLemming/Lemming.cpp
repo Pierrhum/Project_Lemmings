@@ -12,7 +12,9 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         case DIG:
             if(!isColliding(BOTTOM))
                 current_state = FALL;
-            else Dig();
+            // Si la frame permet un déplacement vers le bas, on creuse le niveau
+            else if(movements[current_state].lem_vector_list[index_anim].Y == 1) 
+                Dig();
         break;
         case FALL:
             if(isColliding(BOTTOM))
