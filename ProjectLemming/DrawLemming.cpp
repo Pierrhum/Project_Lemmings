@@ -50,6 +50,7 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
 {
     DrawPicture(buffer, 0, 0, title_screen);
+    Play.play_frame(buffer, Play.isPressed);  
 }
 
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)

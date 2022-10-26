@@ -32,12 +32,11 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                     {
                         // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        //for(Lemming lemming : lemmings)
-                        //    if(lemming.is_showed && isOverlappingLemming(lemming))
-                        //        lemming.current_state = DIG;
                         for (int lem = 0; lem < lemmings.size(); ++lem)
                             if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false) && lemmings[lem].current_state != FALL)
                                 lemmings[lem].current_state = DIG;
+                        if(isOverlapping(DrawLemming::Instance().Play, true))
+                            DrawLemming::Instance().Play.onPress();
                         mouseState = CLICK;
                         break;
                         // Clic droit
@@ -54,6 +53,8 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         for (int lem = 0; lem < lemmings.size(); ++lem)
                             if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
                                 mouseState = HOVER;
+                        if(isOverlapping(DrawLemming::Instance().Play, true))
+                            mouseState = HOVER;
                         break;
                     }
                 }

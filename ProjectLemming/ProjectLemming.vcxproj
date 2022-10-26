@@ -235,6 +235,7 @@
     <ClCompile Include="Picture.cpp" />
     <ClCompile Include="ProjectLemming.cpp" />
     <ClCompile Include="SkillButton.cpp" />
+    <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="WinConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +247,7 @@
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="Picture.h" />
     <ClInclude Include="SkillButton.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="WinConsole.h" />
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +259,7 @@
     <Content Include="spriteAscii\background\bg_210-125.txt" />
     <Content Include="spriteAscii\background\lemmings_title_screen.txt" />
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
+    <Content Include="spriteAscii\button\DigButton.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />
     <Content Include="spriteAscii\door\door.txt" />

@@ -9,6 +9,7 @@
 
 #include "NYTimer.h"
 #include "SkillButton.h"
+#include "UIButton.h"
 
 enum Hexa_color
 {
@@ -20,6 +21,7 @@ class DrawLemming
 {
 public:
     DrawLemming() :
+    Play(new Animation("spriteAscii/button/DigButton.txt", 2), COORD{150, 60}, UIButton::PLAY),
     dig_button(DIG_BUTTON, COORD{0, 84}),
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
     door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true), // 145,67
@@ -46,10 +48,13 @@ public:
         static DrawLemming S;
         return S;
     }
+    bool is_title_screen = true;
     Picture intial_level;
     Picture title_screen;
+    UIButton Play;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
+    
     SkillButton dig_button;
     Element drop;
     Element door;
