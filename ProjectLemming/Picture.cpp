@@ -44,7 +44,8 @@ int Picture::get_pixel(int i)
 
 int Picture::get_pixel(int x, int y)
 {
-    return vpicture.at(y*w_picture + x);
+    
+    return y*w_picture + x < vpicture.size() ? vpicture.at(y*w_picture + x) : NULL;
 }
 
 void Picture::set_pixel(int x, int y, int color)

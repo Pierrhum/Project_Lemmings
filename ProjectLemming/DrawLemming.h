@@ -9,6 +9,7 @@
 
 #include "NYTimer.h"
 #include "SkillButton.h"
+#include "UIButton.h"
 
 enum Hexa_color
 {
@@ -20,11 +21,13 @@ class DrawLemming
 {
 public:
     DrawLemming() :
+    Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
     dig_button(DIG_BUTTON, COORD{0, 84}),
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
-    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true)
+    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true), // 145,67
+    intial_level("spriteAscii/background/background200_100.txt"),
+    title_screen("spriteAscii/background/lemmings_title_screen.txt")
     {
-        intial_level = Picture("spriteAscii/background/background200_100.txt");
         short borderMap = (short)intial_level.w_picture;
         minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
         sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
@@ -45,9 +48,13 @@ public:
         static DrawLemming S;
         return S;
     }
+    bool is_title_screen = true;
     Picture intial_level;
+    Picture title_screen;
+    UIButton Play;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
+    
     SkillButton dig_button;
     Element drop;
     Element door;
@@ -57,5 +64,8 @@ public:
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
+
+    bool isLevelEnded();
 };
