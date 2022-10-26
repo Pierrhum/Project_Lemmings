@@ -33,13 +33,13 @@ int main()
     int lapse_spawn = 3;
     int spawn_counter = 0;
     int next_lemming = 0;
-    bool title_screen = true;
+    bool title_screen = false;
     while (1)
     {
         if(title_screen)
         {
             DrawLemming::Instance().DisplayScreen(Console.buffer);
-            input.play_frame(Console.buffer, input.onClick);
+            input.play_frame(Console.buffer, input.mouseState);
         }
         else
         {
@@ -63,7 +63,7 @@ int main()
                     next_lemming++;
                 }
                 spawn_counter = static_cast<int>(timer.getElapsedMs() / 1000);
-                input.play_frame(Console.buffer, input.onClick);
+                input.play_frame(Console.buffer, input.mouseState);
             }
         }
         

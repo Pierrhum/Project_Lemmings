@@ -12,11 +12,11 @@ private:
     bool MouseInit;
     
 public:
+    enum MouseState { NORMAL = 0, HOVER = 1, CLICK = 2 };
+    MouseState mouseState = NORMAL;
+    
     Input(WinConsole &WinConsole) : Console(WinConsole), Element(new Animation("spriteAscii/mouse.txt", 3), COORD{100, 5}, false) { }
-    void DrawMouse(std::vector<std::vector<CHAR_INFO>>& buffer, bool erase, bool onClick);
     void ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer);
-    bool isOverlappingLemming(Lemming& lemming);
-    bool onClick = false;
 
     Hexa_color GetHexaColor(Picture pic, int x, int y);
 };

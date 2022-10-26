@@ -4,7 +4,7 @@
 
 void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    const int index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
+    int index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     
     State oldState = current_state;
     switch (current_state)
@@ -50,6 +50,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         Picture pic = animations.at(current_state)->origin_picture;
         SIZE.X = (short)pic.w_picture;
         SIZE.Y = (short)pic.h_picture/animations.at(current_state)->nb_frames;
+        index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     }
     if(current_state == DIG)
         play_next_frame(buffer, {-3,0});
