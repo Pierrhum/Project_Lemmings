@@ -9,6 +9,7 @@
 
 #include "NYTimer.h"
 #include "SkillButton.h"
+#include "UIButton.h"
 
 enum Hexa_color
 {
@@ -20,13 +21,15 @@ class DrawLemming
 {
 public:
     DrawLemming() :
+    Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
     dig_button(DIG_BUTTON, COORD{0, 84}),
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
-    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true)
+    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true), // 145,67
+    intial_level("spriteAscii/background/background200_100.txt"),
+    title_screen("spriteAscii/background/lemmings_title_screen.txt"),
+    win_screen("spriteAscii/background/winlemmings200_100.txt"),
+    lose_screen("spriteAscii/background/loselemmings200_100.txt")
     {
-        intial_level = Picture("spriteAscii/background/background200_100.txt");
-        win_screen = Picture("spriteAscii/background/winlemmings200_100.txt");
-        lose_screen = Picture("spriteAscii/background/loselemmings200_100.txt");
         short borderMap = (short)intial_level.w_picture;
         minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
         sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
@@ -48,11 +51,15 @@ public:
         static DrawLemming S;
         return S;
     }
+    bool is_title_screen = true;
+    Picture title_screen;
     Picture intial_level;
     Picture win_screen;
     Picture lose_screen;
+    UIButton Play;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
+    
     SkillButton dig_button;
     Element drop;
     Element door;
@@ -64,5 +71,8 @@ public:
     void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_lose(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
+
+    bool isLevelEnded();
 };

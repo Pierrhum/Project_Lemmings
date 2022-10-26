@@ -235,6 +235,7 @@
     <ClCompile Include="Picture.cpp" />
     <ClCompile Include="ProjectLemming.cpp" />
     <ClCompile Include="SkillButton.cpp" />
+    <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="WinConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +247,7 @@
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="Picture.h" />
     <ClInclude Include="SkillButton.h" />
+    <ClInclude Include="UIButton.h" />
     <ClInclude Include="WinConsole.h" />
   </ItemGroup>
   <ItemGroup>
@@ -256,10 +258,14 @@
     <Content Include="spriteAscii\background\backgroundTest_150-75.txt" />
     <Content Include="spriteAscii\background\background_dark.txt" />
     <Content Include="spriteAscii\background\bg_210-125.txt" />
+    <Content Include="spriteAscii\background\lemmings_title_screen.txt" />
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
+    <Content Include="spriteAscii\button\DigButton.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />
     <Content Include="spriteAscii\crash\lem_crash.txt" />
+    <Content Include="spriteAscii\button\playButton.txt" />
+    <Content Include="spriteAscii\button\quitButton.txt" />
     <Content Include="spriteAscii\door\door.txt" />
     <Content Include="spriteAscii\door\door16.txt" />
     <Content Include="spriteAscii\drop\drop.txt" />
@@ -274,6 +280,7 @@
     <Content Include="spriteAscii\lemming_move\lem_fmove_size8.txt" />
     <Content Include="spriteAscii\lemming_move\lem_move.txt" />
     <Content Include="spriteAscii\lemming_move\lem_move_size8.txt" />
+    <Content Include="spriteAscii\mouse.txt" />
     <Content Include="spriteAscii\numbers.txt" />
     <Content Include="spriteRef\background\backgroundTest.png" />
     <Content Include="spriteRef\background\backgroundTest_150-75.png" />

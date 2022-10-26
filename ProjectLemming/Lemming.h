@@ -51,6 +51,7 @@ public:
     
     bool isColliding(SIDES side) const;
     bool canClimb(SIDES side) const;
+    void exitLevel();
 
 private:
     State fall_state = RMOVE; // State avant la chute (pour récupérer la bonne direction une fois tombé)

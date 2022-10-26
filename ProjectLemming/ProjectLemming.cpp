@@ -60,15 +60,18 @@ int main()
             last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
             if (current_screen == MENU)
             {
-                
+                DrawLemming::Instance().DisplayScreen(Console.buffer);
+                input.play_frame(Console.buffer, input.mouseState);
             }
             else if (current_screen == WIN)
             {
                 DrawLemming::Instance().Refresh_win(Console.buffer);
+                input.play_frame(Console.buffer, input.mouseState);
             }
             else if (current_screen == LOOSE)
             {
                 DrawLemming::Instance().Refresh_lose(Console.buffer);
+                input.play_frame(Console.buffer, input.mouseState);
             }
             else if (current_screen == LEVEL_ONE)
             {
@@ -79,30 +82,28 @@ int main()
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer);
-                DrawLemming::Instance().drop.play_next_frame(Console.buffer);
-                DrawLemming::Instance().door.play_next_frame(Console.buffer);
-                
+                DrawLemming::Instance().Refresh_level(Console.buffer);                
                 // testanim.play_next_frame(Console.buffer);
                 
                 DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
-                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&
+                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
                     spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                     next_lemming<DrawLemming::Instance().lemmings.size())
                 {
                     DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
                     next_lemming++;
                 }
+                //if(timer.getRemainingTime() == 0)
+                //    MessageBox(NULL,_T("Looser!"),_T("Lemmings"),MB_OK);
+                //else if(DrawLemming::Instance().isLevelEnded())
+                //    MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
             }
             last_screen = current_screen;
             spawn_counter = static_cast<int>(timer.getElapsedMs() / 1000);
+            input.play_frame(Console.buffer, input.mouseState);
         }
-
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord,
                            &Console.rcRegion);
         input.ProcessInput(DrawLemming::Instance().lemmings, Console.buffer, timer);
-
-        if(timer.getRemainingTime() == 0)
-            MessageBox(NULL,_T("Looser!"),_T("Lemmings"),MB_OK);
     }        
 }
