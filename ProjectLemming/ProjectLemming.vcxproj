@@ -255,6 +255,7 @@
     <Content Include="spriteAscii\background\backgroundTest_150-75.txt" />
     <Content Include="spriteAscii\background\background_dark.txt" />
     <Content Include="spriteAscii\background\bg_210-125.txt" />
+    <Content Include="spriteAscii\background\lemmings_title_screen.txt" />
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />

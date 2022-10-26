@@ -42,7 +42,14 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, intial_level);
+    drop.play_next_frame(buffer);
+    door.play_next_frame(buffer);
     dig_button.ShowButton(buffer);
+}
+
+void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
+{
+    DrawPicture(buffer, 0, 0, title_screen);
 }
 
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
