@@ -26,7 +26,9 @@ public:
     drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
     door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true), // 145,67
     intial_level("spriteAscii/background/background200_100.txt"),
-    title_screen("spriteAscii/background/lemmings_title_screen.txt")
+    title_screen("spriteAscii/background/lemmings_title_screen.txt"),
+    win_screen("spriteAscii/background/winlemmings200_100.txt"),
+    lose_screen("spriteAscii/background/loselemmings200_100.txt")
     {
         short borderMap = (short)intial_level.w_picture;
         minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
@@ -38,6 +40,7 @@ public:
         _anims.push_back( new Animation("spriteAscii/lemming_dig/lem_dig_size10.txt", 16));
         _anims.push_back( new Animation("spriteAscii/lemming_end/lem_end10.txt", 8));
         _anims.push_back( new Animation("spriteAscii/boom/lem_boom_size10.txt", 12));
+        _anims.push_back( new Animation("spriteAscii/boom/lem_crash.txt", 17));
         COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
 
         Lemming lem = Lemming(_anims, centre_drop_lem, FALL);
@@ -49,8 +52,10 @@ public:
         return S;
     }
     bool is_title_screen = true;
-    Picture intial_level;
     Picture title_screen;
+    Picture intial_level;
+    Picture win_screen;
+    Picture lose_screen;
     UIButton Play;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
@@ -63,6 +68,8 @@ public:
     Element sec2;
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
+    void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_lose(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);

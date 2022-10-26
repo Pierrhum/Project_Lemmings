@@ -39,6 +39,16 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
     }
 }
 
+void DrawLemming::Refresh_win(std::vector<std::vector<CHAR_INFO>> &buffer)
+{
+    DrawPicture(buffer, 0, 0, win_screen);
+}
+
+void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
+{
+    DrawPicture(buffer, 0, 0, lose_screen);
+}
+
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, intial_level);
