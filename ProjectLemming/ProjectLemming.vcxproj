@@ -262,6 +262,8 @@
     <Content Include="spriteAscii\button\DigButton.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />
+    <Content Include="spriteAscii\button\playButton.txt" />
+    <Content Include="spriteAscii\button\quitButton.txt" />
     <Content Include="spriteAscii\door\door.txt" />
     <Content Include="spriteAscii\door\door16.txt" />
     <Content Include="spriteAscii\drop\drop.txt" />
