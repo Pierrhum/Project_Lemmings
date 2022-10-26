@@ -249,6 +249,7 @@
     <ClInclude Include="WinConsole.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sound\Lemmings_JustDig.wav" />
     <Content Include="spriteAscii\background\background200_100.txt" />
     <Content Include="spriteAscii\background\backgroundTest.txt" />
     <Content Include="spriteAscii\background\backgroundTest200_100.txt" />
@@ -258,6 +259,7 @@
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />
+    <Content Include="spriteAscii\crash\lem_crash.txt" />
     <Content Include="spriteAscii\door\door.txt" />
     <Content Include="spriteAscii\door\door16.txt" />
     <Content Include="spriteAscii\drop\drop.txt" />
@@ -275,6 +277,7 @@
     <Content Include="spriteAscii\numbers.txt" />
     <Content Include="spriteRef\background\backgroundTest.png" />
     <Content Include="spriteRef\background\backgroundTest_150-75.png" />
+    <Content Include="spriteRef\crash\lem_crash.png" />
     <Content Include="spriteRef\Def-Lemmings.bmp" />
     <Content Include="spriteRef\door\door.png" />
     <Content Include="spriteRef\door\door15.png" />

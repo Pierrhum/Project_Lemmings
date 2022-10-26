@@ -8,7 +8,7 @@
 
 enum State
 {
-    RMOVE = 0, LMOVE = 1, FALL = 2, DIG = 3, END = 4, BOOM = 5
+    RMOVE = 0, LMOVE = 1, FALL = 2, DIG = 3, END = 4, BOOM = 5, CRASH = 6, UMBRELLA = 7, WAIT = 8
 };
 
 enum SIDES {TOP, BOTTOM, LEFT, RIGHT};
