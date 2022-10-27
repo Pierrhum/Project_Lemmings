@@ -17,20 +17,33 @@ enum Hexa_color
     BLUE_LIGHT = 9, GREEN_LIGHT = 10, BLUESKY_LIGHT = 11, RED_LIGHT = 12, PURPLE_LIGHT = 13, YELLOW_LIGHT = 14, WHITE = 15
 };
 
+enum ScreenEnum
+{
+    MENU, WIN, LOOSE, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE
+};
+
 class DrawLemming
 {
 public:
     DrawLemming() :
-    Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
-    dig_button(DIG_BUTTON, COORD{0, 84}),
-    drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
-    door(new Animation("spriteAscii/door/door16.txt", 6), COORD{110, 67}, true), // 145,67
-    intial_level("spriteAscii/background/background200_100.txt"),
-    title_screen("spriteAscii/background/lemmings_title_screen.txt"),
-    win_screen("spriteAscii/background/winlemmings200_100.txt"),
-    lose_screen("spriteAscii/background/loselemmings200_100.txt")
+        title_screen("spriteAscii/background/lemmings_title_screen.txt"),
+        intial_level_one("spriteAscii/background/background_1_200_100.txt"),
+        intial_level_two("spriteAscii/background/background_2_200_100.txt"),
+        intial_level_three("spriteAscii/background/background_3_200_100.txt"),
+        win_screen("spriteAscii/background/winlemmings200_100.txt"),
+        lose_screen("spriteAscii/background/loselemmings200_100.txt"),
+        Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
+        ReturnMenu(new Animation("spriteAscii/button/MenuButton.txt", 1), COORD{156, 77}, UIButton::RETURN_MENU),
+        ReplayLevel(new Animation("spriteAscii/button/ReplayButton.txt", 1), COORD{120, 77}, UIButton::REPLAY),
+        NextLevel(new Animation("spriteAscii/button/NextButton.txt", 1), COORD{81, 77}, UIButton::NEXT),
+        Dig_button(DIG_BUTTON, COORD{0, 84}),
+        Umbrella_button(UMBRELLA_BUTTON, COORD{14, 84}),
+        Wait_button(WAIT_BUTTON, COORD{28, 84}),
+        Boom_button(BOOM_BUTTON, COORD{42, 84}),
+        drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
+        door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true) // 145,67
     {
-        short borderMap = (short)intial_level.w_picture;
+        short borderMap = (short)intial_level_one.w_picture;
         minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
         sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
         sec2 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 10), 5}, false);
@@ -41,6 +54,8 @@ public:
         _anims.push_back( new Animation("spriteAscii/lemming_end/lem_end10.txt", 8));
         _anims.push_back( new Animation("spriteAscii/boom/lem_boom_size10.txt", 12));
         _anims.push_back( new Animation("spriteAscii/boom/lem_crash.txt", 17));
+        _anims.push_back( new Animation("spriteAscii/umbrella/lem_umbrella10.txt", 16));
+        _anims.push_back( new Animation("spriteAscii/wait/lem_wait8.txt", 16));
         COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
 
         Lemming lem = Lemming(_anims, centre_drop_lem, FALL);
@@ -51,16 +66,28 @@ public:
         static DrawLemming S;
         return S;
     }
+    ScreenEnum current_screen = LEVEL_TWO;
+    ScreenEnum last_screen = MENU;
+    TypeSkillButton currentSelectedSkill = NOTHING;
+    
     bool is_title_screen = true;
     Picture title_screen;
-    Picture intial_level;
+    Picture intial_level_one;
+    Picture intial_level_two;
+    Picture intial_level_three;
     Picture win_screen;
     Picture lose_screen;
     UIButton Play;
+    UIButton ReturnMenu;
+    UIButton ReplayLevel;
+    UIButton NextLevel;
     vector<Lemming> lemmings;
     vector<Animation*> _anims;
     
-    SkillButton dig_button;
+    SkillButton Dig_button;
+    SkillButton Umbrella_button;
+    SkillButton Wait_button;
+    SkillButton Boom_button;
     Element drop;
     Element door;
     Element minute;
@@ -70,7 +97,10 @@ public:
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_lose(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_level_one(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_level_two(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_level_three(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void resetSkillButtonState();
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
 

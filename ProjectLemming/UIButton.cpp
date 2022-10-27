@@ -9,9 +9,20 @@ void UIButton::onPress()
     switch (action)
     {
     case PLAY:
-            DrawLemming::Instance().is_title_screen = false;
+            DrawLemming::Instance().current_screen = LEVEL_ONE;
             break;
-        case QUIT:
+        case RETURN_MENU:
+            DrawLemming::Instance().current_screen = MENU;
             break;
+        case REPLAY:
+            //todo :Current screen become current level 
+            DrawLemming::Instance().current_screen = LEVEL_ONE;
+            break;
+        case NEXT:
+            //todo :Current screen become next level 
+            DrawLemming::Instance().current_screen = LEVEL_TWO;
+            break;
+        // case QUIT:
+        //     break;
     }
 }

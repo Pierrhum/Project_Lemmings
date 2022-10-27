@@ -32,11 +32,21 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                     {
                         // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        for (int lem = 0; lem < lemmings.size(); ++lem)
-                            if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false) && lemmings[lem].current_state != FALL)
-                                lemmings[lem].current_state = DIG;
+                        ActionSkillLemming(lemmings);
+                        
                         if(isOverlapping(DrawLemming::Instance().Play, true))
                             DrawLemming::Instance().Play.onPress();
+                        if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
+                            DrawLemming::Instance().ReturnMenu.onPress();
+                        if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
+                            DrawLemming::Instance().ReplayLevel.onPress();
+                        if(isOverlapping(DrawLemming::Instance().NextLevel, true))
+                            DrawLemming::Instance().NextLevel.onPress();
+                        
+                        ActionSkillButton(DrawLemming::Instance().Dig_button);
+                        ActionSkillButton(DrawLemming::Instance().Umbrella_button);
+                        ActionSkillButton(DrawLemming::Instance().Wait_button);
+                        ActionSkillButton(DrawLemming::Instance().Boom_button);
                         mouseState = CLICK;
                         break;
                         // Clic droit
@@ -61,4 +71,43 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
             }
         }
     }
+}
+
+void Input::ActionSkillButton(SkillButton& skill_button)
+{
+    if (isOverlapping(skill_button, true))
+    {
+        if (DrawLemming::Instance().currentSelectedSkill != NOTHING &&
+            DrawLemming::Instance().currentSelectedSkill != skill_button.type_button)  
+                DrawLemming::Instance().resetSkillButtonState();
+        skill_button.onPress();
+    }
+}
+
+void Input::ActionSkillLemming(vector<Lemming>& lemmings)
+{
+        switch (DrawLemming::Instance().currentSelectedSkill)
+        {
+            case NOTHING:
+                break;
+            case DIG_BUTTON:
+                for (int lem = 0; lem < lemmings.size(); ++lem)
+                    if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false) &&
+                        (lemmings[lem].current_state == LMOVE || lemmings[lem].current_state == RMOVE))
+                        lemmings[lem].current_state = DIG;
+                break;
+            case UMBRELLA_BUTTON:
+                for (int lem = 0; lem < lemmings.size(); ++lem)
+                    if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
+                    {
+                        lemmings[lem].is_umbrellaed = true;
+                        if (lemmings[lem].current_state == FALL)
+                            lemmings[lem].current_state = UMBRELLA;
+                    }
+                break;
+            case WAIT_BUTTON:
+                break;
+            case BOOM_BUTTON:
+                break;
+        }
 }

@@ -4,7 +4,7 @@
 class UIButton : public Element
 {
 public:
-    enum ButtonAction { PLAY, QUIT };
+    enum ButtonAction { PLAY, QUIT, RETURN_MENU, REPLAY, NEXT };
     ButtonAction action;
     bool isPressed = false;
     

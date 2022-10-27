@@ -1,25 +1,23 @@
 ﻿#pragma once
+#include "Element.h"
 
-#include <windows.h>
-
-#include "Picture.h"
-
-enum TypeButton
+enum TypeSkillButton
 {
+    NOTHING,
     DIG_BUTTON,
-    BRIDGE_BUTTON,
-    JUMP_BUTTON
+    UMBRELLA_BUTTON,
+    WAIT_BUTTON,
+    BOOM_BUTTON
 };
 
-class SkillButton
+class SkillButton : public Element
 {
 public:
-    SkillButton(TypeButton type_button, COORD POS);
-    void PressButton();
-    void ShowButton(std::vector<std::vector<CHAR_INFO>>& buffer);
-    TypeButton type_button;
-    COORD POS;
+    SkillButton(TypeSkillButton type_button, COORD pos);
+    void resetEtat();
+    void onPress();
+    TypeSkillButton type_button;
     bool is_active = false;
-    Picture buttonUp;
-    Picture buttonDown;
+    Animation buttonUp;
+    Animation buttonDown;
 };
