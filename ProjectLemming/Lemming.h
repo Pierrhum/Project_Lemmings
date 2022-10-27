@@ -25,16 +25,20 @@ class Lemming : public Element
 {
 public:
     // Movement movements[5] = {{RMOVE, {1, 0} }, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
-    Movement movements[6] = {
+    Movement movements[9] = {
         {RMOVE, {{1, 0}}},
         {LMOVE, {{-1, 0}}},
         {FALL, {{0, 1}}},
         {DIG, {{0, 0}, {0, 0}, {0, 0}, {0, 1}}},
         {END, {{0, 0}}},
-        {BOOM, {{0, 0}}}};
+        {BOOM, {{0, 0}}},
+        {CRASH, {{0, 0}}},
+        {UMBRELLA, {{0, 0}, {1, 1}, {0, 0}, {-1, 1}, {0, 0}, {-1, 1}, {0, 0}, {1, 1}}},
+        {WAIT, {{0, 0}}},
+    };
     bool is_showed = false;
     State current_state;
-
+    bool is_umbrellaed = false;
     Lemming(vector<Animation*> animation, COORD POS, State current_state = RMOVE) :
         Element(animation, POS, true), current_state(current_state)
     {

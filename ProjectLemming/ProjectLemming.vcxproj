@@ -252,17 +252,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sound\Lemmings_JustDig.wav" />
-    <Content Include="spriteAscii\background\background200_100.txt" />
     <Content Include="spriteAscii\background\backgroundTest.txt" />
     <Content Include="spriteAscii\background\backgroundTest200_100.txt" />
     <Content Include="spriteAscii\background\backgroundTest_150-75.txt" />
+    <Content Include="spriteAscii\background\background_1_200_100.txt" />
+    <Content Include="spriteAscii\background\background_2_200_100.txt" />
+    <Content Include="spriteAscii\background\background_3_200_100.txt" />
     <Content Include="spriteAscii\background\background_dark.txt" />
     <Content Include="spriteAscii\background\bg_210-125.txt" />
     <Content Include="spriteAscii\background\lemmings_title_screen.txt" />
     <Content Include="spriteAscii\boom\lem_boom_size10.txt" />
-    <Content Include="spriteAscii\button\DigButton.txt" />
+    <Content Include="spriteAscii\button\BoomButtonDown.txt" />
+    <Content Include="spriteAscii\button\BoomButtonUp.txt" />
     <Content Include="spriteAscii\button\DigButtonDown.txt" />
     <Content Include="spriteAscii\button\DigButtonUp.txt" />
+    <Content Include="spriteAscii\button\MenuButton.txt" />
+    <Content Include="spriteAscii\button\NextButton.txt" />
+    <Content Include="spriteAscii\button\ReplayButton.txt" />
+    <Content Include="spriteAscii\button\UmbrellaButtonDown.txt" />
+    <Content Include="spriteAscii\button\UmbrellaButtonUp.txt" />
+    <Content Include="spriteAscii\button\WaitButtonDown.txt" />
+    <Content Include="spriteAscii\button\WaitButtonUp.txt" />
     <Content Include="spriteAscii\crash\lem_crash.txt" />
     <Content Include="spriteAscii\button\playButton.txt" />
     <Content Include="spriteAscii\button\quitButton.txt" />
@@ -282,6 +292,10 @@
     <Content Include="spriteAscii\lemming_move\lem_move_size8.txt" />
     <Content Include="spriteAscii\mouse.txt" />
     <Content Include="spriteAscii\numbers.txt" />
+    <Content Include="spriteAscii\umbrella\lem_umbrella.txt" />
+    <Content Include="spriteAscii\umbrella\lem_umbrella10.txt" />
+    <Content Include="spriteAscii\wait\lem_wait.txt" />
+    <Content Include="spriteAscii\wait\lem_wait8.txt" />
     <Content Include="spriteRef\background\backgroundTest.png" />
     <Content Include="spriteRef\background\backgroundTest_150-75.png" />
     <Content Include="spriteRef\crash\lem_crash.png" />

@@ -17,6 +17,8 @@ public:
     
     Input(WinConsole &WinConsole) : Console(WinConsole), Element(new Animation("spriteAscii/mouse.txt", 3), COORD{100, 5}, false) { }
     void ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer);
+    void ActionSkillButton(SkillButton& skill_button);
+    void ActionSkillLemming(vector<Lemming>& lemmings);
 
     Hexa_color GetHexaColor(Picture pic, int x, int y);
 };

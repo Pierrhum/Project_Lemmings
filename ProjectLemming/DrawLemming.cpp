@@ -1,7 +1,5 @@
 ﻿#include "DrawLemming.h"
 
-#include <tchar.h>
-
 void DrawLemming::DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color)
 {
     if(y/2 >= buffer.size() || x >= buffer[0].size()) return;
@@ -42,19 +40,70 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
 void DrawLemming::Refresh_win(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, win_screen);
+    ReturnMenu.POS = {156, 77};
+    ReturnMenu.play_frame(buffer, ReturnMenu.isPressed);  
+    ReplayLevel.POS = {120, 77};
+    ReplayLevel.play_frame(buffer, ReturnMenu.isPressed);  
+    NextLevel.play_frame(buffer, NextLevel.isPressed);  
 }
 
 void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, lose_screen);
+    ReturnMenu.POS = {117,73};
+    ReturnMenu.play_frame(buffer, ReturnMenu.isPressed);
+    ReplayLevel.POS = {41,74};
+    ReplayLevel.play_frame(buffer, ReturnMenu.isPressed);  
 }
 
-void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
+void DrawLemming::Refresh_level_one(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    DrawPicture(buffer, 0, 0, intial_level);
+    DrawPicture(buffer, 0, 0, intial_level_one);
+    drop.POS = {50, 20};
     drop.play_next_frame(buffer);
+    door.POS = {145, 67};
     door.play_next_frame(buffer);
-    dig_button.ShowButton(buffer);
+    //draw HUB
+    Dig_button.play_frame(buffer, 0);  
+    Umbrella_button.play_frame(buffer, 0);  
+    Wait_button.play_frame(buffer, 0);  
+    Boom_button.play_frame(buffer, 0);
+}
+
+void DrawLemming::Refresh_level_two(std::vector<std::vector<CHAR_INFO>> &buffer)
+{
+    DrawPicture(buffer, 0, 0, intial_level_two);
+    drop.POS = {2, 2};
+    drop.play_next_frame(buffer);
+    door.POS = {160, 78};
+    door.play_next_frame(buffer);
+    //draw HUB
+    Dig_button.play_frame(buffer, 0);  
+    Umbrella_button.play_frame(buffer, 0);  
+    Wait_button.play_frame(buffer, 0);  
+    Boom_button.play_frame(buffer, 0);
+}
+
+void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffer)
+{
+    DrawPicture(buffer, 0, 0, intial_level_three);
+    drop.POS = {77, 0};
+    drop.play_next_frame(buffer);
+    door.POS = {60, 81};
+    door.play_next_frame(buffer);
+    //draw HUB
+    Dig_button.play_frame(buffer, 0);  
+    Umbrella_button.play_frame(buffer, 0);  
+    Wait_button.play_frame(buffer, 0);  
+    Boom_button.play_frame(buffer, 0);
+}
+
+void DrawLemming::resetSkillButtonState()
+{
+    Dig_button.resetEtat();
+    Umbrella_button.resetEtat();
+    Wait_button.resetEtat();
+    Boom_button.resetEtat();
 }
 
 void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
