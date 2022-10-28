@@ -15,10 +15,20 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             
         break;
         case CRASH:
-            
+            if(next_frame_to_play==animations[CRASH]->nb_frames-1)
+            {
+                is_showed = false;
+                current_state = DEAD;
+                return;
+            }
         break;
         case BOOM:
-            
+            if(next_frame_to_play==animations[BOOM]->nb_frames-1) 
+            {
+                is_showed = false;
+                current_state = DEAD;
+                return;
+            }
         break;
         case DIG:
             if(!isColliding(BOTTOM))
@@ -87,8 +97,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     else if (oldState == UMBRELLA)
         play_next_frame(buffer, {2, 0}, 4);
     else if (oldState == CRASH)
-        if(next_frame_to_play==animations[CRASH]->nb_frames-1) is_showed = false;
-        else play_next_frame(buffer, {-4, 0}, 16);
+        play_next_frame(buffer, {-4, 0}, 16);
     else play_next_frame(buffer);
     
     POS.X += movements[current_state].lem_vector_list[index_anim].X;
