@@ -27,9 +27,9 @@ class DrawLemming
 public:
     DrawLemming() :
         title_screen("spriteAscii/background/lemmings_title_screen.txt"),
-        intial_level_one("spriteAscii/background/background_1_200_100.txt"),
-        intial_level_two("spriteAscii/background/background_2_200_100.txt"),
-        intial_level_three("spriteAscii/background/background_3_200_100.txt"),
+        level_one("spriteAscii/background/background_1_200_100.txt"),
+        level_two("spriteAscii/background/background_2_200_100.txt"),
+        level_three("spriteAscii/background/background_3_200_100.txt"),
         win_screen("spriteAscii/background/winlemmings200_100.txt"),
         lose_screen("spriteAscii/background/loselemmings200_100.txt"),
         Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
@@ -43,7 +43,8 @@ public:
         drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
         door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true) // 145,67
     {
-        short borderMap = (short)intial_level_one.w_picture;
+        short borderMap = (short)initial_level.w_picture;
+        initial_level = current_screen == LEVEL_ONE ? level_one : current_screen == LEVEL_TWO ? level_two : level_three;
         minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
         sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
         sec2 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 10), 5}, false);
@@ -72,9 +73,10 @@ public:
     
     bool is_title_screen = true;
     Picture title_screen;
-    Picture intial_level_one;
-    Picture intial_level_two;
-    Picture intial_level_three;
+    Picture initial_level;
+    Picture level_one;
+    Picture level_two;
+    Picture level_three;
     Picture win_screen;
     Picture lose_screen;
     UIButton Play;

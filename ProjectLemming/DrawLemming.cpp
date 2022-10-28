@@ -58,7 +58,7 @@ void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
 
 void DrawLemming::Refresh_level_one(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    DrawPicture(buffer, 0, 0, intial_level_one);
+    DrawPicture(buffer, 0, 0, initial_level);
     drop.POS = {50, 20};
     drop.play_next_frame(buffer);
     door.POS = {145, 67};
@@ -72,7 +72,7 @@ void DrawLemming::Refresh_level_one(std::vector<std::vector<CHAR_INFO>> &buffer)
 
 void DrawLemming::Refresh_level_two(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    DrawPicture(buffer, 0, 0, intial_level_two);
+    DrawPicture(buffer, 0, 0, initial_level);
     drop.POS = {2, 2};
     drop.play_next_frame(buffer);
     door.POS = {160, 78};
@@ -86,7 +86,7 @@ void DrawLemming::Refresh_level_two(std::vector<std::vector<CHAR_INFO>> &buffer)
 
 void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
-    DrawPicture(buffer, 0, 0, intial_level_three);
+    DrawPicture(buffer, 0, 0, initial_level);
     drop.POS = {77, 0};
     drop.play_next_frame(buffer);
     door.POS = {60, 81};
