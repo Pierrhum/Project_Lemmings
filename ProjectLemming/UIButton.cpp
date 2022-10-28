@@ -9,7 +9,7 @@ void UIButton::onPress()
     switch (action)
     {
     case PLAY:
-            DrawLemming::Instance().current_screen = LEVEL_ONE;
+            DrawLemming::Instance().LoadLevel(1);
             break;
         case RETURN_MENU:
             DrawLemming::Instance().current_screen = MENU;

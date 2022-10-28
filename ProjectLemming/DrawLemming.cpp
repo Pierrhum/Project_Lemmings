@@ -100,7 +100,46 @@ void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffe
 
 void DrawLemming::LoadLevel(int level)
 {
-    
+    State defaultLemmingState = FALL;
+    int nbLemming = 1;
+    switch (level)
+    {
+        case 0:
+            current_screen = MENU;
+            initial_level = title_screen;
+            drop.POS = {0, 50};
+            defaultLemmingState = RMOVE;
+            nbLemming = 10;
+            break;
+        case 1:
+            current_screen = LEVEL_ONE;
+            initial_level = level_one;
+            drop.POS = {50, 20};
+            door.POS = {145, 67};
+            nbLemming = 10;
+            break;
+        case 2:
+            current_screen = LEVEL_TWO;
+            initial_level = level_two;
+            drop.POS = {2, 2};
+            door.POS = {160, 78};
+            nbLemming = 10;
+            break;
+        case 3:
+            current_screen = LEVEL_THREE;
+            initial_level = level_three;
+            drop.POS = {77, 0};
+            door.POS = {60, 81};
+            nbLemming = 10;
+            break;
+        
+        default:
+            break;
+    }
+    lemmings.clear();
+    COORD centre_drop_lem = {(short)(drop.get_center().X - _anims.at(defaultLemmingState)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(defaultLemmingState)->get_frame(0).h_picture/2)};
+    lemmings.resize(nbLemming, Lemming(_anims, centre_drop_lem, defaultLemmingState));        
+
 }
 
 void DrawLemming::resetSkillButtonState()

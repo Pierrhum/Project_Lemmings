@@ -36,6 +36,7 @@ int main()
     int last_second = 0;
     int timing_frame = 100;
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
+    DrawLemming::Instance().LoadLevel(0);
     while (1)
     {
         if (static_cast<int>(timer.getElapsedMs() / timing_frame) > last_second)
@@ -48,6 +49,15 @@ int main()
                     PlaySound(TEXT("sound/menu.wav"), NULL, SND_LOOP | SND_ASYNC);
                 }
                 DrawLemming::Instance().DisplayScreen(Console.buffer);
+                
+                DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
+                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
+                    spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
+                    next_lemming<DrawLemming::Instance().lemmings.size())
+                {
+                    DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+                    next_lemming++;
+                }
                 input.play_frame(Console.buffer, input.mouseState);
             }
             else if (DrawLemming::Instance().current_screen == WIN)
