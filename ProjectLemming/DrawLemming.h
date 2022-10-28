@@ -19,11 +19,13 @@ enum Hexa_color
 
 enum ScreenEnum
 {
-    MENU, WIN, LOOSE, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE
+    MENU, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE, WIN, LOOSE
 };
 
 class DrawLemming
 {
+private:
+    int nbLemmingToWin = 10;
 public:
     DrawLemming() :
         title_screen("spriteAscii/background/lemmings_title_screen.txt"),
@@ -70,8 +72,8 @@ public:
     ScreenEnum current_screen = LEVEL_THREE;
     ScreenEnum last_screen = MENU;
     TypeSkillButton currentSelectedSkill = NOTHING;
-    
-    bool is_title_screen = true;
+
+    int currentLevel;
     Picture title_screen;
     Picture initial_level;
     Picture level_one;
@@ -100,13 +102,12 @@ public:
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_lose(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void Refresh_level_one(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void Refresh_level_two(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void Refresh_level_three(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
     void LoadLevel(int level);
     void resetSkillButtonState();
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
 
     bool isLevelEnded();
+    void CheckIfLevelEnded();
 };

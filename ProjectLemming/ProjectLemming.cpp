@@ -36,7 +36,9 @@ int main()
     int last_second = 0;
     int timing_frame = 100;
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
-    DrawLemming::Instance().LoadLevel(0);
+    
+    DrawLemming::Instance().LoadLevel(MENU);
+    
     while (1)
     {
         if (static_cast<int>(timer.getElapsedMs() / timing_frame) > last_second)
@@ -44,10 +46,6 @@ int main()
             last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
             if (DrawLemming::Instance().current_screen == MENU)
             {
-                if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
-                {
-                    PlaySound(TEXT("sound/menu.wav"), NULL, SND_LOOP | SND_ASYNC);
-                }
                 DrawLemming::Instance().DisplayScreen(Console.buffer);
                 
                 DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
@@ -62,19 +60,11 @@ int main()
             }
             else if (DrawLemming::Instance().current_screen == WIN)
             {
-                if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
-                {
-                    PlaySound(TEXT("sound/win.wav"), NULL, SND_ASYNC);
-                }
                 DrawLemming::Instance().Refresh_win(Console.buffer);
                 input.play_frame(Console.buffer, input.mouseState);
             }
             else if (DrawLemming::Instance().current_screen == LOOSE)
             {
-                if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
-                {
-                    PlaySound(TEXT("sound/loose.wav"), NULL, SND_ASYNC);
-                }
                 DrawLemming::Instance().Refresh_lose(Console.buffer);
                 input.play_frame(Console.buffer, input.mouseState);
             }
@@ -82,13 +72,13 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
+                    timer = NYTimer(20);
                     timer.start();
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
-                    PlaySound(TEXT("sound/level1.wav"), NULL, SND_LOOP | SND_ASYNC);
                 }
-                DrawLemming::Instance().Refresh_level_one(Console.buffer);          
+                DrawLemming::Instance().Refresh_level(Console.buffer);          
                 
                 DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
                 if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
@@ -98,22 +88,18 @@ int main()
                     DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
                     next_lemming++;
                 }
-                //if(timer.getRemainingTime() == 0)
-                //    MessageBox(NULL,_T("Looser!"),_T("Lemmings"),MB_OK);
-                //else if(DrawLemming::Instance().isLevelEnded())
-                // MessageBox(NULL,_T("Victory!"),_T("Lemmings"),MB_OK);
             }
             else if (DrawLemming::Instance().current_screen == LEVEL_TWO)
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
+                    timer = NYTimer(20);
                     timer.start();
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
-                    PlaySound(TEXT("sound/level2.wav"), NULL, SND_LOOP | SND_ASYNC);
                 }
-                DrawLemming::Instance().Refresh_level_two(Console.buffer);
+                DrawLemming::Instance().Refresh_level(Console.buffer);
 
                 //todo:reset lemmings list & fix background lemmings interaction
                 DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
@@ -129,13 +115,13 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
+                    timer = NYTimer(20);
                     timer.start();
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
-                    PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
                 }
-                DrawLemming::Instance().Refresh_level_three(Console.buffer);
+                DrawLemming::Instance().Refresh_level(Console.buffer);
 
                 //todo:reset lemmings list & fix background lemmings interaction
                 DrawLemming::Instance().DrawLemmings(Console.buffer, timer);

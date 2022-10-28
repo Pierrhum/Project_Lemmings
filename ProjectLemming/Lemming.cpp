@@ -24,6 +24,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             {
                 is_showed = false;
                 current_state = DEAD;
+                DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
         break;
@@ -32,6 +33,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             {
                 is_showed = false;
                 current_state = DEAD;
+                DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
         break;
@@ -169,4 +171,6 @@ void Lemming::exitLevel()
 {
     current_state = END;
     is_showed = false;
+    
+    DrawLemming::Instance().CheckIfLevelEnded();
 }

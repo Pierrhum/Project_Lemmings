@@ -12,15 +12,15 @@ void UIButton::onPress()
             DrawLemming::Instance().LoadLevel(1);
             break;
         case RETURN_MENU:
-            DrawLemming::Instance().current_screen = MENU;
+            DrawLemming::Instance().LoadLevel(MENU);
             break;
         case REPLAY:
             //todo :Current screen become current level 
-            DrawLemming::Instance().current_screen = LEVEL_ONE;
+            DrawLemming::Instance().LoadLevel(DrawLemming::Instance().currentLevel);
             break;
         case NEXT:
             //todo :Current screen become next level 
-            DrawLemming::Instance().current_screen = LEVEL_TWO;
+            DrawLemming::Instance().LoadLevel(DrawLemming::Instance().currentLevel + 1);
             break;
         // case QUIT:
         //     break;

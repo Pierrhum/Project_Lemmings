@@ -41,55 +41,26 @@ void DrawLemming::Refresh_win(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, win_screen);
     ReturnMenu.POS = {156, 77};
-    ReturnMenu.play_frame(buffer, ReturnMenu.isPressed);  
+    ReturnMenu.play_frame(buffer, 0);  
     ReplayLevel.POS = {120, 77};
-    ReplayLevel.play_frame(buffer, ReturnMenu.isPressed);  
-    NextLevel.play_frame(buffer, NextLevel.isPressed);  
+    ReplayLevel.play_frame(buffer, 0);  
+    NextLevel.play_frame(buffer, 0);  
 }
 
 void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, lose_screen);
     ReturnMenu.POS = {117,73};
-    ReturnMenu.play_frame(buffer, ReturnMenu.isPressed);
+    ReturnMenu.play_frame(buffer, 0);
     ReplayLevel.POS = {41,74};
-    ReplayLevel.play_frame(buffer, ReturnMenu.isPressed);  
+    ReplayLevel.play_frame(buffer, 0);  
 }
 
-void DrawLemming::Refresh_level_one(std::vector<std::vector<CHAR_INFO>> &buffer)
+void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, initial_level);
-    drop.POS = {50, 20};
-    drop.play_next_frame(buffer);
-    door.POS = {145, 67};
-    door.play_next_frame(buffer);
-    //draw HUB
-    Dig_button.play_frame(buffer, 0);  
-    Umbrella_button.play_frame(buffer, 0);  
-    Wait_button.play_frame(buffer, 0);  
-    Boom_button.play_frame(buffer, 0);
-}
 
-void DrawLemming::Refresh_level_two(std::vector<std::vector<CHAR_INFO>> &buffer)
-{
-    DrawPicture(buffer, 0, 0, initial_level);
-    drop.POS = {2, 2};
     drop.play_next_frame(buffer);
-    door.POS = {160, 78};
-    door.play_next_frame(buffer);
-    //draw HUB
-    Dig_button.play_frame(buffer, 0);  
-    Umbrella_button.play_frame(buffer, 0);  
-    Wait_button.play_frame(buffer, 0);  
-    Boom_button.play_frame(buffer, 0);
-}
-
-void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffer)
-{
-    DrawPicture(buffer, 0, 0, initial_level);
-    drop.POS = {77, 0};
-    drop.play_next_frame(buffer);
-    door.POS = {60, 81};
     door.play_next_frame(buffer);
     //draw HUB
     Dig_button.play_frame(buffer, 0);  
@@ -100,43 +71,73 @@ void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffe
 
 void DrawLemming::LoadLevel(int level)
 {
+    last_screen = current_screen;
+    
     State defaultLemmingState = FALL;
     int nbLemming = 1;
+    
     switch (level)
     {
         case 0:
             current_screen = MENU;
             initial_level = title_screen;
             drop.POS = {0, 50};
+            currentSelectedSkill = BOOM_BUTTON;
             defaultLemmingState = RMOVE;
             nbLemming = 10;
+            PlaySound(TEXT("sound/menu.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
         case 1:
-            current_screen = LEVEL_ONE;
+            currentLevel = current_screen = LEVEL_ONE;
             initial_level = level_one;
             drop.POS = {50, 20};
-            door.POS = {145, 67};
-            nbLemming = 10;
+            door.POS = {60, 30}; // 145 67
+            currentSelectedSkill = NOTHING;
+            nbLemming = 2;
+            nbLemmingToWin = 1;
+            PlaySound(TEXT("sound/level1.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
         case 2:
-            current_screen = LEVEL_TWO;
+            currentLevel = current_screen = LEVEL_TWO;
             initial_level = level_two;
             drop.POS = {2, 2};
             door.POS = {160, 78};
+            currentSelectedSkill = NOTHING;
             nbLemming = 10;
+            nbLemmingToWin = 8;
+            PlaySound(TEXT("sound/level2.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
         case 3:
-            current_screen = LEVEL_THREE;
+            currentLevel = current_screen = LEVEL_THREE;
             initial_level = level_three;
             drop.POS = {77, 0};
             door.POS = {60, 81};
+            currentSelectedSkill = NOTHING;
             nbLemming = 10;
+            nbLemmingToWin = 8;
+            PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
+            break;
+
+        case 4:
+            current_screen = WIN;
+            initial_level = win_screen;
+            nbLemming = 0;
+            PlaySound(TEXT("sound/win.wav"), NULL, SND_ASYNC);
+            break;
+            
+        case 5:
+            current_screen = LOOSE;
+            initial_level = lose_screen;
+            nbLemming = 0;
+            PlaySound(TEXT("sound/loose.wav"), NULL, SND_ASYNC);
             break;
         
         default:
             break;
     }
+    
     lemmings.clear();
+    waiting_lemmings.clear();
     COORD centre_drop_lem = {(short)(drop.get_center().X - _anims.at(defaultLemmingState)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(defaultLemmingState)->get_frame(0).h_picture/2)};
     lemmings.resize(nbLemming, Lemming(_anims, centre_drop_lem, defaultLemmingState));        
 
@@ -181,4 +182,20 @@ bool DrawLemming::isLevelEnded()
         if (lemmings.at(i).current_state != END) ended = false;
 
     return ended;
+}
+
+void DrawLemming::CheckIfLevelEnded()
+{
+    int winAmount = 0;
+    bool ended = true;
+    
+    for (int i = 0; i < lemmings.size(); ++i)
+        if (lemmings.at(i).current_state == END) winAmount++; // WIN
+        else if(lemmings.at(i).current_state != DEAD) ended = false;
+
+    if(ended)
+    {
+        if(winAmount >= nbLemmingToWin) LoadLevel(4);
+        else LoadLevel(5);
+    }
 }

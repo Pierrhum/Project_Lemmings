@@ -28,6 +28,14 @@ class NYTimer
         QueryPerformanceCounter(&lastUpdateTime);
     }
 
+    void restart(void)
+    {
+        LARGE_INTEGER timeNow;
+        QueryPerformanceCounter(&timeNow);
+
+        lastUpdateTime = timeNow;
+    }
+
     float getElapsedSeconds(bool restart = false)
     {
         LARGE_INTEGER timeNow;
