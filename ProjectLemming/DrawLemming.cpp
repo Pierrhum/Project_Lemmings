@@ -98,6 +98,11 @@ void DrawLemming::Refresh_level_three(std::vector<std::vector<CHAR_INFO>> &buffe
     Boom_button.play_frame(buffer, 0);
 }
 
+void DrawLemming::LoadLevel(int level)
+{
+    
+}
+
 void DrawLemming::resetSkillButtonState()
 {
     Dig_button.resetEtat();

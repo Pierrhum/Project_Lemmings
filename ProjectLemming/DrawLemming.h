@@ -54,7 +54,7 @@ public:
         _anims.push_back( new Animation("spriteAscii/lemming_dig/lem_dig_size10.txt", 16));
         _anims.push_back( new Animation("spriteAscii/lemming_end/lem_end10.txt", 8));
         _anims.push_back( new Animation("spriteAscii/boom/lem_boom_size10.txt", 12));
-        _anims.push_back( new Animation("spriteAscii/boom/lem_crash.txt", 17));
+        _anims.push_back( new Animation("spriteAscii/crash/lem_crash.txt", 17));
         _anims.push_back( new Animation("spriteAscii/umbrella/lem_umbrella10.txt", 16));
         _anims.push_back( new Animation("spriteAscii/wait/lem_wait8.txt", 16));
         COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
@@ -102,6 +102,7 @@ public:
     void Refresh_level_one(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_level_two(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_level_three(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void LoadLevel(int level);
     void resetSkillButtonState();
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);

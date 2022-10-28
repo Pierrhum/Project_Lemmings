@@ -23,6 +23,8 @@ struct Movement
 
 class Lemming : public Element
 {
+private:
+    int fallDistance = 0;
 public:
     // Movement movements[5] = {{RMOVE, {1, 0} }, {LMOVE, {-1, 0}}, {FALL, {0, 1}}, {DIG, {0, 1}}, {END, {0, 0}}};
     Movement movements[9] = {

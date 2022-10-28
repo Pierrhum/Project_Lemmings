@@ -4,6 +4,8 @@
 
 void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
+    if(!is_showed) return;
+    
     int index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     
     State oldState = current_state;
@@ -29,6 +31,15 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 Dig();
         break;
         case FALL :
+            fallDistance++;
+            if(isColliding(BOTTOM))
+                if(fallDistance > 30) current_state = CRASH;
+                else
+                {
+                    current_state = fall_state;
+                    fallDistance = 0;
+                }
+        break;
         case UMBRELLA:
             if(isColliding(BOTTOM))
                 current_state = fall_state;
@@ -70,12 +81,16 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         SIZE.Y = (short)pic.h_picture/animations.at(current_state)->nb_frames;
         index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     }
-    if(current_state == DIG)
-        play_next_frame(buffer, {-3,0});
-    if (current_state == UMBRELLA)
-        play_next_frame(buffer, {2, 0}, 4);
-    else play_next_frame(buffer);
     current_anim = current_state;
+    if(oldState == DIG)
+        play_next_frame(buffer, {-3,0});
+    else if (oldState == UMBRELLA)
+        play_next_frame(buffer, {2, 0}, 4);
+    else if (oldState == CRASH)
+        if(next_frame_to_play==animations[CRASH]->nb_frames-1) is_showed = false;
+        else play_next_frame(buffer, {-4, 0}, 16);
+    else play_next_frame(buffer);
+    
     POS.X += movements[current_state].lem_vector_list[index_anim].X;
     POS.Y += movements[current_state].lem_vector_list[index_anim].Y;
 }
