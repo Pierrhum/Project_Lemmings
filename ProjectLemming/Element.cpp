@@ -22,13 +22,13 @@ void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD
     
 }
 
-COORD Element::get_center()
+COORD Element::get_center() const 
 {
     return COORD{(short)(POS.X + animations[current_anim]->origin_picture.w_picture/2), (short)( POS.Y + animations[current_anim]->origin_picture.h_picture / animations[current_anim]->nb_frames/2)};
 }
 
-// 2D AABB vs AABB overlapping
-bool Element::isOverlapping(Element& element, const bool center)
+// 2D AABB vs AABB overlapping 
+bool Element::isOverlapping(const Element& element, const bool center) const
 {
     // Just comparing to the other element center
     if(center)

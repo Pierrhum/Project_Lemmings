@@ -67,7 +67,7 @@ public:
         static DrawLemming S;
         return S;
     }
-    ScreenEnum current_screen = LEVEL_TWO;
+    ScreenEnum current_screen = LEVEL_THREE;
     ScreenEnum last_screen = MENU;
     TypeSkillButton currentSelectedSkill = NOTHING;
     
@@ -84,6 +84,7 @@ public:
     UIButton ReplayLevel;
     UIButton NextLevel;
     vector<Lemming> lemmings;
+    vector<Lemming> waiting_lemmings;
     vector<Animation*> _anims;
     
     SkillButton Dig_button;

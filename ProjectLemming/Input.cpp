@@ -106,13 +106,18 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                     }
                 break;
             case WAIT_BUTTON:
+                for (int lem = 0; lem < lemmings.size(); ++lem)
+                    if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false)
+                        && (lemmings[lem].current_state == LMOVE || lemmings[lem].current_state == RMOVE))
+                    {
+                        lemmings[lem].current_state = WAIT;
+                        DrawLemming::Instance().waiting_lemmings.push_back(lemmings[lem]);
+                    }
                 break;
             case BOOM_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                 if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
-                {
                     lemmings[lem].current_state = BOOM;
-                }
                 break;
         }
 }

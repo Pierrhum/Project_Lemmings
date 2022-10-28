@@ -11,8 +11,13 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     State oldState = current_state;
     switch (current_state)
     {
-        case WAIT:
-            
+    case WAIT:
+        {
+            vector<Lemming> lemmings = DrawLemming::Instance().lemmings;
+            for (int lem = 0; lem < lemmings.size(); ++lem)
+                if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], true))
+                    lemmings[lem].current_state = lemmings[lem].current_state == RMOVE ? LMOVE : RMOVE;
+        }
         break;
         case CRASH:
             if(next_frame_to_play==animations[CRASH]->nb_frames-1)
@@ -113,6 +118,9 @@ void Lemming::Dig()
 bool Lemming::isColliding(SIDES side) const
 {
     int collidingPixels = 0;
+    for(Lemming lemming : DrawLemming::Instance().waiting_lemmings)
+        if(isOverlapping(lemming, false)) return true;
+    
     switch (side)
     {
     case BOTTOM :
