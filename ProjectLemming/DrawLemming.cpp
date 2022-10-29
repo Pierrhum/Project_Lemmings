@@ -100,6 +100,7 @@ void DrawLemming::LoadLevel(int level)
         case 1:
             currentLevel = current_screen = LEVEL_ONE;
             initial_level = level_one;
+            drop.next_frame_to_play = 0;
             drop.POS = {50, 20};
             door.POS = {60, 30}; // 145 67
             currentSelectedSkill = NOTHING;
@@ -110,6 +111,7 @@ void DrawLemming::LoadLevel(int level)
         case 2:
             currentLevel = current_screen = LEVEL_TWO;
             initial_level = level_two;
+            drop.next_frame_to_play = 0;
             drop.POS = {2, 2};
             door.POS = {160, 78};
             currentSelectedSkill = NOTHING;
@@ -120,11 +122,12 @@ void DrawLemming::LoadLevel(int level)
         case 3:
             currentLevel = current_screen = LEVEL_THREE;
             initial_level = level_three;
+            drop.next_frame_to_play = 0;
             drop.POS = {77, 0};
             door.POS = {60, 81};
             currentSelectedSkill = NOTHING;
-            nbLemming = 10;
-            nbLemmingToWin = 8;
+            nbLemming = 20;
+            nbLemmingToWin = 15;
             PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
 
@@ -164,7 +167,7 @@ void DrawLemming::resetSkillButtonState()
 void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
 {
     DrawPicture(buffer, 0, 0, title_screen);
-    Play.play_frame(buffer, Play.isPressed);  
+    Play.play_frame(buffer, 0);  
 }
 
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
@@ -198,7 +201,7 @@ void DrawLemming::CheckIfLevelEnded()
 
     if(ended)
     {
-        if(winAmount >= nbLemmingToWin) LoadLevel(4);
-        else LoadLevel(5);
+        if(winAmount >= nbLemmingToWin) LoadLevel(WIN);
+        else LoadLevel(LOOSE);
     }
 }

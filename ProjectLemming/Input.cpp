@@ -32,21 +32,37 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                     {
                         // Clic gauche
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
-                        ActionSkillLemming(lemmings);
+                        if(DrawLemming::Instance().current_screen == MENU)
+                        {
+                            ActionSkillLemming(lemmings);
+                            if(isOverlapping(DrawLemming::Instance().Play, true))
+                                DrawLemming::Instance().Play.onPress();
+                        }
+                        else if(DrawLemming::Instance().current_screen == WIN)
+                        {
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
+                                DrawLemming::Instance().ReturnMenu.onPress();
+                            if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
+                                DrawLemming::Instance().ReplayLevel.onPress();
+                            if(isOverlapping(DrawLemming::Instance().NextLevel, true))
+                                DrawLemming::Instance().NextLevel.onPress();                            
+                        }
+                        else if(DrawLemming::Instance().current_screen == LOOSE)
+                        {
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
+                                DrawLemming::Instance().ReturnMenu.onPress();
+                            if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
+                                DrawLemming::Instance().ReplayLevel.onPress();    
+                        }
+                        else
+                        {
+                            ActionSkillLemming(lemmings);
+                            ActionSkillButton(DrawLemming::Instance().Dig_button);
+                            ActionSkillButton(DrawLemming::Instance().Umbrella_button);
+                            ActionSkillButton(DrawLemming::Instance().Wait_button);
+                            ActionSkillButton(DrawLemming::Instance().Boom_button);                            
+                        }
                         
-                        if(isOverlapping(DrawLemming::Instance().Play, true))
-                            DrawLemming::Instance().Play.onPress();
-                        if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
-                            DrawLemming::Instance().ReturnMenu.onPress();
-                        if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
-                            DrawLemming::Instance().ReplayLevel.onPress();
-                        if(isOverlapping(DrawLemming::Instance().NextLevel, true))
-                            DrawLemming::Instance().NextLevel.onPress();
-                        
-                        ActionSkillButton(DrawLemming::Instance().Dig_button);
-                        ActionSkillButton(DrawLemming::Instance().Umbrella_button);
-                        ActionSkillButton(DrawLemming::Instance().Wait_button);
-                        ActionSkillButton(DrawLemming::Instance().Boom_button);
                         mouseState = CLICK;
                         break;
                         // Clic droit

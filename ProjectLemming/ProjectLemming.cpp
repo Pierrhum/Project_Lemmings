@@ -37,7 +37,7 @@ int main()
     int timing_frame = 100;
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
     
-    DrawLemming::Instance().LoadLevel(MENU);
+    DrawLemming::Instance().LoadLevel(LEVEL_THREE);
     timer.start();
     
     while (1)
@@ -79,59 +79,72 @@ int main()
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer, timer);          
-                
-                DrawLemming::Instance().DrawLemmings(Console.buffer);
-                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
-                    spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
-                    next_lemming<DrawLemming::Instance().lemmings.size())
+                else if(timer.getRemainingTime() <= 0)
+                    DrawLemming::Instance().LoadLevel(LOOSE);
+                else
                 {
-                    DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
-                    next_lemming++;
+                    DrawLemming::Instance().Refresh_level(Console.buffer, timer);          
+                    DrawLemming::Instance().DrawLemmings(Console.buffer);
+                    
+                    if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
+                        spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
+                        next_lemming<DrawLemming::Instance().lemmings.size())
+                    {
+                        DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+                        next_lemming++;
+                    }                    
                 }
             }
             else if (DrawLemming::Instance().current_screen == LEVEL_TWO)
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer.restart(75);
+                    timer.restart(80);
                     last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer, timer);
-
-                //todo:reset lemmings list & fix background lemmings interaction
-                DrawLemming::Instance().DrawLemmings(Console.buffer);
-                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
-                    spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
-                    next_lemming<DrawLemming::Instance().lemmings.size())
+                else if(timer.getRemainingTime() <= 0)
+                    DrawLemming::Instance().LoadLevel(LOOSE);
+                else
                 {
-                    DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
-                    next_lemming++;
+                    DrawLemming::Instance().Refresh_level(Console.buffer, timer);
+                    DrawLemming::Instance().DrawLemmings(Console.buffer);
+                    
+                    if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
+                        spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
+                        next_lemming<DrawLemming::Instance().lemmings.size())
+                    {
+                        DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+                        next_lemming++;
+                    }                    
                 }
             }
             else if (DrawLemming::Instance().current_screen == LEVEL_THREE)
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer.restart(50);
+                    timer.restart(150);
                     last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer, timer);
-
-                //todo:reset lemmings list & fix background lemmings interaction
-                DrawLemming::Instance().DrawLemmings(Console.buffer);
-                if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
-                    spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
-                    next_lemming<DrawLemming::Instance().lemmings.size())
+                else if(timer.getRemainingTime() <= 0)
+                    DrawLemming::Instance().LoadLevel(LOOSE);
+                else
                 {
-                    DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
-                    next_lemming++;
+                    DrawLemming::Instance().Refresh_level(Console.buffer, timer);
+                    DrawLemming::Instance().DrawLemmings(Console.buffer);
+                    
+                    if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
+                        spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
+                        next_lemming<DrawLemming::Instance().lemmings.size())
+                    {
+                        DrawLemming::Instance().lemmings[next_lemming].is_showed = true;
+                        next_lemming++;
+                    }
                 }
             }
             DrawLemming::Instance().last_screen = DrawLemming::Instance().current_screen;
