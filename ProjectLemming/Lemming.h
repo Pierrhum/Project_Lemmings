@@ -32,7 +32,7 @@ public:
         {LMOVE, {{-1, 0}}},
         {FALL, {{0, 1}}},
         {DIG, {{0, 0}, {0, 0}, {0, 0}, {0, 1}}},
-        {END, {{0, 0}}},
+        {END, {{0, 0}, {0, 0}, {0, -1}, {0, -1}, {0, 0}, {0, -1}, {0, 0}, {0, 0}}},
         {BOOM, {{0, 0}}},
         {CRASH, {{0, 0}}},
         {UMBRELLA, {{0, 0}, {1, 1}, {0, 0}, {-1, 1}, {0, 0}, {-1, 1}, {0, 0}, {1, 1}}},
@@ -57,7 +57,7 @@ public:
     
     bool isColliding(SIDES side) const;
     bool canClimb(SIDES side) const;
-    void exitLevel();
+    void SetState(State state);
 
 private:
     State fall_state = RMOVE; // State avant la chute (pour récupérer la bonne direction une fois tombé)

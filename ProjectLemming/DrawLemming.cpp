@@ -176,8 +176,8 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
     for (int i = 0; i < lemmings.size(); ++i)
         if (lemmings.at(i).is_showed)
         {
+            if(lemmings.at(i).current_state != END && lemmings.at(i).isOverlapping(door, true)) lemmings.at(i).SetState(END);
             lemmings.at(i).Update(buffer);
-            if(lemmings.at(i).isOverlapping(door, true)) lemmings.at(i).exitLevel();
         }
     
 }

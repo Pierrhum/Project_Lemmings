@@ -11,19 +11,24 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     State oldState = current_state;
     switch (current_state)
     {
-    case WAIT:
+        case END :
+            if(next_frame_to_play==animations[END]->nb_frames-1)
+            {
+                is_showed = false;
+                DrawLemming::Instance().CheckIfLevelEnded();
+                return;
+            }
+            break;
+        case WAIT:
         {
-            vector<Lemming> lemmings = DrawLemming::Instance().lemmings;
-            for (int lem = 0; lem < lemmings.size(); ++lem)
-                if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], true))
-                    lemmings[lem].current_state = lemmings[lem].current_state == RMOVE ? LMOVE : RMOVE;
+
         }
         break;
         case CRASH:
             if(next_frame_to_play==animations[CRASH]->nb_frames-1)
             {
                 is_showed = false;
-                current_state = DEAD;
+                SetState(DEAD);
                 DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
@@ -32,7 +37,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             if(next_frame_to_play==animations[BOOM]->nb_frames-1) 
             {
                 is_showed = false;
-                current_state = DEAD;
+                SetState(DEAD);
                 DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
@@ -40,9 +45,9 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         case DIG:
             if(!isColliding(BOTTOM))
                 if (is_umbrellaed)
-                    current_state = UMBRELLA;
+                    SetState(UMBRELLA);
                 else
-                    current_state = FALL;
+                    SetState(FALL);
             // Si la frame permet un déplacement vers le bas, on creuse le niveau
             else if(movements[current_state].lem_vector_list[index_anim].Y == 1) 
                 Dig();
@@ -50,7 +55,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         case FALL :
             fallDistance++;
             if(isColliding(BOTTOM))
-                if(fallDistance > 30) current_state = CRASH;
+                if(fallDistance > 30) SetState(CRASH);
                 else
                 {
                     current_state = fall_state;
@@ -59,14 +64,14 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         break;
         case UMBRELLA:
             if(isColliding(BOTTOM))
-                current_state = fall_state;
+                SetState(fall_state);
         break;
         case RMOVE:
             if(!isColliding(BOTTOM))
                 if (is_umbrellaed)
-                    current_state = UMBRELLA;
+                    SetState(UMBRELLA);
                 else
-                    current_state = FALL;
+                    SetState(FALL);
             else if(isColliding(RIGHT))
             {
                 if(canClimb(RIGHT))
@@ -78,9 +83,9 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         case LMOVE:
             if(!isColliding(BOTTOM))
                 if (is_umbrellaed)
-                    current_state = UMBRELLA;
+                    SetState(UMBRELLA);
                 else
-                    current_state = FALL;
+                    SetState(FALL);
             else if(isColliding(LEFT))
             {
                 if(canClimb(LEFT))
@@ -167,10 +172,8 @@ bool Lemming::canClimb(SIDES side) const
     }
 }
 
-void Lemming::exitLevel() 
+void Lemming::SetState(State state)
 {
-    current_state = END;
-    is_showed = false;
-    
-    DrawLemming::Instance().CheckIfLevelEnded();
+    current_state = state;
+    next_frame_to_play = 0;
 }
