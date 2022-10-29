@@ -34,7 +34,8 @@ public:
         level_three("spriteAscii/background/background_3_200_100.txt"),
         win_screen("spriteAscii/background/winlemmings200_100.txt"),
         lose_screen("spriteAscii/background/loselemmings200_100.txt"),
-        Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{130, 50}, UIButton::PLAY),
+        Quit(new Animation("spriteAscii/button/quitButton.txt", 1), COORD{180, 55}, UIButton::QUIT),
+        Play(new Animation("spriteAscii/button/playButton.txt", 1), COORD{150, 55}, UIButton::PLAY),
         ReturnMenu(new Animation("spriteAscii/button/MenuButton.txt", 1), COORD{156, 77}, UIButton::RETURN_MENU),
         ReplayLevel(new Animation("spriteAscii/button/ReplayButton.txt", 1), COORD{120, 77}, UIButton::REPLAY),
         NextLevel(new Animation("spriteAscii/button/NextButton.txt", 1), COORD{81, 77}, UIButton::NEXT),
@@ -81,6 +82,7 @@ public:
     Picture level_three;
     Picture win_screen;
     Picture lose_screen;
+    UIButton Quit;
     UIButton Play;
     UIButton ReturnMenu;
     UIButton ReplayLevel;

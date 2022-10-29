@@ -168,6 +168,7 @@ void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
 {
     DrawPicture(buffer, 0, 0, title_screen);
     Play.play_frame(buffer, 0);  
+    Quit.play_frame(buffer, 0);  
 }
 
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)

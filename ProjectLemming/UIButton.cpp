@@ -19,7 +19,8 @@ void UIButton::onPress()
             if(DrawLemming::Instance().currentLevel == 3) DrawLemming::Instance().LoadLevel(MENU);
             else DrawLemming::Instance().LoadLevel(DrawLemming::Instance().currentLevel + 1);
             break;
-        // case QUIT:
-        //     break;
+        case QUIT:
+            exit(EXIT_SUCCESS);
+            break;
     }
 }

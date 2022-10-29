@@ -37,10 +37,12 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             ActionSkillLemming(lemmings);
                             if(isOverlapping(DrawLemming::Instance().Play, true))
                                 DrawLemming::Instance().Play.onPress();
+                            if(isOverlapping(DrawLemming::Instance().Quit, true))
+                                DrawLemming::Instance().Quit.onPress();
                         }
                         else if(DrawLemming::Instance().current_screen == WIN)
                         {
-                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
                                 DrawLemming::Instance().ReturnMenu.onPress();
                             if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
                                 DrawLemming::Instance().ReplayLevel.onPress();
@@ -49,7 +51,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         }
                         else if(DrawLemming::Instance().current_screen == LOOSE)
                         {
-                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, false))
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
                                 DrawLemming::Instance().ReturnMenu.onPress();
                             if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
                                 DrawLemming::Instance().ReplayLevel.onPress();    
@@ -79,8 +81,29 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         for (int lem = 0; lem < lemmings.size(); ++lem)
                             if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
                                 mouseState = HOVER;
-                        if(isOverlapping(DrawLemming::Instance().Play, true))
-                            mouseState = HOVER;
+                        if(DrawLemming::Instance().current_screen == MENU)
+                        {
+                            if(isOverlapping(DrawLemming::Instance().Play, true))
+                                mouseState = HOVER;
+                            if(isOverlapping(DrawLemming::Instance().Quit, true))
+                                mouseState = HOVER;
+                        }
+                        else if(DrawLemming::Instance().current_screen == WIN)
+                        {
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
+                                mouseState = HOVER;
+                            if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
+                                mouseState = HOVER;
+                            if(isOverlapping(DrawLemming::Instance().NextLevel, true))
+                                mouseState = HOVER;                            
+                        }
+                        else if(DrawLemming::Instance().current_screen == LOOSE)
+                        {
+                            if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
+                                mouseState = HOVER;
+                            if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
+                                mouseState = HOVER;    
+                        }
                         break;
                     }
                 }
