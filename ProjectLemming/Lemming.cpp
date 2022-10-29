@@ -44,10 +44,13 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         break;
         case DIG:
             if(!isColliding(BOTTOM))
+            {
+                Dig();
                 if (is_umbrellaed)
                     SetState(UMBRELLA);
                 else
                     SetState(FALL);
+            }
             // Si la frame permet un déplacement vers le bas, on creuse le niveau
             else if(movements[current_state].lem_vector_list[index_anim].Y == 1) 
                 Dig();
@@ -58,7 +61,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 if(fallDistance > 30) SetState(CRASH);
                 else
                 {
-                    current_state = fall_state;
+                    SetState(fall_state);
                     fallDistance = 0;
                 }
         break;
@@ -119,7 +122,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 void Lemming::Dig()
 {
     for(int x = POS.X; x < POS.X + SIZE.X; x++)
-        DrawLemming::Instance().initial_level.set_pixel(x, POS.Y + SIZE.Y, BLACK);
+        DrawLemming::Instance().initial_level.set_pixel(x, POS.Y + SIZE.Y -1, BLACK);
 }
 
 bool Lemming::isColliding(SIDES side) const

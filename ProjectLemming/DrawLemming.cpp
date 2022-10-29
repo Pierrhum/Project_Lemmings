@@ -116,7 +116,7 @@ void DrawLemming::LoadLevel(int level)
             initial_level = level_one;
             drop.next_frame_to_play = 0;
             drop.POS = {50, 20};
-            door.POS = {60, 30}; // 145 67
+            door.POS = {145, 67}; // 145 67
             currentSelectedSkill = NOTHING;
             nbLemming = 2;
             nbLemmingToWin = 1;

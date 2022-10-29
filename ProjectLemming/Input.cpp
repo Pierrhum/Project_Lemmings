@@ -133,7 +133,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false) &&
                         (lemmings[lem].current_state == LMOVE || lemmings[lem].current_state == RMOVE))
-                        lemmings[lem].current_state = DIG;
+                        lemmings[lem].SetState(DIG);
                 break;
             case UMBRELLA_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
@@ -141,7 +141,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                     {
                         lemmings[lem].is_umbrellaed = true;
                         if (lemmings[lem].current_state == FALL)
-                            lemmings[lem].current_state = UMBRELLA;
+                            lemmings[lem].SetState(UMBRELLA);
                     }
                 break;
             case WAIT_BUTTON:
@@ -149,7 +149,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false)
                         && (lemmings[lem].current_state == LMOVE || lemmings[lem].current_state == RMOVE))
                     {
-                        lemmings[lem].current_state = WAIT;
+                        lemmings[lem].SetState(WAIT);
                         DrawLemming::Instance().waiting_lemmings.push_back(lemmings[lem]);
                     }
                 break;
@@ -158,7 +158,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
                     {
                         if(lemmings[lem].current_state == WAIT) DrawLemming::Instance().RemoveWaitingLemming(lemmings[lem]);
-                        lemmings[lem].current_state = BOOM;
+                        lemmings[lem].SetState(BOOM);
                     }
                 break;
         }
