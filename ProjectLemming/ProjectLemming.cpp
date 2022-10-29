@@ -22,7 +22,7 @@ int main()
 {
     WinConsole Console;
     Input input(Console);
-    NYTimer timer(10);
+    NYTimer timer;
 
     //ShowCursor(FALSE);
     ReadConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize,
@@ -38,6 +38,7 @@ int main()
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
     
     DrawLemming::Instance().LoadLevel(MENU);
+    timer.start();
     
     while (1)
     {
@@ -48,7 +49,7 @@ int main()
             {
                 DrawLemming::Instance().DisplayScreen(Console.buffer);
                 
-                DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
+                DrawLemming::Instance().DrawLemmings(Console.buffer);
                 if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
                     spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                     next_lemming<DrawLemming::Instance().lemmings.size())
@@ -72,15 +73,15 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer = NYTimer(20);
-                    timer.start();
+                    timer.restart(90);
+                    last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer);          
+                DrawLemming::Instance().Refresh_level(Console.buffer, timer);          
                 
-                DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
+                DrawLemming::Instance().DrawLemmings(Console.buffer);
                 if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
                     spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                     next_lemming<DrawLemming::Instance().lemmings.size())
@@ -93,16 +94,16 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer = NYTimer(20);
-                    timer.start();
+                    timer.restart(75);
+                    last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer);
+                DrawLemming::Instance().Refresh_level(Console.buffer, timer);
 
                 //todo:reset lemmings list & fix background lemmings interaction
-                DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
+                DrawLemming::Instance().DrawLemmings(Console.buffer);
                 if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
                     spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                     next_lemming<DrawLemming::Instance().lemmings.size())
@@ -115,16 +116,16 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer = NYTimer(20);
-                    timer.start();
+                    timer.restart(50);
+                    last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
                     next_lemming = 0;
                 }
-                DrawLemming::Instance().Refresh_level(Console.buffer);
+                DrawLemming::Instance().Refresh_level(Console.buffer, timer);
 
                 //todo:reset lemmings list & fix background lemmings interaction
-                DrawLemming::Instance().DrawLemmings(Console.buffer, timer);
+                DrawLemming::Instance().DrawLemmings(Console.buffer);
                 if (static_cast<int>(timer.getElapsedMs() / 1000) != spawn_counter &&    
                     spawn_counter%lapse_spawn==lapse_spawn-1-2 &&
                     next_lemming<DrawLemming::Instance().lemmings.size())

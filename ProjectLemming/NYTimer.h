@@ -7,20 +7,18 @@
 
 class NYTimer
 {
-    public :
+public :
     int _MaxTime = 90;
         LARGE_INTEGER lastUpdateTime;
     LONGLONG freq;
 
-    NYTimer(int MaxTime)
+    NYTimer()
     {
         QueryPerformanceCounter(&lastUpdateTime);
         LARGE_INTEGER li_freq;
         QueryPerformanceFrequency(&li_freq);
         freq = li_freq.QuadPart;
         freq /= 1000;
-
-        _MaxTime = MaxTime;
     }
 
     void start(void)
@@ -28,11 +26,12 @@ class NYTimer
         QueryPerformanceCounter(&lastUpdateTime);
     }
 
-    void restart(void)
+    void restart(int MaxTime)
     {
+        _MaxTime = MaxTime;
+
         LARGE_INTEGER timeNow;
         QueryPerformanceCounter(&timeNow);
-
         lastUpdateTime = timeNow;
     }
 

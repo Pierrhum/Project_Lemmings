@@ -56,7 +56,7 @@ void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
     ReplayLevel.play_frame(buffer, 0);  
 }
 
-void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
+void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
 {
     DrawPicture(buffer, 0, 0, initial_level);
 
@@ -67,6 +67,16 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer)
     Umbrella_button.play_frame(buffer, 0);  
     Wait_button.play_frame(buffer, 0);  
     Boom_button.play_frame(buffer, 0);
+    
+    // Gestion du timer
+    int _minute = timer.getRemainingTime() / 60;
+    int _seconde = timer.getRemainingTime() - (_minute * 60);
+    // Affichage
+    minute.play_frame(buffer, _minute);
+    DrawPixel(buffer, minute.POS.X + minute.SIZE.X + 1, minute.POS.Y + 2, WHITE);
+    DrawPixel(buffer, minute.POS.X + minute.SIZE.X + 1, minute.POS.Y + 4, WHITE);
+    sec1.play_frame(buffer, _seconde / 10);
+    sec2.play_frame(buffer, _seconde % 10);
 }
 
 void DrawLemming::LoadLevel(int level)
@@ -157,7 +167,7 @@ void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
     Play.play_frame(buffer, Play.isPressed);  
 }
 
-void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
+void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     for (int i = 0; i < lemmings.size(); ++i)
         if (lemmings.at(i).is_showed)
@@ -166,13 +176,6 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer, NYTi
             if(lemmings.at(i).isOverlapping(door, true)) lemmings.at(i).exitLevel();
         }
     
-    // Gestion du timer
-    int _minute = timer.getRemainingTime() / 60;
-    int _seconde = timer.getRemainingTime() - (_minute * 60);
-    // Affichage
-    minute.play_frame(buffer, _minute);
-    sec1.play_frame(buffer, _seconde / 10);
-    sec2.play_frame(buffer, _seconde % 10);
 }
 
 bool DrawLemming::isLevelEnded()

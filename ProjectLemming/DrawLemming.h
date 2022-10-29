@@ -45,9 +45,9 @@ public:
         drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
         door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true) // 145,67
     {
-        short borderMap = (short)initial_level.w_picture;
         initial_level = current_screen == LEVEL_ONE ? level_one : current_screen == LEVEL_TWO ? level_two : level_three;
-        minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 23), 5}, false);
+        short borderMap = (short)initial_level.w_picture;
+        minute = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 22), 5}, false);
         sec1 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 15), 5}, false);
         sec2 = Element(new Animation("spriteAscii/numbers.txt", 10), COORD{(short)(borderMap - 10), 5}, false);
         _anims.push_back( new Animation("spriteAscii/lemming_move/lem_move_size8.txt", 8));
@@ -102,11 +102,11 @@ public:
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
     void Refresh_lose(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer);
+    void Refresh_level(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
     void LoadLevel(int level);
     void resetSkillButtonState();
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
-    void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer& timer);
+    void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer);
 
     bool isLevelEnded();
     void CheckIfLevelEnded();
