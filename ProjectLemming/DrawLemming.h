@@ -100,6 +100,7 @@ public:
     Element minute;
     Element sec1;
     Element sec2;
+    void RemoveWaitingLemming(Lemming& Lemming);
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);
     void Refresh_win(std::vector<std::vector<CHAR_INFO>>& buffer);
