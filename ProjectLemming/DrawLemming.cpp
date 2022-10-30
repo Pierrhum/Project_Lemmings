@@ -1,5 +1,9 @@
 ﻿#include "DrawLemming.h"
 
+/**
+ * \brief Used to destroy lemmings you have click on when this lemmings is in waiting mode.
+ * \param Lemming Lemmings you have click on
+ */
 void DrawLemming::RemoveWaitingLemming(Lemming& Lemming)
 {
     int index = -1;
@@ -14,6 +18,13 @@ void DrawLemming::RemoveWaitingLemming(Lemming& Lemming)
         waiting_lemmings.erase(waiting_lemmings.begin() + index);
 }
 
+/**
+ * \brief Draw pixel methode
+ * \param buffer Console screen buffer
+ * \param x Draw pixel position X axis
+ * \param y Draw pixel position Y axis
+ * \param color Color pixel you want
+ */
 void DrawLemming::DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color)
 {
     if(y/2 >= buffer.size() || x >= buffer[0].size()) return;
@@ -29,6 +40,14 @@ void DrawLemming::DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, 
     buffer[y/2][x].Char.UnicodeChar = 0x2580;
 }
 
+/**
+ * \brief Draw picture methode
+ * \param buffer Console screen buffer
+ * \param x Draw picture position X axis
+ * \param y Draw picture position Y axis
+ * \param picture Picture you want to show
+ * \param debugOutline Show border of picture to debug (used to debug lemming physics collider pixels)
+ */
 void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline)
 {
     for (int i = 0; i < picture.h_picture*picture.w_picture; ++i)
@@ -51,6 +70,10 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
     }
 }
 
+/**
+ * \brief Used in main loop to refresh win screen and reset elements his data
+ * \param buffer Console screen buffer
+ */
 void DrawLemming::Refresh_win(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, win_screen);
@@ -61,6 +84,10 @@ void DrawLemming::Refresh_win(std::vector<std::vector<CHAR_INFO>> &buffer)
     NextLevel.play_frame(buffer, 0);  
 }
 
+/**
+ * \brief Used in main loop to refresh lose screen and reset elements his data
+ * \param buffer Console screen buffer
+ */
 void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     DrawPicture(buffer, 0, 0, lose_screen);
@@ -71,6 +98,12 @@ void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
 }
 
 bool once = true;
+
+/**
+ * \brief Used in main loop to refresh current level screen and reset elements his data
+ * \param buffer Console screen buffer
+ * \param timer  Console timer
+ */
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
 {
     DrawPicture(buffer, 0, 0, initial_level);
@@ -89,10 +122,10 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYT
     Wait_button.play_frame(buffer, 0);  
     Boom_button.play_frame(buffer, 0);
     
-    // Gestion du timer
+    // Timer management
     int _minute = timer.getRemainingTime() / 60;
     int _seconde = timer.getRemainingTime() - (_minute * 60);
-    // Affichage
+    // Display
     minute.play_frame(buffer, _minute);
     DrawPixel(buffer, minute.POS.X + minute.SIZE.X + 1, minute.POS.Y + 2, WHITE);
     DrawPixel(buffer, minute.POS.X + minute.SIZE.X + 1, minute.POS.Y + 4, WHITE);
@@ -100,6 +133,10 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYT
     sec2.play_frame(buffer, _seconde % 10);
 }
 
+/**
+ * \brief Reinit data for the screen scene "level" you want to load
+ * \param level Number of level you load
+ */
 void DrawLemming::LoadLevel(int level)
 {
     last_screen = current_screen;
@@ -186,6 +223,9 @@ void DrawLemming::LoadLevel(int level)
 
 }
 
+/**
+ * \brief Look at All SkillButton to reset their statement to not active
+ */
 void DrawLemming::resetSkillButtonState()
 {
     Dig_button.resetEtat();
@@ -194,6 +234,10 @@ void DrawLemming::resetSkillButtonState()
     Boom_button.resetEtat();
 }
 
+/**
+ * \brief Used in main loop to refresh title screen and reset elements his data
+ * \param buffer Console screen buffer
+ */
 void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
 {
     DrawPicture(buffer, 0, 0, title_screen);
@@ -201,6 +245,10 @@ void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
     Quit.play_frame(buffer, 0);  
 }
 
+/**
+ * \brief Show lemmings list in all level and check is lemmings is noticeable 
+ * \param buffer Console screen buffer
+ */
 void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     for (int i = 0; i < lemmings.size(); ++i)
@@ -209,9 +257,11 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
             if(lemmings.at(i).current_state != END && lemmings.at(i).isOverlapping(door, true)) lemmings.at(i).SetState(END);
             else if(!lemmings.empty()) lemmings.at(i).Update(buffer);
         }
-    
 }
 
+/**
+ * \brief check in levels (one, two or three) if the game is lose or win
+ */
 void DrawLemming::CheckIfLevelEnded()
 {
     int winAmount = 0;

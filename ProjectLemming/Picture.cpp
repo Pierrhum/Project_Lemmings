@@ -5,8 +5,9 @@
 
 using namespace std;
 
-/* Import Picture from file string name
- * <param name="str_file"> Call txtFile with pixels anim info </param>
+/**
+ * \brief Import Picture from TXT file string name
+ * \param str_file Call txtFile with pixels anim info
  */
 Picture::Picture(const char* str_file)
 {

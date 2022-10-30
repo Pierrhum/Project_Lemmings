@@ -2,7 +2,11 @@
 
 #include "DrawLemming.h"
 
-
+/**
+ * \brief constructor of skill button
+ * \param type_button type of the button you will create
+ * \param pos Button position on screen
+ */
 SkillButton::SkillButton(TypeSkillButton type_button, COORD pos) : Element(), type_button(type_button)
 {
     POS = pos;
@@ -41,11 +45,13 @@ void SkillButton::onPress()
     animations.clear();
     if (is_active)
     {
+        //select skill
         DrawLemming::Instance().currentSelectedSkill = type_button;
         animations.push_back(&buttonDown);
     }
     else
     {
+        //when click on selected button to unselect skill
         DrawLemming::Instance().currentSelectedSkill = NOTHING;
         animations.push_back(&buttonUp);
     }

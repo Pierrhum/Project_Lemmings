@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/**
+* \brief Make a vector list of Picture to save all frame on it.
+ */
 class Animation
 {    
 public:
