@@ -175,4 +175,19 @@ void Lemming::SetState(State state)
 {
     current_state = state;
     next_frame_to_play = 0;
+
+    switch (state)
+    {
+        case END:
+            mciSendString(TEXT("play sound/Yippee.wav"), NULL, 0, NULL);
+        break;
+        case CRASH:
+            mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
+            mciSendString(TEXT("play sound/Splat.wav"), NULL, 0, NULL);
+        break;
+        case BOOM:
+            mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
+            mciSendString(TEXT("play sound/Explode.wav"), NULL, 0, NULL);
+            break;
+    }
 }

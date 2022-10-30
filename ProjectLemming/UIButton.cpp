@@ -4,6 +4,8 @@
 
 void UIButton::onPress()
 {
+    mciSendString(TEXT("play sound/OK.wav"), NULL, 0, NULL);
+    
     switch (action)
     {
         case PLAY:

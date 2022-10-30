@@ -30,14 +30,13 @@ int main()
     
     //https://learn.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)
     //https://learn.microsoft.com/fr-fr/windows/win32/multimedia/using-playsound-to-loop-sounds
-    PlaySound(TEXT("sound/menu.wav"), NULL, SND_LOOP | SND_ASYNC);
     //PlaySound(NULL, NULL, 0); //stop sound
     
     int last_second = 0;
     int timing_frame = 100;
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
     
-    DrawLemming::Instance().LoadLevel(LEVEL_THREE);
+    DrawLemming::Instance().LoadLevel(MENU);
     timer.start();
     
     while (1)
