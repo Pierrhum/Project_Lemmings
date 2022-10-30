@@ -252,10 +252,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sound\Ahhhh.wav" />
+    <Content Include="sound\Clunk.wav" />
     <Content Include="sound\Explode.wav" />
+    <Content Include="sound\DoorOpen.wav" />
+    <Content Include="sound\Ow.wav" />
     <Content Include="sound\Lemmings_JustDig.wav" />
+    <Content Include="sound\LetsGo.wav" />
     <Content Include="sound\OK.wav" />
     <Content Include="sound\Splat.wav" />
+    <Content Include="sound\Click.wav" />
     <Content Include="sound\Yippee.wav" />
     <Content Include="spriteAscii\background\backgroundTest.txt" />
     <Content Include="spriteAscii\background\backgroundTest200_100.txt" />

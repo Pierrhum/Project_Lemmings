@@ -65,6 +65,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             ActionSkillButton(DrawLemming::Instance().Boom_button);                            
                         }
                         
+                        mciSendString(TEXT("play sound/Click.wav"), NULL, 0, NULL);
                         mouseState = CLICK;
                         break;
                         // Clic droit
@@ -127,7 +128,10 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
 {
         switch (DrawLemming::Instance().currentSelectedSkill)
         {
-            case NOTHING:
+        case NOTHING:
+                for (int lem = 0; lem < lemmings.size(); ++lem)
+                    if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
+                    mciSendString(TEXT("play sound/Ow.wav"), NULL, 0, NULL);
                 break;
             case DIG_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)

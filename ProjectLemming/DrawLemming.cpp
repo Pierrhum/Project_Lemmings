@@ -70,12 +70,19 @@ void DrawLemming::Refresh_lose(std::vector<std::vector<CHAR_INFO>> &buffer)
     ReplayLevel.play_frame(buffer, 0);  
 }
 
+bool once = true;
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
 {
     DrawPicture(buffer, 0, 0, initial_level);
 
     drop.play_next_frame(buffer);
     door.play_next_frame(buffer);
+
+    if(once && door.next_frame_to_play==door.animations[0]->nb_frames-1)
+    {
+        once = false;
+        mciSendString(TEXT("play sound/LetsGo.wav"), NULL, 0, NULL);
+    }
     //draw HUB
     Dig_button.play_frame(buffer, 0);  
     Umbrella_button.play_frame(buffer, 0);  
@@ -122,6 +129,7 @@ void DrawLemming::LoadLevel(int level)
             nbLemming = 2;
             nbLemmingToWin = 1;
             PlaySound(TEXT("sound/level1.wav"), NULL, SND_LOOP | SND_ASYNC);
+            mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
         case 2:
             currentLevel = current_screen = LEVEL_TWO;
@@ -134,6 +142,7 @@ void DrawLemming::LoadLevel(int level)
             nbLemming = 10;
             nbLemmingToWin = 8;
             PlaySound(TEXT("sound/level2.wav"), NULL, SND_LOOP | SND_ASYNC);
+            mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
         case 3:
             currentLevel = current_screen = LEVEL_THREE;
@@ -146,6 +155,7 @@ void DrawLemming::LoadLevel(int level)
             nbLemming = 20;
             nbLemmingToWin = 14;
             PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
+            mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
 
         case 4:

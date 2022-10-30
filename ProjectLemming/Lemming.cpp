@@ -43,6 +43,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             }
         break;
         case DIG:
+            mciSendString(TEXT("play sound/Clunk.wav"), NULL, 0, NULL);
             if(!isColliding(BOTTOM))
             {
                 Dig();
