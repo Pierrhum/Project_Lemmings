@@ -55,10 +55,10 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             if(fallDistance > 4 && is_umbrellaed)
             {
                 SetState(UMBRELLA);
-                fallDistance = 0;                
+                fallDistance = 0;
             }
             if(isColliding(BOTTOM))
-                if(fallDistance > 30) SetState(CRASH);
+                if(fallDistance > 40) SetState(CRASH);
                 else
                 {
                     SetState(fall_state);

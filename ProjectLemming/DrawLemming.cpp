@@ -126,8 +126,8 @@ void DrawLemming::LoadLevel(int level)
             door.POS = {145, 67}; // 145 67
             resetSkillButtonState();
             currentSelectedSkill = NOTHING;
-            nbLemming = 2;
-            nbLemmingToWin = 1;
+            nbLemming = 10;
+            nbLemmingToWin = 8;
             PlaySound(TEXT("sound/level1.wav"), NULL, SND_LOOP | SND_ASYNC);
             mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
@@ -140,7 +140,7 @@ void DrawLemming::LoadLevel(int level)
             resetSkillButtonState();
             currentSelectedSkill = NOTHING;
             nbLemming = 10;
-            nbLemmingToWin = 8;
+            nbLemmingToWin = 7;
             PlaySound(TEXT("sound/level2.wav"), NULL, SND_LOOP | SND_ASYNC);
             mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
