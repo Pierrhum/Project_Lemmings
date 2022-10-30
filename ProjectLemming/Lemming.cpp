@@ -195,7 +195,6 @@ void Lemming::SetState(State state)
             DrawLemming::Instance().CheckIfLevelEnded();
         break;
         case CRASH:
-            mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
             mciSendString(TEXT("play sound/Splat.wav"), NULL, 0, NULL);
         break;
         case BOOM:
