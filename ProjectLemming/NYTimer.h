@@ -21,49 +21,32 @@ public :
         freq /= 1000;
     }
 
-    void start(void)
-    {
-        QueryPerformanceCounter(&lastUpdateTime);
-    }
+    /**
+     * \brief Start the timer for the first time
+     */
+    void start(void);
+    /**
+     * \brief Restart the timer, setting the new Maximum Time
+     * \param MaxTime : Time in seconds allowed to complete the game
+     */
+    void restart(int MaxTime);
 
-    void restart(int MaxTime)
-    {
-        _MaxTime = MaxTime;
-
-        LARGE_INTEGER timeNow;
-        QueryPerformanceCounter(&timeNow);
-        lastUpdateTime = timeNow;
-    }
-
-    float getElapsedSeconds(bool restart = false)
-    {
-        LARGE_INTEGER timeNow;
-        QueryPerformanceCounter(&timeNow);
-        LONGLONG elapsedLong = timeNow.QuadPart-lastUpdateTime.QuadPart;
-
-        float elapsed = (float) ((float)elapsedLong/(float)freq);
-        elapsed /= 1000.0f;
-
-        if (restart)
-            lastUpdateTime = timeNow;
-
-        return elapsed;
-    }
-
-    unsigned long getElapsedMs(bool restart = false)
-    {
-        LARGE_INTEGER timeNow;
-        QueryPerformanceCounter(&timeNow);
-        LONGLONG elapsedLong = timeNow.QuadPart-lastUpdateTime.QuadPart;
-
-        unsigned long elapsed = (unsigned long) ((float)elapsedLong/(float)freq);
-        return elapsed;
-    }
-
-    int getRemainingTime()
-    {
-        return _MaxTime - (int)getElapsedSeconds();     
-    }
+    /**
+     * \brief Get the elapsed seconds since the restart
+     * \return Time in seconds
+     */
+    float getElapsedSeconds();
+    /**
+     * \brief Get the elapsed milliseconds since the restart
+     * \return Time in milliseconds
+     */
+    unsigned long getElapsedMs();
+    /**
+     * \brief Get the remaining time before the level ends
+     * \return Time in seconds
+     */
+    int getRemainingTime();
+    
 };
 
 #endif
