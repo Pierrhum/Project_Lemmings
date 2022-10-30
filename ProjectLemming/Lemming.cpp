@@ -5,12 +5,14 @@
 void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 {
     if(!is_showed) return;
-    
+
+    // We retrieve the corresponding movement index 
     int index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     
     State oldState = current_state;
     switch (current_state)
     {
+        // We play the anim once, and then the lemming is hidden
         case END :
             if(next_frame_to_play==animations[END]->nb_frames-1)
             {
@@ -18,11 +20,11 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 return;
             }
             break;
+        
         case WAIT:
-        {
-
-        }
         break;
+        
+        // We play the anim once, and then the lemming is hidden, and set to DEAD state 
         case CRASH:
             if(next_frame_to_play==animations[CRASH]->nb_frames-1)
             {
@@ -31,6 +33,8 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 return;
             }
         break;
+        
+        // We play the anim once, and then the lemming is hidden, and set to DEAD state 
         case BOOM:
             if(next_frame_to_play==animations[BOOM]->nb_frames-1) 
             {
@@ -39,6 +43,8 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 return;
             }
         break;
+        
+        // the Lemming dig while it is colliding to the ground, then he starts falling 
         case DIG:
             mciSendString(TEXT("play sound/Clunk.wav"), NULL, 0, NULL);
             if(!isColliding(BOTTOM))
@@ -46,10 +52,12 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                 Dig();
                 SetState(FALL);
             }
-            // Si la frame permet un déplacement vers le bas, on creuse le niveau
+            // If the current frame is moving downside, we dig the current level
             else if(movements[current_state].lem_vector_list[index_anim].Y == 1) 
                 Dig();
         break;
+
+        // The lemming fall to the ground, and crash if it falls during more than 40 frames, or take the umbrella  
         case FALL :
             fallDistance++;
             if(fallDistance > 4 && is_umbrellaed)
@@ -65,10 +73,14 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                     fallDistance = 0;
                 }
         break;
+
+        // The Lemming go safely to the state before it fell (RMOVE or LMOVE) when it collides to the ground
         case UMBRELLA:
             if(isColliding(BOTTOM))
                 SetState(fall_state);
         break;
+
+        // The Lemming fall when it doesn't collides to the ground, and go up by one pixel if it can climb to the corresponding direction.
         case RMOVE:
             if(!isColliding(BOTTOM))
                 SetState(FALL);
@@ -80,6 +92,8 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                     current_state = fall_state = LMOVE;
             }
         break;
+        
+        // The Lemming fall when it doesn't collides to the ground, and go up by one pixel if it can climb to the corresponding direction.
         case LMOVE:
             if(!isColliding(BOTTOM))
                 SetState(FALL);
@@ -92,14 +106,18 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             }
         break;
     }
+
+    // When the Lemming starts leaving the screen, it screams
     if(POS.Y + SIZE.Y == DrawLemming::Instance().initial_level.h_picture)
         mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
+    // Then when it completly left the screen, it's set to DEAD
     else if(POS.Y >= DrawLemming::Instance().initial_level.h_picture)
     {
         SetState(DEAD);
         return;
     }
-    
+
+    // When the state changed, we update the collider size
     if(oldState != current_state)
     {
         Picture pic = animations.at(current_state)->origin_picture;
@@ -108,18 +126,23 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
         index_anim = next_frame_to_play % movements[current_state].lem_vector_list.size();
     }
     current_anim = current_state;
+    
+    // Positioning of Dig State, to show some particles
     if(oldState == DIG)
         play_next_frame(buffer, {-3,0});
+    // Positioning of Umbrella State, that'll loop to after it took out the umbrella
     else if (oldState == UMBRELLA)
     {
         if(next_frame_to_play==2)
             mciSendString(TEXT("play sound/Thud.wav"), NULL, 0, NULL);
         play_next_frame(buffer, {2, 0}, 4);
     }
+    // Positioning of Crash State, to show some particles
     else if (oldState == CRASH)
         play_next_frame(buffer, {-4, 0}, 16);
     else play_next_frame(buffer);
     
+    // Element position update
     POS.X += movements[current_state].lem_vector_list[index_anim].X;
     POS.Y += movements[current_state].lem_vector_list[index_anim].Y;
 }

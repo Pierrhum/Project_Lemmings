@@ -22,6 +22,10 @@ public:
 
     WinConsole();
 
+    /**
+     * \brief Allow to transform the 2D buffer array to a 1D array
+     * \return Flattened buffer
+     */
     CHAR_INFO* GetFlatBuffer();
     
 };
