@@ -10,6 +10,7 @@
 #include "NYTimer.h"
 #include "SkillButton.h"
 #include "UIButton.h"
+#include "dsound.h"
 
 enum Hexa_color
 {

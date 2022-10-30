@@ -21,7 +21,6 @@ public:
     SMALL_RECT rcRegion;
 
     WinConsole();
-    LONG_PTR setConsoleWindowStyle(INT n_index,LONG_PTR new_style);
 
     CHAR_INFO* GetFlatBuffer();
     

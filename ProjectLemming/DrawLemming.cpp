@@ -200,7 +200,7 @@ bool DrawLemming::isLevelEnded()
 {
     bool ended = true;
     for (int i = 0; i < lemmings.size(); ++i)
-        if (lemmings.at(i).current_state != END) ended = false;
+        if (lemmings.at(i).current_state != END && lemmings.at(i).current_state != WAIT) ended = false;
 
     return ended;
 }
