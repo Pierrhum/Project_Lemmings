@@ -15,7 +15,6 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             if(next_frame_to_play==animations[END]->nb_frames-1)
             {
                 is_showed = false;
-                DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
             break;
@@ -29,7 +28,6 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             {
                 is_showed = false;
                 SetState(DEAD);
-                DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
         break;
@@ -38,7 +36,6 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
             {
                 is_showed = false;
                 SetState(DEAD);
-                DrawLemming::Instance().CheckIfLevelEnded();
                 return;
             }
         break;
@@ -94,6 +91,13 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
                     current_state = fall_state = RMOVE; 
             }
         break;
+    }
+    if(POS.Y + SIZE.Y == DrawLemming::Instance().initial_level.h_picture)
+        mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
+    else if(POS.Y >= DrawLemming::Instance().initial_level.h_picture)
+    {
+        SetState(DEAD);
+        return;
     }
     
     if(oldState != current_state)
@@ -183,8 +187,12 @@ void Lemming::SetState(State state)
 
     switch (state)
     {
+        case DEAD:
+            DrawLemming::Instance().CheckIfLevelEnded();
+        break;
         case END:
             mciSendString(TEXT("play sound/Yippee.wav"), NULL, 0, NULL);
+            DrawLemming::Instance().CheckIfLevelEnded();
         break;
         case CRASH:
             mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
