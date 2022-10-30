@@ -23,6 +23,11 @@ enum ScreenEnum
     MENU, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE, WIN, LOOSE, LOADGAME
 };
 
+
+/**
+* \brief Singleton class used to import data.
+* It used like a game manager to process gameplay (Stat screen level..) and Renderer pictures and anim in game.
+*/
 class DrawLemming
 {
 private:
@@ -45,7 +50,7 @@ public:
         Wait_button(WAIT_BUTTON, COORD{28, 84}),
         Boom_button(BOOM_BUTTON, COORD{42, 84}),
         drop(new Animation("spriteAscii/drop/drop16.txt", 10), COORD{50, 20}, false),
-        door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true) // 145,67
+        door(new Animation("spriteAscii/door/door16.txt", 6), COORD{145, 67}, true) 
     {
         initial_level = current_screen == LEVEL_ONE ? level_one : current_screen == LEVEL_TWO ? level_two : level_three;
         short borderMap = (short)initial_level.w_picture;
@@ -74,34 +79,44 @@ public:
     }
     ScreenEnum current_screen = MENU;
     ScreenEnum last_screen = LOADGAME;
-    TypeSkillButton currentSelectedSkill = NOTHING;
 
     int currentLevel;
-    Picture title_screen;
+    
+    //current scene loaded where lemmings can destroy ground and not affect observed level reference
     Picture initial_level;
+    
+    //scene references background 
+    Picture title_screen;
     Picture level_one;
     Picture level_two;
     Picture level_three;
     Picture win_screen;
     Picture lose_screen;
+
+    //navigation button between screens levels scene
     UIButton Quit;
     UIButton Play;
     UIButton ReturnMenu;
     UIButton ReplayLevel;
     UIButton NextLevel;
+    
     vector<Lemming> lemmings;
     vector<Lemming> waiting_lemmings;
     vector<Animation*> _anims;
-    
+
+    //skill button used by play
+    TypeSkillButton currentSelectedSkill = NOTHING;
     SkillButton Dig_button;
     SkillButton Umbrella_button;
     SkillButton Wait_button;
     SkillButton Boom_button;
+    
     Element drop;
     Element door;
     Element minute;
     Element sec1;
     Element sec2;
+    
     void RemoveWaitingLemming(Lemming& Lemming);
     void DrawPixel(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Hexa_color color);
     void DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x, int y, Picture picture, bool debugOutline=false);

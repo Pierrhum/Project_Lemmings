@@ -1,12 +1,23 @@
 ﻿#include "Element.h"
 #include "DrawLemming.h"
 
+/**
+ * \brief Use this methode when you want just show a frame from the animation of element
+ * \param buffer Console screen buffer
+ * \param frame index of the frame anim you want to show
+ */
 void Element::play_frame(std::vector<std::vector<CHAR_INFO>>& buffer, int frame)
 {
     if(frame<0) frame=0;
     DrawLemming::Instance().DrawPicture(buffer, POS.X, POS.Y, animations[current_anim]->get_frame(frame), debugOutline);
 }
 
+/**
+ * \brief Use this methode when you want play frame by frame an anim
+ * \param buffer Console screen buffer
+ * \param gap vector to shift anim. use for example to param specific anim
+ * \param loopOn if this anim will loop or not
+ */
 void Element::play_next_frame(std::vector<std::vector<CHAR_INFO>>& buffer, COORD gap, int loopOn)
 {
     if (!loop)
