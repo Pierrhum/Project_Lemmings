@@ -46,6 +46,11 @@ int main()
             last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
             if (DrawLemming::Instance().current_screen == MENU)
             {
+                if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
+                {
+                    next_lemming = 0;
+                    spawn_counter = 0;
+                }
                 DrawLemming::Instance().DisplayScreen(Console.buffer);
                 
                 DrawLemming::Instance().DrawLemmings(Console.buffer);

@@ -20,7 +20,7 @@ enum Hexa_color
 
 enum ScreenEnum
 {
-    MENU, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE, WIN, LOOSE
+    MENU, LEVEL_ONE, LEVEL_TWO, LEVEL_THREE, WIN, LOOSE, LOADGAME
 };
 
 class DrawLemming
@@ -72,8 +72,8 @@ public:
         static DrawLemming S;
         return S;
     }
-    ScreenEnum current_screen = LEVEL_THREE;
-    ScreenEnum last_screen = MENU;
+    ScreenEnum current_screen = MENU;
+    ScreenEnum last_screen = LOADGAME;
     TypeSkillButton currentSelectedSkill = NOTHING;
 
     int currentLevel;
