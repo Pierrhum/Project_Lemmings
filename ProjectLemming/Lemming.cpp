@@ -107,7 +107,11 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     if(oldState == DIG)
         play_next_frame(buffer, {-3,0});
     else if (oldState == UMBRELLA)
+    {
+        if(next_frame_to_play==2)
+            mciSendString(TEXT("play sound/Thud.wav"), NULL, 0, NULL);
         play_next_frame(buffer, {2, 0}, 4);
+    }
     else if (oldState == CRASH)
         play_next_frame(buffer, {-4, 0}, 16);
     else play_next_frame(buffer);

@@ -261,6 +261,7 @@
     <Content Include="sound\OK.wav" />
     <Content Include="sound\Splat.wav" />
     <Content Include="sound\Click.wav" />
+    <Content Include="sound\Thud.wav" />
     <Content Include="sound\Yippee.wav" />
     <Content Include="spriteAscii\background\backgroundTest.txt" />
     <Content Include="spriteAscii\background\backgroundTest200_100.txt" />
