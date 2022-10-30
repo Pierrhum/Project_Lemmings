@@ -4,21 +4,36 @@
 #include "DrawLemming.h"
 #include "Lemming.h"
 
+/**
+ * \brief Class managing the mouse input actions, and its display.
+ */
 class Input : public Element
 {
 private:
     WinConsole &Console;
     COORD MousePos;
-    bool MouseInit;
     
 public:
     enum MouseState { NORMAL = 0, HOVER = 1, CLICK = 2 };
     MouseState mouseState = NORMAL;
     
     Input(WinConsole &WinConsole) : Console(WinConsole), Element(new Animation("spriteAscii/mouse.txt", 3), COORD{100, 5}, false) { }
-    void ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer);
-    void ActionSkillButton(SkillButton& skill_button);
-    void ActionSkillLemming(vector<Lemming>& lemmings);
+    
+    /**
+     * \brief Manage the input actions, and the MouseState
+     * \param lemmings : Lemmings present in the current map
+     */
+    void ProcessInput(vector<Lemming>& lemmings);
 
-    Hexa_color GetHexaColor(Picture pic, int x, int y);
+    /**
+     * \brief Check if the Skill Button overlaps the input, and set it as the selected skill if it does, then reset the others
+     * \param skill_button : Skill button receiving the click
+     */
+    void ActionSkillButton(SkillButton& skill_button);
+
+    /**
+     * \brief Check if a Lemming overlaps the input, and call the chosen skill action if it does
+     * \param lemmings : Lemmings present in the current map
+     */
+    void ActionSkillLemming(vector<Lemming>& lemmings);
 };

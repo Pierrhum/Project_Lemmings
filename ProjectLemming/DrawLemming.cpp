@@ -128,6 +128,7 @@ void DrawLemming::LoadLevel(int level)
             currentSelectedSkill = NOTHING;
             nbLemming = 10;
             nbLemmingToWin = 7;
+            once = true;
             PlaySound(TEXT("sound/level1.wav"), NULL, SND_LOOP | SND_ASYNC);
             mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
@@ -141,6 +142,7 @@ void DrawLemming::LoadLevel(int level)
             currentSelectedSkill = NOTHING;
             nbLemming = 7;
             nbLemmingToWin = 5;
+            once = true;
             PlaySound(TEXT("sound/level2.wav"), NULL, SND_LOOP | SND_ASYNC);
             mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;
@@ -154,6 +156,7 @@ void DrawLemming::LoadLevel(int level)
             currentSelectedSkill = NOTHING;
             nbLemming = 20;
             nbLemmingToWin = 14;
+            once = true;
             PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
             mciSendString(TEXT("play sound/DoorOpen.wav"), NULL, 0, NULL);
             break;

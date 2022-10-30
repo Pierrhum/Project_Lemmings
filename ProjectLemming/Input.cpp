@@ -2,17 +2,12 @@
 
 #include "Lemming.h"
 
-Hexa_color Input::GetHexaColor(Picture pic, int x, int y)
-{
-    return (Hexa_color)pic.get_pixel(MousePos.X + x, MousePos.Y * 2 + y);
-}
-
-void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR_INFO>>& buffer, NYTimer timer)
+void Input::ProcessInput(vector<Lemming>& lemmings)
 {
     DWORD nb;
     INPUT_RECORD record[200];
-    
-    buffer[5][5].Char.AsciiChar = 0x30 + static_cast<int>(timer.getElapsedSeconds());
+
+    // To avoid freezing the update method, we'll check the input every 50ms, instead of everytime
     if (WaitForSingleObject(Console.hInput, 50) == WAIT_OBJECT_0)
     {
         if (ReadConsoleInput(Console.hInput,record,200,&nb))
@@ -21,8 +16,6 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
             {
                 if (record[i].EventType == MOUSE_EVENT)
                 {
-                    if(!MouseInit) MouseInit = true;
-                    
                     MousePos = record[i].Event.MouseEvent.dwMousePosition;
                     POS.X = MousePos.X - SIZE.X/2;
                     POS.Y = MousePos.Y * 2 - SIZE.Y / 2;
@@ -30,8 +23,9 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             
                     switch (record[i].Event.MouseEvent.dwButtonState)
                     {
-                        // Clic gauche
+                    // Left click
                     case FROM_LEFT_1ST_BUTTON_PRESSED:
+                        // If we click from the title screen
                         if(DrawLemming::Instance().current_screen == MENU)
                         {
                             ActionSkillLemming(lemmings);
@@ -40,6 +34,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             if(isOverlapping(DrawLemming::Instance().Quit, true))
                                 DrawLemming::Instance().Quit.onPress();
                         }
+                        // From the win menu
                         else if(DrawLemming::Instance().current_screen == WIN)
                         {
                             if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
@@ -49,6 +44,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             if(isOverlapping(DrawLemming::Instance().NextLevel, true))
                                 DrawLemming::Instance().NextLevel.onPress();                            
                         }
+                        // From the loose menu
                         else if(DrawLemming::Instance().current_screen == LOOSE)
                         {
                             if(isOverlapping(DrawLemming::Instance().ReturnMenu, true))
@@ -56,6 +52,7 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                             if(isOverlapping(DrawLemming::Instance().ReplayLevel, true))
                                 DrawLemming::Instance().ReplayLevel.onPress();    
                         }
+                        // From the other screens, ie the 3 levels
                         else
                         {
                             ActionSkillLemming(lemmings);
@@ -68,20 +65,16 @@ void Input::ProcessInput(vector<Lemming>& lemmings, std::vector<std::vector<CHAR
                         mciSendString(TEXT("play sound/Click.wav"), NULL, 0, NULL);
                         mouseState = CLICK;
                         break;
-                        // Clic droit
-                    case RIGHTMOST_BUTTON_PRESSED:
-                        mouseState = CLICK;
-                        break;
-                        // Clic molette
-                    case FROM_LEFT_2ND_BUTTON_PRESSED:
-                        mouseState = CLICK;
-                        break;
-                        // Aucun clic : affichge de la souris
+                    // Every other state
                     default:
                         mouseState = NORMAL;
+                        
+                        // If the mouse overlaps a lemming
                         for (int lem = 0; lem < lemmings.size(); ++lem)
                             if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
                                 mouseState = HOVER;
+                        
+                        // If the mouse overlaps any button corresponding to the corresponding screen
                         if(DrawLemming::Instance().current_screen == MENU)
                         {
                             if(isOverlapping(DrawLemming::Instance().Play, true))
@@ -128,17 +121,20 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
 {
         switch (DrawLemming::Instance().currentSelectedSkill)
         {
-        case NOTHING:
+            // If we didn't select any button, a funny sound appears if we click on a Lemming
+            case NOTHING:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
                     mciSendString(TEXT("play sound/Ow.wav"), NULL, 0, NULL);
                 break;
+            // The Lemming has to be walking to apply Dig Skill
             case DIG_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false) &&
                         (lemmings[lem].current_state == LMOVE || lemmings[lem].current_state == RMOVE))
                         lemmings[lem].SetState(DIG);
                 break;
+            // The Lemming can receive the umbrella skill at any moment
             case UMBRELLA_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))
@@ -148,6 +144,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                             lemmings[lem].SetState(UMBRELLA);
                     }
                 break;
+            // The Lemming has to be walking to apply Wait Skill, and we'll add it to the waiting_list, used in collisions checking
             case WAIT_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false)
@@ -157,6 +154,7 @@ void Input::ActionSkillLemming(vector<Lemming>& lemmings)
                         DrawLemming::Instance().waiting_lemmings.push_back(lemmings[lem]);
                     }
                 break;
+            // The Lemming can explode at any moment, we'll also remove it if it belongs to the waiting list, to remove the collision.
             case BOOM_BUTTON:
                 for (int lem = 0; lem < lemmings.size(); ++lem)
                     if (lemmings[lem].is_showed && isOverlapping(lemmings[lem], false))

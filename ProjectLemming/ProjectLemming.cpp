@@ -154,6 +154,6 @@ int main()
         }
         WriteConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize, Console.dwBufferCoord,
                            &Console.rcRegion);
-        input.ProcessInput(DrawLemming::Instance().lemmings, Console.buffer, timer);
+        input.ProcessInput(DrawLemming::Instance().lemmings);
     }        
 }
