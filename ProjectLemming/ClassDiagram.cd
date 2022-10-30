@@ -13,6 +13,10 @@
       <HashCode>AAQAAEEUQgBgAECAEDAIRAEEDBIGAIAI5CMgAQA4AQA=</HashCode>
       <FileName>DrawLemming.h</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="current_screen" />
+      <Field Name="last_screen" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="Element">
     <Position X="5" Y="0.5" Width="1.5" />
@@ -31,12 +35,18 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAEAEAACAAAAAAEAAgAAAAAQAAAAAAEIA=</HashCode>
+      <HashCode>AACAAAAAAAAAEAEAAAAAAAAAEAAgAAAAAQAAAAAAAIA=</HashCode>
       <FileName>Input.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Lemming">
     <Position X="4" Y="5" Width="1.5" />
+    <AssociationLine Name="current_state" Type="State" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="7.875" />
+        <Point X="9.75" Y="7.875" />
+      </Path>
+    </AssociationLine>
     <AssociationLine Name="movements" Type="Movement" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="5" Y="8.031" />
@@ -53,19 +63,13 @@
         <Position X="1.248" Y="0.057" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="current_state" Type="State" FixedToPoint="true">
-      <Path>
-        <Point X="5.5" Y="7.875" />
-        <Point X="9.75" Y="7.875" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AgQABAAAAgAkAABgAAAAAAABAAAAAAAAQAABAAEAAAA=</HashCode>
       <FileName>Lemming.h</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="movements" />
       <Field Name="current_state" />
+      <Field Name="movements" />
       <Field Name="fall_state" />
     </ShowAsAssociation>
   </Class>
@@ -122,14 +126,14 @@
     </TypeIdentifier>
   </Struct>
   <Enum Name="Hexa_color">
-    <Position X="17.5" Y="3" Width="1.5" />
+    <Position X="18.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAEIAACAogIUKAAAAAAAABAAgAAAAAAEAAAAAAAAQA=</HashCode>
       <FileName>DrawLemming.h</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="ScreenEnum">
-    <Position X="17.5" Y="0.5" Width="1.5" />
+    <Position X="18.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAgAAAAAAAABAAAAAAAAAAAAAAAAAAACAIABAE=</HashCode>
       <FileName>DrawLemming.h</FileName>
