@@ -117,6 +117,7 @@ void DrawLemming::LoadLevel(int level)
             drop.next_frame_to_play = 0;
             drop.POS = {50, 20};
             door.POS = {145, 67}; // 145 67
+            resetSkillButtonState();
             currentSelectedSkill = NOTHING;
             nbLemming = 2;
             nbLemmingToWin = 1;
@@ -128,6 +129,7 @@ void DrawLemming::LoadLevel(int level)
             drop.next_frame_to_play = 0;
             drop.POS = {2, 2};
             door.POS = {160, 78};
+            resetSkillButtonState();
             currentSelectedSkill = NOTHING;
             nbLemming = 10;
             nbLemmingToWin = 8;
@@ -139,9 +141,10 @@ void DrawLemming::LoadLevel(int level)
             drop.next_frame_to_play = 0;
             drop.POS = {77, 0};
             door.POS = {60, 81};
+            resetSkillButtonState();
             currentSelectedSkill = NOTHING;
             nbLemming = 20;
-            nbLemmingToWin = 15;
+            nbLemmingToWin = 14;
             PlaySound(TEXT("sound/level3.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
 
