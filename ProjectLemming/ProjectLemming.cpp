@@ -37,7 +37,7 @@ int main()
     int timing_frame = 100;
     int lapse_spawn = 3, spawn_counter = 0, next_lemming = 0;
     
-    DrawLemming::Instance().LoadLevel(MENU);
+    DrawLemming::Instance().LoadLevel(LEVEL_THREE);
     timer.start();
     
     while (1)

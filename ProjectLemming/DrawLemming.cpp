@@ -105,10 +105,10 @@ void DrawLemming::LoadLevel(int level)
         case 0:
             current_screen = MENU;
             initial_level = title_screen;
-            drop.POS = {0, 50};
+            drop.POS = {-10, 50};
             currentSelectedSkill = BOOM_BUTTON;
             defaultLemmingState = RMOVE;
-            nbLemming = 10;
+            nbLemming = 500;
             PlaySound(TEXT("sound/menu.wav"), NULL, SND_LOOP | SND_ASYNC);
             break;
         case 1:
@@ -196,15 +196,6 @@ void DrawLemming::DrawLemmings(std::vector<std::vector<CHAR_INFO>> &buffer)
     
 }
 
-bool DrawLemming::isLevelEnded()
-{
-    bool ended = true;
-    for (int i = 0; i < lemmings.size(); ++i)
-        if (lemmings.at(i).current_state != END && lemmings.at(i).current_state != WAIT) ended = false;
-
-    return ended;
-}
-
 void DrawLemming::CheckIfLevelEnded()
 {
     int winAmount = 0;
@@ -212,7 +203,7 @@ void DrawLemming::CheckIfLevelEnded()
     
     for (int i = 0; i < lemmings.size(); ++i)
         if (lemmings.at(i).current_state == END) winAmount++; // WIN
-        else if(lemmings.at(i).current_state != DEAD) ended = false;
+        else if(lemmings.at(i).current_state != DEAD && lemmings.at(i).current_state != WAIT) ended = false;
 
     if(ended)
     {

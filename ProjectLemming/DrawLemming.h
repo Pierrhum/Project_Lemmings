@@ -63,6 +63,7 @@ public:
         _anims.push_back( new Animation("spriteAscii/wait/lem_wait8.txt", 16));
         COORD centre_drop_lem{(short)(drop.get_center().X - _anims.at(2)->get_frame(0).w_picture/2), (short)(drop.get_center().Y - _anims.at(2)->get_frame(0).h_picture/2)};
 
+        
         Lemming lem = Lemming(_anims, centre_drop_lem, FALL);
         lemmings.resize(10, Lemming(_anims, centre_drop_lem, FALL));        
     }
@@ -112,6 +113,5 @@ public:
     void DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer);
     void DrawLemmings(std::vector<std::vector<CHAR_INFO>>& buffer);
 
-    bool isLevelEnded();
     void CheckIfLevelEnded();
 };

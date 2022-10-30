@@ -18,5 +18,5 @@ WinConsole::WinConsole()
     SetConsoleTitleA("The Lemmings");
     SetConsoleScreenBufferSize(hOutput, dwBufferSize);
     SetConsoleWindowInfo(hOutput, true, &rcRegion);
-    //ShowWindow(hwnd_console,SW_MAXIMIZE);
+    ShowWindow(hwnd_console,SW_MAXIMIZE);
 }
