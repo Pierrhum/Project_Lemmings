@@ -251,6 +251,7 @@
     <ClInclude Include="WinConsole.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClassDiagram.png" />
     <Content Include="sound\Ahhhh.wav" />
     <Content Include="sound\Clunk.wav" />
     <Content Include="sound\Explode.wav" />

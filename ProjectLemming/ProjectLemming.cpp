@@ -24,12 +24,9 @@ int main()
     Input input(Console);
     NYTimer timer;
 
-    //ShowCursor(FALSE);
     ReadConsoleOutput(Console.hOutput, Console.GetFlatBuffer(), Console.dwBufferSize,
                       Console.dwBufferCoord, &Console.rcRegion);
     
-    //https://learn.microsoft.com/en-us/previous-versions/dd743680(v=vs.85)
-    //https://learn.microsoft.com/fr-fr/windows/win32/multimedia/using-playsound-to-loop-sounds
     //PlaySound(NULL, NULL, 0); //stop sound
     
     int last_second = 0;

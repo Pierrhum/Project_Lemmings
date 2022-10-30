@@ -1,5 +1,10 @@
 ﻿#include "Animation.h"
 
+/* Import animation from file string name
+ * <param name="str_file"> Call txtFile with pixels anim info </param>
+ * <param name="nb_frames"> Number of frame in anim </param>
+ * <param name="flipped"> Flip anim on the X axis </param>
+ */
 Animation::Animation(const char* str_file, int nb_frames, bool flipped): origin_picture(Picture(str_file)), nb_frames(nb_frames)
 {
     vector<int> frame_buffer;

@@ -5,10 +5,13 @@
 
 using namespace std;
 
+/* Import Picture from file string name
+ * <param name="str_file"> Call txtFile with pixels anim info </param>
+ */
 Picture::Picture(const char* str_file)
 {
     ifstream input;
-    input.open(str_file);//"spriteAscii/backgroundTest200_100.txt"
+    input.open(str_file);
 
     if (input.is_open() == true) {
         string word;
