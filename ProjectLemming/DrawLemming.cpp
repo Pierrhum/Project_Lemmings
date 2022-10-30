@@ -71,6 +71,17 @@ void DrawLemming::DrawPicture(std::vector<std::vector<CHAR_INFO>> &buffer, int x
 }
 
 /**
+ * \brief Used in main loop to refresh title screen and reset elements his data
+ * \param buffer Console screen buffer
+ */
+void DrawLemming::Refresh_menu(std::vector<std::vector<CHAR_INFO>>& buffer)
+{
+    DrawPicture(buffer, 0, 0, title_screen);
+    Play.play_frame(buffer, 0);  
+    Quit.play_frame(buffer, 0);  
+}
+
+/**
  * \brief Used in main loop to refresh win screen and reset elements his data
  * \param buffer Console screen buffer
  */
@@ -106,7 +117,7 @@ bool once = true;
  */
 void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYTimer& timer)
 {
-    DrawPicture(buffer, 0, 0, initial_level);
+    DrawPicture(buffer, 0, 0, current_scene);
 
     drop.play_next_frame(buffer);
     door.play_next_frame(buffer);
@@ -137,7 +148,7 @@ void DrawLemming::Refresh_level(std::vector<std::vector<CHAR_INFO>> &buffer, NYT
  * \brief Reinit data for the screen scene "level" you want to load
  * \param level Number of level you load
  */
-void DrawLemming::LoadLevel(int level)
+void DrawLemming::LoadScene(int level)
 {
     last_screen = current_screen;
     
@@ -148,7 +159,7 @@ void DrawLemming::LoadLevel(int level)
     {
         case 0:
             current_screen = MENU;
-            initial_level = title_screen;
+            current_scene = title_screen;
             drop.POS = {-10, 50};
             currentSelectedSkill = BOOM_BUTTON;
             defaultLemmingState = RMOVE;
@@ -157,7 +168,7 @@ void DrawLemming::LoadLevel(int level)
             break;
         case 1:
             currentLevel = current_screen = LEVEL_ONE;
-            initial_level = level_one;
+            current_scene = level_one;
             drop.next_frame_to_play = 0;
             drop.POS = {50, 20};
             door.POS = {145, 67}; // 145 67
@@ -171,7 +182,7 @@ void DrawLemming::LoadLevel(int level)
             break;
         case 2:
             currentLevel = current_screen = LEVEL_TWO;
-            initial_level = level_two;
+            current_scene = level_two;
             drop.next_frame_to_play = 0;
             drop.POS = {2, 2};
             door.POS = {160, 78};
@@ -185,7 +196,7 @@ void DrawLemming::LoadLevel(int level)
             break;
         case 3:
             currentLevel = current_screen = LEVEL_THREE;
-            initial_level = level_three;
+            current_scene = level_three;
             drop.next_frame_to_play = 0;
             drop.POS = {77, 0};
             door.POS = {60, 81};
@@ -200,14 +211,14 @@ void DrawLemming::LoadLevel(int level)
 
         case 4:
             current_screen = WIN;
-            initial_level = win_screen;
+            current_scene = win_screen;
             nbLemming = 0;
             PlaySound(TEXT("sound/win.wav"), NULL, SND_ASYNC);
             break;
             
         case 5:
             current_screen = LOOSE;
-            initial_level = lose_screen;
+            current_scene = lose_screen;
             nbLemming = 0;
             PlaySound(TEXT("sound/loose.wav"), NULL, SND_ASYNC);
             break;
@@ -232,17 +243,6 @@ void DrawLemming::resetSkillButtonState()
     Umbrella_button.resetEtat();
     Wait_button.resetEtat();
     Boom_button.resetEtat();
-}
-
-/**
- * \brief Used in main loop to refresh title screen and reset elements his data
- * \param buffer Console screen buffer
- */
-void DrawLemming::DisplayScreen(std::vector<std::vector<CHAR_INFO>>& buffer)
-{
-    DrawPicture(buffer, 0, 0, title_screen);
-    Play.play_frame(buffer, 0);  
-    Quit.play_frame(buffer, 0);  
 }
 
 /**
@@ -273,7 +273,7 @@ void DrawLemming::CheckIfLevelEnded()
 
     if(ended)
     {
-        if(winAmount >= nbLemmingToWin) LoadLevel(WIN);
-        else LoadLevel(LOOSE);
+        if(winAmount >= nbLemmingToWin) LoadScene(WIN);
+        else LoadScene(LOOSE);
     }
 }

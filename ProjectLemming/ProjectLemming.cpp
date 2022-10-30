@@ -48,7 +48,7 @@ int main()
                       Console.dwBufferCoord, &Console.rcRegion);
     
     
-    DrawLemming::Instance().LoadLevel(MENU);
+    DrawLemming::Instance().LoadScene(MENU);
     timer.start();
     
     while (1)
@@ -65,7 +65,7 @@ int main()
                     next_lemming = 0;
                     spawn_counter = 0;
                 }
-                DrawLemming::Instance().DisplayScreen(Console.buffer);
+                DrawLemming::Instance().Refresh_menu(Console.buffer);
                 
                 LemmingUpdate(Console, timer);
             }
@@ -87,7 +87,7 @@ int main()
                     ResetValues(timer);
                 }
                 else if(timer.getRemainingTime() <= 0)
-                    DrawLemming::Instance().LoadLevel(LOOSE);
+                    DrawLemming::Instance().LoadScene(LOOSE);
                 else
                 {
                     DrawLemming::Instance().Refresh_level(Console.buffer, timer);          
@@ -104,7 +104,7 @@ int main()
                     ResetValues(timer);
                 }
                 else if(timer.getRemainingTime() <= 0)
-                    DrawLemming::Instance().LoadLevel(LOOSE);
+                    DrawLemming::Instance().LoadScene(LOOSE);
                 else
                 {
                     DrawLemming::Instance().Refresh_level(Console.buffer, timer);      
@@ -121,7 +121,7 @@ int main()
                     ResetValues(timer);
                 }
                 else if(timer.getRemainingTime() <= 0)
-                    DrawLemming::Instance().LoadLevel(LOOSE);
+                    DrawLemming::Instance().LoadScene(LOOSE);
                 else
                 {
                     DrawLemming::Instance().Refresh_level(Console.buffer, timer);      

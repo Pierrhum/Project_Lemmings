@@ -9,17 +9,17 @@ void UIButton::onPress()
     switch (action)
     {
         case PLAY:
-            DrawLemming::Instance().LoadLevel(LEVEL_ONE);
+            DrawLemming::Instance().LoadScene(LEVEL_ONE);
             break;
         case RETURN_MENU:
-            DrawLemming::Instance().LoadLevel(MENU);
+            DrawLemming::Instance().LoadScene(MENU);
             break;
         case REPLAY:
-            DrawLemming::Instance().LoadLevel(DrawLemming::Instance().currentLevel);
+            DrawLemming::Instance().LoadScene(DrawLemming::Instance().currentLevel);
             break;
         case NEXT:
-            if(DrawLemming::Instance().currentLevel == 3) DrawLemming::Instance().LoadLevel(MENU);
-            else DrawLemming::Instance().LoadLevel(DrawLemming::Instance().currentLevel + 1);
+            if(DrawLemming::Instance().currentLevel == 3) DrawLemming::Instance().LoadScene(MENU);
+            else DrawLemming::Instance().LoadScene(DrawLemming::Instance().currentLevel + 1);
             break;
         case QUIT:
             exit(EXIT_SUCCESS);

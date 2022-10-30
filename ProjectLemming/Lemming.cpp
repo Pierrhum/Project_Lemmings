@@ -108,10 +108,10 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
     }
 
     // When the Lemming starts leaving the screen, it screams
-    if(POS.Y + SIZE.Y == DrawLemming::Instance().initial_level.h_picture)
+    if(POS.Y + SIZE.Y == DrawLemming::Instance().current_scene.h_picture)
         mciSendString(TEXT("play sound/Ahhhh.wav"), NULL, 0, NULL);
     // Then when it completly left the screen, it's set to DEAD
-    else if(POS.Y >= DrawLemming::Instance().initial_level.h_picture)
+    else if(POS.Y >= DrawLemming::Instance().current_scene.h_picture)
     {
         SetState(DEAD);
         return;
@@ -150,7 +150,7 @@ void Lemming::Update(std::vector<std::vector<CHAR_INFO>> &buffer)
 void Lemming::Dig()
 {
     for(int x = POS.X; x < POS.X + SIZE.X; x++)
-        DrawLemming::Instance().initial_level.set_pixel(x, POS.Y + SIZE.Y -1, BLACK);
+        DrawLemming::Instance().current_scene.set_pixel(x, POS.Y + SIZE.Y -1, BLACK);
 }
 
 bool Lemming::isColliding(SIDES side) const
@@ -163,19 +163,19 @@ bool Lemming::isColliding(SIDES side) const
     {
     case BOTTOM :
         for(int x = POS.X; x < POS.X + SIZE.X; x++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( x,POS.Y + SIZE.Y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( x,POS.Y + SIZE.Y) != BLACK ? 1 : 0;
         return collidingPixels > SIZE.X / 2;
     case TOP:
         for(int x = POS.X; x < POS.X + SIZE.X; x++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( x,POS.Y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( x,POS.Y) != BLACK ? 1 : 0;
         return collidingPixels > SIZE.X / 2;
     case RIGHT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
         return collidingPixels >= SIZE.Y / 4;
     case LEFT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( POS.X, y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( POS.X, y) != BLACK ? 1 : 0;
         return collidingPixels >= SIZE.Y / 4;
     }
     return false;
@@ -189,12 +189,12 @@ bool Lemming::canClimb(SIDES side) const
     {
     case RIGHT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( POS.X + SIZE.X, y) != BLACK ? 1 : 0;
         return collidingPixels == SIZE.Y / 4 && !isColliding(TOP);
         
     case LEFT :
         for(int y = POS.Y; y < POS.Y + SIZE.Y; y++)
-            collidingPixels += DrawLemming::Instance().initial_level.get_pixel( POS.X, y) != BLACK ? 1 : 0;
+            collidingPixels += DrawLemming::Instance().current_scene.get_pixel( POS.X, y) != BLACK ? 1 : 0;
         
         return collidingPixels == SIZE.Y / 4 && !isColliding(TOP);
 
