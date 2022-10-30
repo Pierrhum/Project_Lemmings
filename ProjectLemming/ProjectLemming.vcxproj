@@ -325,6 +325,9 @@
     <Content Include="spriteRef\umbrella\lem_umbrella10.png" />
     <Content Include="spriteRef\wait\lem_wait8.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

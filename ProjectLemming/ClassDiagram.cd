@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Animation">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAQAAAAAAgAAAQIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawLemming">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEEUQgBgAECAEDAIRAEEDBIGAIAI5CMgAQA4AQA=</HashCode>
+      <FileName>DrawLemming.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Element">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAEAAAAAQCACAAAAAgQAAAAAABAEQAAiAAAAAAAAgA=</HashCode>
+      <FileName>Element.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Input::MouseState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Input.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAEAEAACAAAAAAEAAgAAAAAQAAAAAAEIA=</HashCode>
+      <FileName>Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lemming">
+    <Position X="4" Y="5" Width="1.5" />
+    <AssociationLine Name="movements" Type="Movement" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="8.031" />
+        <Point X="5" Y="9.188" />
+        <Point X="6.5" Y="9.188" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="fall_state" Type="State" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="7.875" />
+        <Point X="9.75" Y="7.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.248" Y="0.057" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="current_state" Type="State" FixedToPoint="true">
+      <Path>
+        <Point X="5.5" Y="7.875" />
+        <Point X="9.75" Y="7.875" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgQABAAAAgAkAABgAAAAAAABAAAAAAAAQAABAAEAAAA=</HashCode>
+      <FileName>Lemming.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="movements" />
+      <Field Name="current_state" />
+      <Field Name="fall_state" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NYTimer">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAADAAAAABAAAgAAAAEAAAAAAAAEgAIAAAAAAAAAA=</HashCode>
+      <FileName>NYTimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Picture">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAQAAEAAAAAAAAAAABAAAAAAAARAg=</HashCode>
+      <FileName>Picture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SkillButton">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAgAAAAAAAAAABAAAAACAAAAACAACCAAA=</HashCode>
+      <FileName>SkillButton.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="type_button" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="UIButton">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="UIButton::ButtonAction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>UIButton.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAABAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>UIButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinConsole">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAQAACAAAAAAAAAgQgAAAAIBQAAAAAAQ=</HashCode>
+      <FileName>WinConsole.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Movement">
+    <Position X="6.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Lemming.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Hexa_color">
+    <Position X="17.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEIAACAogIUKAAAAAAAABAAgAAAAAAEAAAAAAAAQA=</HashCode>
+      <FileName>DrawLemming.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ScreenEnum">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAgAAAAAAAABAAAAAAAAAAAAAAAAAAACAIABAE=</HashCode>
+      <FileName>DrawLemming.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="State">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAEAAAAEAAQQAAAAAgABgAAAAAAAAEAAAACA=</HashCode>
+      <FileName>Lemming.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SIDES">
+    <Position X="3.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAgAAABAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Lemming.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TypeSkillButton">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAgAAAAAgAAAAAAAAAAAAAAQAAABAAAAAA=</HashCode>
+      <FileName>SkillButton.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

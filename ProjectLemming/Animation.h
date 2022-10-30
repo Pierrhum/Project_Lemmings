@@ -7,10 +7,7 @@
 using namespace std;
 
 class Animation
-{
-private:
-    int currant_frame = 0;
-    
+{    
 public:
     Picture origin_picture;
     int nb_frames;

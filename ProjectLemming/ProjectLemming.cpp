@@ -129,7 +129,7 @@ int main()
             {
                 if (DrawLemming::Instance().last_screen != DrawLemming::Instance().current_screen)
                 {
-                    timer.restart(150);
+                    timer.restart(200);
                     last_second = static_cast<int>(timer.getElapsedMs() / timing_frame);
                     lapse_spawn = 3;
                     spawn_counter = 0;
